@@ -42,13 +42,20 @@
             <div class="inl a-re">
               <div class="re-desc">
                 <el-link class="info" type="primary" :underline="false">
-                  {{ re_video.title.substring(0, 35) }}
+                  {{ re_video.title.substring(0, 25) }}
                 </el-link>
               </div>
               <div class="re-desc">
-                <el-link class="info" type="primary" :underline="false">
-                  bofan danmu
-                </el-link>
+                <div>
+                  <el-link icon="el-icon-video-play" class="info" type="primary" :underline="false">
+                    {{ re_video.stat.view }}
+                  </el-link>
+                </div>
+                <div>
+                  <el-link icon="el-icon-c-scale-to-original" class="info" type="primary" :underline="false">
+                    {{ re_video.stat.danmaku }}
+                  </el-link>
+                </div>
               </div>
             </div>
           </div>
@@ -83,13 +90,20 @@ export default {
 </script>
 <style scoped>
 .a-re {
-  padding-left: 5px;
+  position: absolute;
+  left: 145px;
+}
+
+.re-it {
   position: relative;
-  top: -25px
 }
 
 .re-desc {
   max-width: 230px;
+}
+
+.re-video{
+  padding-bottom: 10px;
 }
 
 #re {
