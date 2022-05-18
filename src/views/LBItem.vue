@@ -7,6 +7,14 @@
     </div>
     <div v-for="video in videos" class="inl video-it">
       <img :src="video.pic" @click="play(video)">
+      <div class="v-count">
+        <el-link class="info" :underline="false" icon="el-icon-video-pause">
+          {{ video.stat.view }}
+        </el-link>
+        <el-link class="info danmaku" :underline="false" icon="el-icon-c-scale-to-original">
+          {{ video.stat.danmaku }}
+        </el-link>
+      </div>
       <div class="desc">
         <el-link :underline="false">{{ video.title }}</el-link>
       </div>
@@ -37,7 +45,7 @@ export default {
       videos: '',
     }
   },
-  created() {
+  mounted() {
     this.update()
   }
 }
@@ -55,7 +63,7 @@ h1 {
 
 h1 button {
   position: relative;
-  top:-4px
+  top: -4px
 }
 
 img {

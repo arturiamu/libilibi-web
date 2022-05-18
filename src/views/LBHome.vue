@@ -1,41 +1,25 @@
 <template>
   <div id="lb-home">
     <div id="top">
-      <div id="refresh" @click="load_videos">
+      <div id="refresh" v-bind:style="{ left: $store.state.per}" @click="load_videos">
         <el-link icon="el-icon-refresh" :underline="false"></el-link>
         <div id="re-text">
           <el-link :underline="false">换一批</el-link>
         </div>
       </div>
 
-      <div id="sidebar">
+      <div id="sidebar" v-bind:style="{ left: $store.state.per}">
         <div id="sidebar-bt" class="s-h" @click="drawer = true">
           <el-link :underline="false" icon="el-icon-menu"></el-link>
           <el-link :underline="false">分区</el-link>
-        </div>
-        <div id="up" class="s-h" @click="goAnchor('lb-header')">
-          <el-link :underline="false" icon="el-icon-arrow-up"></el-link>
-          <el-link :underline="false">顶部</el-link>
-        </div>
-        <div id="join" class="s-h" @click="side_f('join')">
-          <el-link :underline="false">加入</el-link>
-          <el-link :underline="false">我们</el-link>
-        </div>
-        <div id="get" class="s-h" @click="side_f('get')">
-          <el-link :underline="false">获取</el-link>
-          <el-link :underline="false">源码</el-link>
-        </div>
-        <div id="feedback" class="s-h" @click="side_f('feedback')">
-          <el-link :underline="false">意见</el-link>
-          <el-link :underline="false">反馈</el-link>
         </div>
         <el-drawer
             title="视频分区"
             :size="150"
             :visible.sync="drawer">
           <div id="partition">
-            <div class="pt pt-top" @click="goAnchor('lb-header')">
-              <el-link :underline="false" icon="el-icon-arrow-up"></el-link>
+            <div class="pt pt-top" @click="goAnchor('lb-footer')">
+              <el-link :underline="false" icon="el-icon-arrow-down"></el-link>
             </div>
             <div class="pt" v-for="item in $store.state.items" @click="goAnchor(item.url)">
               <el-link :underline="false">{{ item.name }}</el-link>
@@ -45,6 +29,10 @@
             </div>
           </div>
         </el-drawer>
+        <div id="up" class="s-h" @click="goAnchor('lb-header')">
+          <el-link :underline="false" icon="el-icon-arrow-up"></el-link>
+          <el-link :underline="false">顶部</el-link>
+        </div>
       </div>
 
       <div class="inl" id="carousel">
@@ -71,6 +59,14 @@
                 <div class="v-pic">
                   <img @click="play(videos[i - 1 + 5])" :src="videos[i - 1 + 5].pic">
                 </div>
+                <div class="v-count">
+                  <el-link class="info" :underline="false" icon="el-icon-video-pause">
+                    {{ videos[i - 1 + 5].stat.view }}
+                  </el-link>
+                  <el-link class="info danmaku" :underline="false" icon="el-icon-c-scale-to-original">
+                    {{ videos[i - 1 + 5].stat.danmaku }}
+                  </el-link>
+                </div>
                 <div class="desc">
                   <el-link class="info" :underline="false">
                     {{ videos[i - 1 + 5].title }}
@@ -84,6 +80,14 @@
               <div class="video-it inl">
                 <div class="v-pic">
                   <img @click="play(videos[i - 1 + 9])" :src="videos[i - 1 + 9].pic">
+                </div>
+                <div class="v-count">
+                  <el-link class="info" :underline="false" icon="el-icon-video-pause">
+                    {{ videos[i - 1 + 9].stat.view }}
+                  </el-link>
+                  <el-link class="info danmaku" :underline="false" icon="el-icon-c-scale-to-original">
+                    {{ videos[i - 1 + 9].stat.danmaku }}
+                  </el-link>
                 </div>
                 <div class="desc">
                   <el-link class="info" :underline="false">
@@ -125,31 +129,6 @@ export default {
       let anchor = document.getElementById(id);
       anchor.scrollIntoView();
     },
-    side_f: function (type) {
-      if (type === 'get') {
-        this.$alert('<a href="https://gitee.com/arturiamu/libilibi-web.git" target="_blank">前端 </a>' +
-            '<a href="https://gitee.com/arturiamu/libilibi-host.git" target="_blank"> 后端</a>', 'gitee 仓库地址', {
-          dangerouslyUseHTMLString: true
-        });
-      } else if (type === 'join') {
-
-      } else if (type === 'feedback') {
-        this.$prompt('请输入您的建议', '意见反馈', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-        }).then(({value}) => {
-          this.$message({
-            type: 'success',
-            message: '反馈成功，感谢您的宝贵意见！！！: '
-          });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '取消输入'
-          });
-        });
-      }
-    }
   },
   mounted() {
     this.load_videos()
@@ -165,7 +144,7 @@ export default {
 
 #sidebar {
   position: absolute;
-  top: 40%;
+  top: 50%;
   left: 93%;
 }
 
@@ -181,34 +160,7 @@ export default {
   text-align: center;
   position: fixed;
   width: 40px;
-  top: 46%;
-  border: 1px solid #606266;
-  border-radius: 5px;
-}
-
-#join {
-  text-align: center;
-  position: fixed;
-  width: 40px;
-  top: 52%;
-  border: 1px solid #606266;
-  border-radius: 5px;
-}
-
-#get {
-  text-align: center;
-  position: fixed;
-  width: 40px;
-  top: 58%;
-  border: 1px solid #606266;
-  border-radius: 5px;
-}
-
-#feedback {
-  text-align: center;
-  position: fixed;
-  width: 40px;
-  top: 64%;
+  top: 57%;
   border: 1px solid #606266;
   border-radius: 5px;
 }
@@ -226,7 +178,6 @@ export default {
 
 #refresh {
   position: absolute;
-  z-index: 1;
   top: 8%;
   left: 93%;
   width: 35px;
@@ -280,4 +231,5 @@ img {
   height: 100%;
   border-radius: 3%;
 }
+
 </style>

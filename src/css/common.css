@@ -3,6 +3,38 @@
     padding: 0;
 }
 
+.keyword {
+    display: none;
+}
+
+.small_screen {
+    left: 99% !important;
+}
+
+.danmaku {
+    position: relative;
+    top:-22px;
+    left: 90px;
+}
+
+.v-count {
+    position: absolute;
+    top: 133px;
+    width: 24.5%;
+}
+
+.v-count a {
+    margin-left: 10px;
+}
+
+.v-count a span {
+    color: #f6f6f6;
+}
+
+.v-count a i {
+    color: #f6f6f6;
+}
+
 .inl {
     display: inline-block;
 }
@@ -28,10 +60,11 @@
     width: 260px;
     height: 156px;
     padding-left: 7px;
+    position: relative;
 }
 
 .video-it:hover {
-    box-shadow: 2px 2px 2px rgba(238, 91, 122, 0.6);
+    box-shadow: 2px 2px 2px 2px rgba(238, 91, 122, 0.6);
 }
 
 a {

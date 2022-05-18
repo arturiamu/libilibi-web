@@ -4,18 +4,38 @@ import Vue from 'vue'
 Vue.use(Vuex)
 
 const actions = {
-    chw(context, value) {
-        context.commit('CHW', value)
-    }
-}
-const mutations = {
-    CHW(state, value) {
-        state.screenWidth = value
+    ch_sc(context, value) {
+        context.commit('CH_SC', value)
+    },
+    in_msg(context) {
+        context.commit('IN_MSG', value)
+    },
+    in_dym(context) {
+        context.commit('IN_DYM', value)
     },
 }
+const mutations = {
+    CH_SC(state, value) {
+        if (value < 1500 && value > 1200) {
+            state.per = '96%'
+        } else if (value < 1000) {
+            state.per = '-200px'
+        }
+    },
+    IN_MSG(state) {
+        if (state.user.msg > 0) {
+            state.user.msg -= 1
+        }
+    },
+    IN_DYM(state) {
+        if (state.user.dym > 0) {
+            state.user.dym -= 1
+        }
+    }
+}
 const state = {
-    user: {id: '', name: ''},
-    screenWidth: 0,
+    user: {id: '', name: '', msg: 0, dym: 0},
+    per: '93%',
     items: [
         {name: '舞蹈', url: 'DANCE'},
         {name: '音乐', url: 'MUSIC'},

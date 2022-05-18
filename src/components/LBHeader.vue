@@ -26,15 +26,18 @@
       </div>
     </div>
     <div id="user" class="inl">
-      <div id="userinfo" class="inl">
-        <div id="avatar" @click="tip">
-          <el-avatar :src="user.pic"></el-avatar>
-        </div>
+      <div @click="user_op" id="userinfo" class="inl">
+        <el-link v-if="$store.state.user.name" :underline="false" type="primary">
+          {{ $store.state.user.name.substring(0, 5) }}...
+        </el-link>
+        <el-link v-else :underline="false" type="primary">登录</el-link>
       </div>
       <div id="appInfo" class="inl">
         <div id="message" class="inl app-info" @click="tip">
           <div id="m-icon" class="mess">
-            <el-link icon="el-icon-message" type="primary" :underline="false"></el-link>
+            <el-badge :value="$store.state.user.msg" :hidden="$store.state.user.msg===0" type="primary ">
+              <el-link icon="el-icon-message" type="primary" :underline="false"></el-link>
+            </el-badge>
           </div>
           <div class="mess">
             <el-link type="primary" :underline="false">消息</el-link>
@@ -42,7 +45,9 @@
         </div>
         <div id="dynamic" class="inl app-info" @click="tip">
           <div id="d-icon" class="mess">
-            <el-link icon="el-icon-bangzhu" type="primary" :underline="false"></el-link>
+            <el-badge :value="$store.state.user.dym" :hidden="$store.state.user.dym===0" type="primary ">
+              <el-link icon="el-icon-bangzhu" type="primary" :underline="false"></el-link>
+            </el-badge>
           </div>
           <div class="mess">
             <el-link type="primary" :underline="false">动态</el-link>
@@ -76,12 +81,16 @@ export default {
   name: "LBHeader",
   data() {
     return {
-      // user: {name: "ArturiaMu", pic: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png", sex: "男"},
-      user: {name: "", pic: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png", sex: "男"},
       keyword: "",
     }
   },
   methods: {
+    user_op: function () {
+      if (this.$store.state.user.name) {
+      } else {
+        this.$router.push('/login')
+      }
+    },
     home: function () {
       if (this.$route.path !== '/') {
         this.$router.push('/')
@@ -101,7 +110,13 @@ export default {
     },
     search: function () {
       if (this.keyword.replaceAll(" ", '') !== "") {
-        bl_search(this, this.keyword)
+        if (this.$route.path !== '/search') {
+          bl_search(this, this.keyword)
+        } else {
+          // this.$router.push('/')
+          this.$router.push('/temp')
+          bl_search(this, this.keyword)
+        }
       }
     }
   }
@@ -114,7 +129,6 @@ export default {
   font-size: 20px;
   padding-left: 25px;
 }
-
 
 #search {
   height: 35px;
@@ -138,9 +152,14 @@ export default {
   padding-left: 15px;
 }
 
-#avatar span {
+#userinfo {
   position: relative;
-  top: 5px;
+  top: -7px;
+  left: -5px;
+}
+
+#userinfo a {
+  font-size: larger;
 }
 
 #lb-header {

@@ -2,6 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import LBHome from "@/views/LBHome";
 import LBPlayer from "@/views/LBPlayer";
+import LBSearch from "@/views/LBSearch";
+import LBLogin from "@/views/LBLogin";
+import LBTemp from "@/views/LBTemp";
 
 Vue.use(VueRouter)
 
@@ -9,35 +12,34 @@ const routes = [
     {
         path: '/',
         name: 'lb-home',
-        component: LBHome
+        component: LBHome,
+    },
+    {
+        path: '/temp',
+        name: 'lb-temp',
+        component: LBTemp,
+    },
+    {
+        path: '/login',
+        name: 'lb-login',
+        component: LBLogin,
+        meta: {
+            keepAlive: false
+        }
     },
     {
         path: '/player',
         name: 'lb-player',
-        component: LBPlayer
+        component: LBPlayer,
     },
-    // {
-    //     path: '/login',
-    //     name: 'lb-login',
-    //     component: Login
-    // },
-    // {
-    //     path: '/player',
-    //     name: 'lb-player',
-    //     component: LBPlayer
-    //     // component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-    // },
-    // {
-    //     path: '/search',
-    //     name: 'lb-search',
-    //     component: Search
-    // },
+    {
+        path: '/search',
+        name: 'lb-search',
+        component: LBSearch,
+    },
 ]
 
-const router = new VueRouter({
-    // mode:'history',
+export default new VueRouter({
     mode: 'history',
     routes
 })
-
-export default router
