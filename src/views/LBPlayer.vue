@@ -17,12 +17,14 @@
         </div>
       </div>
       <div id="frame">
-        <iframe v-bind:src="src + video.stat.aid"
+        <iframe id="lb-frame" ref="iframeRef" v-bind:src="src + video.stat.aid"
                 allowfullscreen="allowfullscreen" width="100%" height="100%" allow="autoplay"
                 scrolling="no" frameborder="no" framespacing="0" border="0"
                 sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
-        ></iframe>
+        >您的浏览器不支持iframe，请升级或更换浏览器
+        </iframe>
       </div>
+
       <div id="describe">
         <div v-for="i in desc">
           <el-link :underline="false">{{ i }}</el-link>
@@ -102,7 +104,7 @@ export default {
   max-width: 230px;
 }
 
-.re-video{
+.re-video {
   padding-bottom: 10px;
 }
 

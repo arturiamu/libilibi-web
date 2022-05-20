@@ -18,20 +18,24 @@
             :size="150"
             :visible.sync="drawer">
           <div id="partition">
-            <div class="pt pt-top" @click="goAnchor('lb-footer')">
-              <el-link :underline="false" icon="el-icon-arrow-down"></el-link>
-            </div>
-            <div class="pt" v-for="item in $store.state.items" @click="goAnchor(item.url)">
-              <el-link :underline="false">{{ item.name }}</el-link>
-            </div>
             <div class="pt pt-top" @click="goAnchor('lb-header')">
               <el-link :underline="false" icon="el-icon-arrow-up"></el-link>
+            </div>
+            <div class="pt" v-for="item in $store.state.home" @click="goAnchor(item.url)">
+              <el-link :underline="false">{{ item.name }}</el-link>
+            </div>
+            <div class="pt pt-top" @click="goAnchor('lb-footer')">
+              <el-link :underline="false" icon="el-icon-arrow-down"></el-link>
             </div>
           </div>
         </el-drawer>
         <div id="up" class="s-h" @click="goAnchor('lb-header')">
           <el-link :underline="false" icon="el-icon-arrow-up"></el-link>
           <el-link :underline="false">顶部</el-link>
+        </div>
+        <div id="down" class="s-h" @click="goAnchor('lb-footer')">
+          <el-link :underline="false">底部</el-link>
+          <el-link :underline="false" icon="el-icon-arrow-down"></el-link>
         </div>
       </div>
 
@@ -100,7 +104,7 @@
         </div>
       </div>
     </div>
-    <LBItem v-for="it in $store.state.items" v-bind:item_info="it" :id="it.url"></LBItem>
+    <LBItem v-for="it in $store.state.home" v-bind:item_info="it" :id="it.url"></LBItem>
   </div>
 </template>
 
@@ -165,6 +169,15 @@ export default {
   border-radius: 5px;
 }
 
+#down {
+  text-align: center;
+  position: fixed;
+  width: 40px;
+  top: 83%;
+  border: 1px solid #606266;
+  border-radius: 5px;
+}
+
 .pt {
   margin-top: 5px;
   margin-left: 50px;
@@ -214,7 +227,7 @@ export default {
 
 #top-r-b {
   position: relative;
-  top: -15px
+  top: -14px
 }
 
 #lb-home {

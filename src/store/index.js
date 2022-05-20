@@ -36,6 +36,11 @@ const mutations = {
 const state = {
     user: {id: '', name: '', msg: 0, dym: 0},
     per: '93%',
+    home: [
+        {name: '舞蹈', url: 'DANCE'},
+        {name: '动画', url: 'ANIME'},
+        {name: '原创', url: 'GUO_CHUANG'},
+    ],
     items: [
         {name: '舞蹈', url: 'DANCE'},
         {name: '音乐', url: 'MUSIC'},

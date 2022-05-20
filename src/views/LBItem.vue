@@ -5,7 +5,7 @@
         <el-button icon="el-icon-refresh" size="small" round @click="update">换一批</el-button>
       </h1>
     </div>
-    <div v-for="video in videos" class="inl video-it">
+    <div v-for="video in videos" class="inl video-it-it">
       <img :src="video.pic" @click="play(video)">
       <div class="v-count">
         <el-link class="info" :underline="false" icon="el-icon-video-pause">

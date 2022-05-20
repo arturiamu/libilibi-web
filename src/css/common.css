@@ -11,16 +11,18 @@
     left: 99% !important;
 }
 
-.danmaku {
+.video-it {
     position: relative;
-    top:-22px;
-    left: 90px;
 }
 
 .v-count {
     position: absolute;
-    top: 133px;
-    width: 24.5%;
+    top: 134px;
+    width: 97.5%;
+    background-color: rgba(246, 246, 246, 0.75);
+    background-image: linear-gradient(0deg, rgba(160, 163, 165, 0.77) 20%, rgba(246, 246, 246, 0.75) 100%);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .v-count a {
@@ -63,10 +65,18 @@
     position: relative;
 }
 
-.video-it:hover {
-    box-shadow: 2px 2px 2px 2px rgba(238, 91, 122, 0.6);
+.video-it-it {
+    width: 264px;
+    height: 156px;
+    padding-left: 7px;
+    position: relative;
 }
 
 a {
     text-decoration: none;
+}
+
+a, img {
+    cursor: pointer;
+    cursor: hand;
 }

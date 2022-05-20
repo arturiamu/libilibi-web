@@ -1,19 +1,20 @@
 <template>
   <div id="lb-header">
     <div id="logo" class="inl">
-      <img style="vertical-align: middle " src="../assets/logo.png">
-      <el-link href="/" :underline="false" style="font: 40px 'Segoe Print;color:#ee5b7a">Artless-Mu</el-link>
-
+      <img style="vertical-align: middle " src="../assets/logo.jpg">
+      <el-link href="/" :underline="false" style="font: 40px Segoe;color:#ee5b7a">𝖆𝖉 𝖆𝖘𝖙𝖗𝖆</el-link>
+      <!-- Segoe     -->
       <div id="nav" class="inl">
-        <el-link :underline="false" type="primary" @click="home">首页</el-link>
-        <el-link :underline="false" type="primary" @click="tip">直播</el-link>
-        <el-link :underline="false" type="primary" @click="tip">热门</el-link>
+        <el-link :underline="false" type="primary" @click="goto('/')">主页</el-link>
+        <el-link :underline="false" type="primary" @click="goto('/explore')">探索</el-link>
+        <el-link :underline="false" type="primary" @click="goto('/live')">直播</el-link>
       </div>
     </div>
 
     <div id="search" class="inl">
       <div id="search-input" class="inl s-c">
         <el-input
+            @keydown.native.enter="search"
             style="width:300px;"
             placeholder="请输入内容"
             size="small"
@@ -26,14 +27,14 @@
       </div>
     </div>
     <div id="user" class="inl">
-      <div @click="user_op" id="userinfo" class="inl">
-        <el-link v-if="$store.state.user.name" :underline="false" type="primary">
+      <div id="userinfo" class="inl">
+        <el-link v-if="$store.state.user.name" @click="goto('user')" :underline="false" type="primary">
           {{ $store.state.user.name.substring(0, 5) }}...
         </el-link>
-        <el-link v-else :underline="false" type="primary">登录</el-link>
+        <el-link @click="goto('/login')" v-else :underline="false" type="primary">登录</el-link>
       </div>
       <div id="appInfo" class="inl">
-        <div id="message" class="inl app-info" @click="tip">
+        <div id="message" class="inl app-info" @click="goto('/message')">
           <div id="m-icon" class="mess">
             <el-badge :value="$store.state.user.msg" :hidden="$store.state.user.msg===0" type="primary ">
               <el-link icon="el-icon-message" type="primary" :underline="false"></el-link>
@@ -43,17 +44,17 @@
             <el-link type="primary" :underline="false">消息</el-link>
           </div>
         </div>
-        <div id="dynamic" class="inl app-info" @click="tip">
+        <div id="dynamic" class="inl app-info" @click="goto('/dynamic')">
           <div id="d-icon" class="mess">
             <el-badge :value="$store.state.user.dym" :hidden="$store.state.user.dym===0" type="primary ">
-              <el-link icon="el-icon-bangzhu" type="primary" :underline="false"></el-link>
+              <el-link icon="el-icon-magic-stick" type="primary" :underline="false"></el-link>
             </el-badge>
           </div>
           <div class="mess">
             <el-link type="primary" :underline="false">动态</el-link>
           </div>
         </div>
-        <div id="collect" class="inl app-info" @click="tip">
+        <div id="collect" class="inl app-info" @click="goto('/favorite')">
           <div id="c-icon" class="mess">
             <el-link icon="el-icon-star-off" type="primary" :underline="false"></el-link>
           </div>
@@ -61,7 +62,7 @@
             <el-link type="primary" :underline="false">收藏</el-link>
           </div>
         </div>
-        <div id="history" class="inl app-info" @click="tip">
+        <div id="history" class="inl app-info" @click="goto('/history')">
           <div id="h-icon" class="mess">
             <el-link icon="el-icon-video-camera" type="primary" :underline="false"></el-link>
           </div>
@@ -82,38 +83,24 @@ export default {
   data() {
     return {
       keyword: "",
+      loginVisible: false,
+      account: '',
+      password: '',
+      nickname: '',
+      mode: 'login'
     }
   },
   methods: {
-    user_op: function () {
-      if (this.$store.state.user.name) {
-      } else {
-        this.$router.push('/login')
+    goto(type) {
+      if (this.$route.path !== type) {
+        this.$router.push(type)
       }
-    },
-    home: function () {
-      if (this.$route.path !== '/') {
-        this.$router.push('/')
-      }
-    },
-    tip: function () {
-      this.$message({
-        message: '该功能暂未开放！！！',
-        type: 'success'
-      });
-    },
-    net: function () {
-      this.$message({
-        message: '当前网络环境异常，该功能暂停使用！！！',
-        type: 'success'
-      });
     },
     search: function () {
       if (this.keyword.replaceAll(" ", '') !== "") {
         if (this.$route.path !== '/search') {
           bl_search(this, this.keyword)
         } else {
-          // this.$router.push('/')
           this.$router.push('/temp')
           bl_search(this, this.keyword)
         }
@@ -124,24 +111,21 @@ export default {
 </script>
 
 <style scoped>
-
 #nav a {
   font-size: 20px;
   padding-left: 25px;
 }
 
 #search {
-  height: 35px;
   background-color: #f6f6f6;
   border-radius: 7px;
   padding: 10px;
   position: relative;
-  top: 10px;
+  height: 32px;
 }
 
 #user {
   position: relative;
-  top: 10px
 }
 
 #appInfo a {
@@ -163,8 +147,10 @@ export default {
 }
 
 #lb-header {
-  border-bottom: 2px solid #e36666;
+  margin-top: 5px;
+  border-bottom: 2px solid #ee5b7a;
   display: flex;
   justify-content: space-between;
+  height: 60px;
 }
 </style>

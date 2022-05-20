@@ -1,9 +1,11 @@
 import axios from "axios";
 
 // const requestUrl = "http://175.24.175.35:9000"
-const requestUrl = "http://libilibi.isamumu.cn:9000"
-// const requestUrl = "http://10.1.188.121:9000"
+const requestUrl = "http://adastra.isamumu.cn:9000"
+// const requestUrl = "http://localhost:9000"
+
 const ps = 12
+const jsonBirdV1 = 'https://bird.ioliu.cn/v1'
 
 function item_video(that, it_name) {
     let lo_url = requestUrl + '/api/general/' + it_name + '/' + ps
@@ -41,6 +43,14 @@ function video_detail(that, bvid) {
     }).then()
 }
 
+function live_video(that) {
+    let lo_url = requestUrl + '/api/live'
+    axios.get(lo_url).then(function (response) {
+        that.videos = response.data.data.recommend_room_list
+        that.i = 0
+    }).then()
+}
+
 function player(that, video) {
     if (that.$router.currentRoute.path === '/player') {
         that.$router.push({path: '/',}).then(r => {
@@ -63,5 +73,5 @@ function player(that, video) {
 }
 
 export {
-    item_video, main_video, bl_search, video_detail, player
+    item_video, main_video, bl_search, video_detail, player, live_video
 }
