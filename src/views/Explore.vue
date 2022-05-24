@@ -32,17 +32,17 @@
         </div>
       </div>
     </div>
-    <LBItem v-for="it in $store.state.items" v-bind:item_info="it" :id="it.url"></LBItem>
+    <LBItem v-for="it in $store.state.explore" v-bind:item_info="it" :id="it.url"></LBItem>
   </div>
 </template>
 
 <script>
 import {main_video} from "@/js/common";
 import {player} from "@/js/common";
-import LBItem from "@/views/LBItem";
+import LBItem from "@/views/Item";
 
 export default {
-  name: "LBExplore",
+  name: "Explore",
   components: {LBItem},
   data() {
     return {

@@ -5,12 +5,15 @@
 </template>
 
 <script>
-import LBMainBody from "@/components/LBMainBody";
-
+import LBMainBody from "@/components/MainBody";
+import {item_list} from '@/js/common'
 export default {
   name: 'App',
   components: {LBMainBody},
   methods: {},
+  created() {
+    item_list(this)
+  },
   beforeCreate() {
     let w = document.body.clientWidth
     this.$store.dispatch('ch_sc', w)

@@ -22,7 +22,7 @@
 import {live_video} from '@/js/common'
 
 export default {
-  name: "LBLive",
+  name: "Live",
   created() {
     live_video(this)
   },
@@ -77,7 +77,7 @@ export default {
 
 #mark {
   width: 100%;
-  height: 800px;
+  height: 750px;
   position: relative;
   top: -100%;
   /*background-color: rgba(238, 91, 122, 0.38);*/

@@ -38,9 +38,9 @@
   </div>
 </template>
 <script>
-import LBHeader from "@/components/LBHeader";
-import LBFooter from "@/components/LBFooter";
-import LBHome from "@/views/LBHome";
+import LBHeader from "@/components/Header";
+import LBFooter from "@/components/Footer";
+import LBHome from "@/views/Home";
 
 export default {
   name: "MainBody",

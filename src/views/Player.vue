@@ -4,15 +4,15 @@
       <div id="introduce">
         <div id="title">
           <h2>
-            {{ video.title }}
+            {{ video.title.substring(0, 40) }}...
           </h2>
         </div>
         <div id="video-info">
           <el-link :underline="false" icon="el-icon-video-play">{{ video.stat.view + " " }}播放</el-link>
           <el-link :underline="false" icon="el-icon-film">{{ video.stat.danmaku + " " }}弹幕</el-link>
-          <el-link :underline="false" icon="el-icon-star-off">{{ video.stat.favorite + " " }}收藏</el-link>
-          <el-link :underline="false" icon="el-icon-circle-check">{{ video.stat.like + " " }}点赞</el-link>
           <el-link :underline="false" icon="el-icon-help">{{ video.stat.coin + " " }}投币</el-link>
+          <el-link :underline="false" icon="el-icon-circle-check">{{ video.stat.like + " " }}点赞</el-link>
+          <el-link :underline="false" icon="el-icon-star-off">{{ video.stat.favorite + " " }}收藏</el-link>
           <el-link :underline="false" icon="el-icon-position">{{ video.stat.share + " " }}分享</el-link>
         </div>
       </div>
@@ -32,10 +32,10 @@
       </div>
     </div>
     <div id="recommend-area" class="inl">
+      <div id="re-tittle">
+        <h2>推荐列表：</h2>
+      </div>
       <div id="re">
-        <div id="re-tittle">
-          <h2>推荐列表：</h2>
-        </div>
         <div @click="play(re_video)" class="re-video" v-for="re_video in videos">
           <div class="re-it">
             <div class="re-pic inl">
@@ -44,7 +44,7 @@
             <div class="inl a-re">
               <div class="re-desc">
                 <el-link class="info" type="primary" :underline="false">
-                  {{ re_video.title.substring(0, 25) }}
+                  {{ re_video.title.substring(0, 15) }}...
                 </el-link>
               </div>
               <div class="re-desc">
@@ -71,7 +71,7 @@
 import {main_video, player} from "@/js/common";
 
 export default {
-  name: "LBPlayer",
+  name: "Player",
   data: function () {
     return {
       video: this.$route.query.video,
@@ -93,7 +93,7 @@ export default {
 <style scoped>
 .a-re {
   position: absolute;
-  left: 145px;
+  left: 150px;
 }
 
 .re-it {
@@ -110,6 +110,10 @@ export default {
 
 #re {
   text-align: left;
+  margin-left: 20px;
+  width: 400px;
+  height: 750px;
+  overflow: scroll;
 }
 
 .re-pic {
@@ -125,6 +129,7 @@ export default {
 
 #re-tittle {
   height: 68px;
+  margin-left: 20px;
 }
 
 #lb-player {
@@ -147,24 +152,24 @@ img {
 
 #player-area {
   width: 1050px;
+  vertical-align: top;
 }
 
 #recommend-area {
   vertical-align: top;
-  margin-left: 20px;
-  width: 400px;
-  height: 750px;
-  overflow: scroll;
 }
 
 h2 {
   text-align: left;
   font-weight: lighter;
-  margin-left: 10px;
 }
 
 #video-info {
   text-align: left;
   margin: 10px 0;
+}
+
+img {
+  border-radius: 3%;
 }
 </style>

@@ -111,10 +111,10 @@
 <script>
 import {main_video} from "@/js/common";
 import {player} from "@/js/common";
-import LBItem from "@/views/LBItem";
+import LBItem from "@/views/Item";
 
 export default {
-  name: "LBHome",
+  name: "Home",
   components: {LBItem},
   data() {
     return {

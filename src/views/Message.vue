@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: "LBMessage"
+  name: "Message"
 }
 </script>
 

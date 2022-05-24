@@ -1,17 +1,15 @@
 <template>
-<div id="temp">
-
-</div>
+  <div id="login">
+    动态
+  </div>
 </template>
 
 <script>
 export default {
-  name: "LBTemp"
+  name: "Dynamic"
 }
 </script>
 
 <style scoped>
-#temp{
-  height: 800px;
-}
+
 </style>

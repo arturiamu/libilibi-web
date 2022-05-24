@@ -25,7 +25,7 @@
 import {item_video} from '@/js/common'
 
 export default {
-  name: "LBItem",
+  name: "Item",
   props: ['item_info'],
   methods: {
     play: function (video) {

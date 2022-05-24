@@ -18,7 +18,7 @@
 import {video_detail} from "@/js/common";
 
 export default {
-  name: "LBSearch",
+  name: "Search",
   data: function () {
     return {
       // videos: this.$route.params.videos,

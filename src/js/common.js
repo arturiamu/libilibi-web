@@ -14,6 +14,14 @@ function item_video(that, it_name) {
     })
 }
 
+function item_list(that) {
+    let lo_url = requestUrl + '/user/userItem'
+    axios.get(lo_url).then(function (response) {
+        console.log(response)
+        that.$store.dispatch('ch_home', response.data.data)
+    })
+}
+
 function main_video(that) {
     let lo_url = requestUrl + '/api/recommend'
     axios.get(lo_url).then(function (response) {
@@ -73,5 +81,5 @@ function player(that, video) {
 }
 
 export {
-    item_video, main_video, bl_search, video_detail, player, live_video
+    item_video, main_video, bl_search, video_detail, player, live_video, item_list
 }

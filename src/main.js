@@ -10,11 +10,9 @@ import './css/common.css'
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
-router.beforeEach((to,from,next) =>{
-    if(to.meta.title){
-        document.title = to.meta.title
-    }
-    next();
+router.beforeEach((to, from, next) => {
+    document.title = to.meta.title
+    next()
 })
 new Vue({
     render: h => h(App),

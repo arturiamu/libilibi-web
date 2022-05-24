@@ -3,11 +3,11 @@
     <div id="logo" class="inl">
       <img style="vertical-align: middle " src="../assets/logo.jpg">
       <el-link href="/" :underline="false" style="font: 40px Segoe;color:#ee5b7a">𝖆𝖉 𝖆𝖘𝖙𝖗𝖆</el-link>
-      <!-- Segoe     -->
       <div id="nav" class="inl">
         <el-link :underline="false" type="primary" @click="goto('/')">主页</el-link>
         <el-link :underline="false" type="primary" @click="goto('/explore')">探索</el-link>
         <el-link :underline="false" type="primary" @click="goto('/live')">直播</el-link>
+
       </div>
     </div>
 

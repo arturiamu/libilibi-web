@@ -1,73 +1,95 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import LBHome from "@/views/LBHome";
-import LBExplore from "@/views/LBExplore"
-import LBPlayer from "@/views/LBPlayer";
-import LBSearch from "@/views/LBSearch";
-import LBLogin from "@/views/LBLogin";
-import LBLive from "@/views/LBLive";
-import LBMessage from "@/views/LBMessage";
+import Home from "@/views/Home";
+import Explore from "@/views/Explore"
+import Player from "@/views/Player";
+import Search from "@/views/Search";
+import Login from "@/views/Login";
+import Live from "@/views/Live";
+import Message from "@/views/Message";
+import Collection from "@/views/Collection";
+import Dynamic from "@/views/Dynamic";
+import History from "@/views/History";
 
 Vue.use(VueRouter)
 
 const routes = [
     {
         path: '/',
-        name: 'lb-home',
-        component: LBHome,
+        name: 'home',
+        component: Home,
         meta: {
             title: 'ad-astra 首页'
         }
     },
     {
+        path: '/history',
+        name: 'history',
+        component: History,
+        meta: {
+            title: 'ad-astra 历史'
+        }
+    },
+    {
+        path: '/dynamic',
+        name: 'dynamic',
+        component: Dynamic,
+        meta: {
+            title: 'ad-astra 动态'
+        }
+    },
+    {
+        path: '/collection',
+        name: 'collection',
+        component: Collection,
+        meta: {
+            title: 'ad-astra 收藏'
+        }
+    },
+    {
         path: '/explore',
-        name: 'lb-explore',
-        component: LBExplore,
+        name: 'explore',
+        component: Explore,
         meta: {
             title: 'ad-astra 探索'
         }
     },
     {
-        path: '/temp',
-        name: 'lb-temp',
-        component: LBLive,
-    },
-    {
         path: '/live',
-        name: 'lb-live',
-        component: LBLive,
+        name: '-live',
+        component: Live,
         meta: {
             title: 'ad-astra 直播'
         }
     },
     {
         path: '/login',
-        name: 'lb-login',
-        component: LBLogin,
+        name: 'login',
+        component: Login,
         meta: {
             title: 'ad-astra 用户登录'
         }
     },
     {
         path: '/message',
-        name: 'lb-message',
-        component: LBMessage,
+        name: 'message',
+        component: Message,
         meta: {
             title: 'ad-astra 消息中心'
         }
     },
     {
         path: '/player',
-        name: 'lb-player',
-        component: LBPlayer,
+        name: 'player',
+        component: Player,
         meta: {
             title: 'ad-astra 视频播放'
         }
     },
     {
         path: '/search',
-        name: 'lb-search',
-        component: LBSearch,
+        name: 'search',
+        component: Search,
         meta: {
             title: 'ad-astra 搜索'
         }

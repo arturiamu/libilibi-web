@@ -9,7 +9,7 @@
 import axios from "axios";
 
 export default {
-  name: "LBLogin",
+  name: "Login",
   data() {
     return {
       data: ''

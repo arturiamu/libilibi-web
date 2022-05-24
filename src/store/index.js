@@ -7,6 +7,9 @@ const actions = {
     ch_sc(context, value) {
         context.commit('CH_SC', value)
     },
+    ch_home(context, value) {
+        context.commit('CH_HOME', value)
+    },
     in_msg(context) {
         context.commit('IN_MSG', value)
     },
@@ -15,6 +18,9 @@ const actions = {
     },
 }
 const mutations = {
+    CH_HOME(state, value) {
+        state.home = value
+    },
     CH_SC(state, value) {
         if (value < 1500 && value > 1200) {
             state.per = '96%'
@@ -41,7 +47,7 @@ const state = {
         {name: '动画', url: 'ANIME'},
         {name: '原创', url: 'GUO_CHUANG'},
     ],
-    items: [
+    explore: [
         {name: '舞蹈', url: 'DANCE'},
         {name: '音乐', url: 'MUSIC'},
         {name: '动画', url: 'ANIME'},
