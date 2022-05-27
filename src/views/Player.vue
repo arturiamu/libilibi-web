@@ -8,16 +8,16 @@
           </h2>
         </div>
         <div id="video-info">
-          <el-link :underline="false" icon="el-icon-video-play">{{ video.stat.view + " " }}播放</el-link>
-          <el-link :underline="false" icon="el-icon-film">{{ video.stat.danmaku + " " }}弹幕</el-link>
-          <el-link :underline="false" icon="el-icon-help">{{ video.stat.coin + " " }}投币</el-link>
-          <el-link :underline="false" icon="el-icon-circle-check">{{ video.stat.like + " " }}点赞</el-link>
-          <el-link :underline="false" icon="el-icon-star-off">{{ video.stat.favorite + " " }}收藏</el-link>
-          <el-link :underline="false" icon="el-icon-position">{{ video.stat.share + " " }}分享</el-link>
+          <el-link :underline="false" icon="el-icon-video-play">{{ video.view + " " }}播放</el-link>
+          <el-link :underline="false" icon="el-icon-film">{{ video.danmaku + " " }}弹幕</el-link>
+          <el-link :underline="false" icon="el-icon-help">{{ video.coin + " " }}投币</el-link>
+          <el-link :underline="false" icon="el-icon-circle-check">{{ video.like + " " }}点赞</el-link>
+          <el-link :underline="false" icon="el-icon-star-off">{{ video.favorite + " " }}收藏</el-link>
+          <el-link :underline="false" icon="el-icon-position">{{ video.share + " " }}分享</el-link>
         </div>
       </div>
       <div id="frame">
-        <iframe id="lb-frame" ref="iframeRef" v-bind:src="src + video.stat.aid"
+        <iframe id="lb-frame" ref="iframeRef" v-bind:src="src + video.aid"
                 allowfullscreen="allowfullscreen" width="100%" height="100%" allow="autoplay"
                 scrolling="no" frameborder="no" framespacing="0" border="0"
                 sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
@@ -50,12 +50,12 @@
               <div class="re-desc">
                 <div>
                   <el-link icon="el-icon-video-play" class="info" type="primary" :underline="false">
-                    {{ re_video.stat.view }}
+                    {{ re_video.view }}
                   </el-link>
                 </div>
                 <div>
                   <el-link icon="el-icon-c-scale-to-original" class="info" type="primary" :underline="false">
-                    {{ re_video.stat.danmaku }}
+                    {{ re_video.danmaku }}
                   </el-link>
                 </div>
               </div>

@@ -6,8 +6,11 @@ import ElementUI from 'element-ui';
 // import 'element-ui/lib/theme-chalk/index.css';
 import './css/element-variables.scss'
 import './css/common.css'
+import VueLazyLoad from 'vue-lazyload';
 
 Vue.config.productionTip = false
+
+Vue.use(VueLazyLoad)
 
 Vue.use(ElementUI)
 router.beforeEach((to, from, next) => {

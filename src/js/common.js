@@ -1,14 +1,13 @@
 import axios from "axios";
 
-// const requestUrl = "http://175.24.175.35:9000"
 const requestUrl = "http://adastra.isamumu.cn:9000"
-// const requestUrl = "http://localhost:9000"
+const userUrl = "http://localhost:9000"
 
 const ps = 12
 const jsonBirdV1 = 'https://bird.ioliu.cn/v1'
 
-function item_video(that, it_name) {
-    let lo_url = requestUrl + '/api/general/' + it_name + '/' + ps
+function item_video(that, pid, ps) {
+    let lo_url = requestUrl + '/video/pid/' + pid + '/' + ps
     axios.get(lo_url).then(function (response) {
         that.videos = response.data.data
     })
@@ -23,10 +22,11 @@ function item_list(that) {
 }
 
 function main_video(that) {
-    let lo_url = requestUrl + '/api/recommend'
-    axios.get(lo_url).then(function (response) {
-        that.videos = response.data.data
-    })
+    // let lo_url = requestUrl + '/api/recommend'
+    // axios.get(lo_url).then(function (response) {
+    //     that.videos = response.data.data
+    // })
+    item_video(that, 129, 13)
 }
 
 function bl_search(that, keyword) {

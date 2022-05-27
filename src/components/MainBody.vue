@@ -1,7 +1,7 @@
 <template>
   <div id="main-body">
     <LBHeader></LBHeader>
-    <keep-alive include="LBHome,LBExplore">
+    <keep-alive include="Home,Explore">
       <RouterView></RouterView>
     </keep-alive>
     <LBFooter></LBFooter>
@@ -23,15 +23,6 @@
           :size="150"
           :visible.sync="drawer">
         <div id="partition">
-          <div class="pt pt-top" @click="goAnchor('lb-header')">
-            <el-link :underline="false" icon="el-icon-arrow-up"></el-link>
-          </div>
-          <div class="pt" v-for="item in $store.state.items" @click="goAnchor(item.url)">
-            <el-link :underline="false">{{ item.name }}</el-link>
-          </div>
-          <div class="pt pt-top" @click="goAnchor('lb-header')">
-            <el-link :underline="false" icon="el-icon-arrow-up"></el-link>
-          </div>
         </div>
       </el-drawer>
     </div>

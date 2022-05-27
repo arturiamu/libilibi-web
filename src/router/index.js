@@ -10,6 +10,7 @@ import Message from "@/views/Message";
 import Collection from "@/views/Collection";
 import Dynamic from "@/views/Dynamic";
 import History from "@/views/History";
+import Register from "@/views/Register";
 
 Vue.use(VueRouter)
 
@@ -56,7 +57,7 @@ const routes = [
     },
     {
         path: '/live',
-        name: '-live',
+        name: 'live',
         component: Live,
         meta: {
             title: 'ad-astra 直播'
@@ -68,6 +69,14 @@ const routes = [
         component: Login,
         meta: {
             title: 'ad-astra 用户登录'
+        }
+    },
+    {
+        path: '/register',
+        name: 'register',
+        component: Register,
+        meta: {
+            title: 'ad-astra 用户注册'
         }
     },
     {

@@ -65,10 +65,10 @@
                 </div>
                 <div class="v-count">
                   <el-link class="info" :underline="false" icon="el-icon-video-pause">
-                    {{ videos[i - 1 + 5].stat.view }}
+                    {{ videos[i - 1 + 5].view }}
                   </el-link>
                   <el-link class="info danmaku" :underline="false" icon="el-icon-c-scale-to-original">
-                    {{ videos[i - 1 + 5].stat.danmaku }}
+                    {{ videos[i - 1 + 5].danmaku }}
                   </el-link>
                 </div>
                 <div class="desc">
@@ -87,10 +87,10 @@
                 </div>
                 <div class="v-count">
                   <el-link class="info" :underline="false" icon="el-icon-video-pause">
-                    {{ videos[i - 1 + 9].stat.view }}
+                    {{ videos[i - 1 + 9].view }}
                   </el-link>
                   <el-link class="info danmaku" :underline="false" icon="el-icon-c-scale-to-original">
-                    {{ videos[i - 1 + 9].stat.danmaku }}
+                    {{ videos[i - 1 + 9].danmaku }}
                   </el-link>
                 </div>
                 <div class="desc">
@@ -118,7 +118,22 @@ export default {
   components: {LBItem},
   data() {
     return {
-      videos: '',
+      videos: [{
+        aid: "",
+        coin: "",
+        danmaku: "",
+        desc: "",
+        favorite: "",
+        like: "",
+        pic: "",
+        pid: "",
+        reply: "",
+        share: "",
+        tid: "",
+        title: "",
+        tname: "",
+        view: "",
+      }],
       drawer: false,
     }
   },
@@ -134,7 +149,7 @@ export default {
       anchor.scrollIntoView();
     },
   },
-  mounted() {
+  created() {
     this.load_videos()
   },
 }

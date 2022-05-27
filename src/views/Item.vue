@@ -6,13 +6,14 @@
       </h1>
     </div>
     <div v-for="video in videos" class="inl video-it-it">
-      <img :src="video.pic" @click="play(video)">
+<!--      <img :src="video.pic" @click="play(video)">-->
+      <img v-lazy="video.pic" @click="play(video)">
       <div class="v-count">
         <el-link class="info" :underline="false" icon="el-icon-video-pause">
-          {{ video.stat.view }}
+          {{ video.view }}
         </el-link>
         <el-link class="info danmaku" :underline="false" icon="el-icon-c-scale-to-original">
-          {{ video.stat.danmaku }}
+          {{ video.danmaku }}
         </el-link>
       </div>
       <div class="desc">
@@ -36,13 +37,29 @@ export default {
         }
       })
     },
+
     update: function () {
-      item_video(this, this.item_info.url)
+      item_video(this, this.item_info.pid, 12)
     }
   },
   data: function () {
     return {
-      videos: '',
+      videos: [{
+        aid: "",
+        coin: "",
+        danmaku: "",
+        desc: "",
+        favorite: "",
+        like: "",
+        pic: "",
+        pid: "",
+        reply: "",
+        share: "",
+        tid: "",
+        title: "",
+        tname: "",
+        view: "",
+      }],
     }
   },
   mounted() {

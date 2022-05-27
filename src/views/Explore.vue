@@ -14,7 +14,7 @@
             <div class="pt pt-top" @click="goAnchor('lb-header')">
               <el-link :underline="false" icon="el-icon-arrow-up"></el-link>
             </div>
-            <div class="pt" v-for="item in $store.state.items" @click="goAnchor(item.url)">
+            <div class="pt" v-for="item in $store.state.explore" @click="goAnchor(item.url)">
               <el-link :underline="false">{{ item.name }}</el-link>
             </div>
             <div class="pt pt-top" @click="goAnchor('lb-footer')">
