@@ -1,7 +1,9 @@
 <template>
   <div id="login">
-    <el-link>login</el-link>
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+    <div>
+      <el-link>用户登录</el-link>
+    </div>
+    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
       <el-form-item label="账号" prop="username">
         <el-input v-model="ruleForm.username"></el-input>
       </el-form-item>
@@ -10,9 +12,11 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+        <div>
+          <el-link @click="register">首次使用？新用户注册</el-link>
+        </div>
       </el-form-item>
     </el-form>
-    <el-link @click="register">首次使用？新用户注册</el-link>
   </div>
 </template>
 
@@ -32,7 +36,7 @@ export default {
           {required: true, message: '请输入账号', trigger: 'blur'},
         ],
         password: [
-          {required: true, message: '请输入账密码', trigger: 'change'},
+          {required: true, message: '请输入密码', trigger: 'blur'},
           {min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur'}
         ],
       }
@@ -41,7 +45,7 @@ export default {
   mounted() {
   },
   methods: {
-    register(){
+    register() {
       this.$router.push("/register")
     },
     submitForm(formName) {
@@ -62,7 +66,7 @@ export default {
 <style scoped>
 #login {
   margin: 20px auto;
-  width: 500px;
+  width: 350px;
   text-align: center;
 }
 </style>

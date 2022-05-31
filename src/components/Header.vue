@@ -16,7 +16,7 @@
         <el-input
             @keydown.native.enter="search"
             style="width:300px;"
-            placeholder="请输入内容"
+            placeholder="请输入搜索内容"
             size="small"
             prefix-icon="el-icon-search"
             v-model="keyword">
@@ -28,8 +28,8 @@
     </div>
     <div id="user" class="inl">
       <div id="userinfo" class="inl">
-        <el-link v-if="$store.state.user.name" @click="goto('user')" :underline="false" type="primary">
-          {{ $store.state.user.name.substring(0, 5) }}...
+        <el-link v-if="$store.state.user.username" @click="goto('user')" :underline="false" type="primary">
+          {{ $store.state.user.username.substring(0, 5) }}...
         </el-link>
         <el-link @click="goto('/login')" v-else :underline="false" type="primary">登录</el-link>
       </div>
@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import {bl_search} from '@/js/common'
+import {search} from '@/js/common'
 
 export default {
   name: "LBHeader",
@@ -99,10 +99,10 @@ export default {
     search: function () {
       if (this.keyword.replaceAll(" ", '') !== "") {
         if (this.$route.path !== '/search') {
-          bl_search(this, this.keyword)
+          search(this, this.keyword)
         } else {
           this.$router.push('/temp')
-          bl_search(this, this.keyword)
+          search(this, this.keyword)
         }
       }
     }

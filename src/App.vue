@@ -11,9 +11,6 @@ export default {
   name: 'App',
   components: {LBMainBody},
   methods: {},
-  created() {
-    item_list(this)
-  },
   beforeCreate() {
     let w = document.body.clientWidth
     this.$store.dispatch('ch_sc', w)

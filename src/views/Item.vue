@@ -6,14 +6,13 @@
       </h1>
     </div>
     <div v-for="video in videos" class="inl video-it-it">
-<!--      <img :src="video.pic" @click="play(video)">-->
-      <img v-lazy="video.pic" @click="play(video)">
+      <img :src="video.pic" @click="play(video)">
       <div class="v-count">
         <el-link class="info" :underline="false" icon="el-icon-video-pause">
           {{ video.view }}
         </el-link>
-        <el-link class="info danmaku" :underline="false" icon="el-icon-c-scale-to-original">
-          {{ video.danmaku }}
+        <el-link class="info" :underline="false" icon="el-icon-circle-check">
+          {{ video.like }}
         </el-link>
       </div>
       <div class="desc">
@@ -62,7 +61,7 @@ export default {
       }],
     }
   },
-  mounted() {
+  created() {
     this.update()
   }
 }

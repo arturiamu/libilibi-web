@@ -21,7 +21,7 @@
             <div class="pt pt-top" @click="goAnchor('lb-header')">
               <el-link :underline="false" icon="el-icon-arrow-up"></el-link>
             </div>
-            <div class="pt" v-for="item in $store.state.home" @click="goAnchor(item.url)">
+            <div class="pt" v-for="item in $store.state.user.items" @click="goAnchor(item.url)">
               <el-link :underline="false">{{ item.name }}</el-link>
             </div>
             <div class="pt pt-top" @click="goAnchor('lb-footer')">
@@ -67,8 +67,8 @@
                   <el-link class="info" :underline="false" icon="el-icon-video-pause">
                     {{ videos[i - 1 + 5].view }}
                   </el-link>
-                  <el-link class="info danmaku" :underline="false" icon="el-icon-c-scale-to-original">
-                    {{ videos[i - 1 + 5].danmaku }}
+                  <el-link class="info like" :underline="false" icon="el-icon-circle-check">
+                    {{ videos[i - 1 + 5].like }}
                   </el-link>
                 </div>
                 <div class="desc">
@@ -89,8 +89,8 @@
                   <el-link class="info" :underline="false" icon="el-icon-video-pause">
                     {{ videos[i - 1 + 9].view }}
                   </el-link>
-                  <el-link class="info danmaku" :underline="false" icon="el-icon-c-scale-to-original">
-                    {{ videos[i - 1 + 9].danmaku }}
+                  <el-link class="info" :underline="false" icon="el-icon-circle-check">
+                    {{ videos[i - 1 + 9].like }}
                   </el-link>
                 </div>
                 <div class="desc">
@@ -104,7 +104,7 @@
         </div>
       </div>
     </div>
-    <LBItem v-for="it in $store.state.home" v-bind:item_info="it" :id="it.url"></LBItem>
+    <LBItem v-for="it in $store.state.user.items" v-bind:item_info="it" :id="it.url"></LBItem>
   </div>
 </template>
 

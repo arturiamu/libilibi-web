@@ -18,13 +18,6 @@
         <el-link :underline="false">意见</el-link>
         <el-link :underline="false">反馈</el-link>
       </div>
-      <el-drawer
-          title="视频分区"
-          :size="150"
-          :visible.sync="drawer">
-        <div id="partition">
-        </div>
-      </el-drawer>
     </div>
   </div>
 </template>
@@ -40,6 +33,9 @@ export default {
     return {
       small_screen: '',
     }
+  },
+  mounted() {
+
   },
   methods: {
     side_f: function (type) {
@@ -113,16 +109,5 @@ export default {
   top: 76%;
   border: 1px solid #606266;
   border-radius: 5px;
-}
-
-.pt {
-  margin-top: 5px;
-  margin-left: 50px;
-  padding-top: 10px;
-}
-
-.pt-top {
-  position: relative;
-  left: 5px;
 }
 </style>

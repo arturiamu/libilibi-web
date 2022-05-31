@@ -1,23 +1,43 @@
 import axios from "axios";
 
-const requestUrl = "http://adastra.isamumu.cn:9000"
-const userUrl = "http://localhost:9000"
-
+// const requestUrl = "http://adastra.isamumu.cn:9000"
+const requestUrl = "http://localhost:9000"
+const phone_re = /^1[3|4|5|6|7|8|9][0-9]{9}$/
 const ps = 12
-const jsonBirdV1 = 'https://bird.ioliu.cn/v1'
+
+function getVerCode(that) {
+    // axios.post('http://localhost:9000/user/test', {
+    //     username: that.ruleForm.username,
+    //     password: that.ruleForm.password,
+    //     phone: that.ruleForm.phone,
+    //     item: that.checkedItems,
+    //     verCode: that.ruleForm.ver
+    // })
+    if (phone_re.test(that.ruleForm.phone)) {
+        axios.post("http://localhost:9000/user/registerSMS", {
+            phone: that.ruleForm.phone
+        })
+        that.waitTime--
+        this.codeBtnWord = `${this.waitTime}s 后重新获取`
+        that.getCode = true
+        let timer = setInterval(function () {
+            if (that.waitTime > 1) {
+                that.waitTime--
+                that.codeBtnWord = `${that.waitTime}s 后重新获取`
+            } else {
+                clearInterval(timer)
+                that.codeBtnWord = '获取验证码'
+                that.waitTime = 61
+                that.getCode = false
+            }
+        }, 1000)
+    }
+}
 
 function item_video(that, pid, ps) {
     let lo_url = requestUrl + '/video/pid/' + pid + '/' + ps
     axios.get(lo_url).then(function (response) {
         that.videos = response.data.data
-    })
-}
-
-function item_list(that) {
-    let lo_url = requestUrl + '/user/userItem'
-    axios.get(lo_url).then(function (response) {
-        console.log(response)
-        that.$store.dispatch('ch_home', response.data.data)
     })
 }
 
@@ -29,7 +49,7 @@ function main_video(that) {
     item_video(that, 129, 13)
 }
 
-function bl_search(that, keyword) {
+function search(that, keyword) {
     let lo_url = requestUrl + '/api/search/' + keyword
     axios.get(lo_url).then(function (response) {
         that.$router.push({
@@ -81,5 +101,5 @@ function player(that, video) {
 }
 
 export {
-    item_video, main_video, bl_search, video_detail, player, live_video, item_list
+    item_video, main_video, search, video_detail, player, live_video, getVerCode
 }

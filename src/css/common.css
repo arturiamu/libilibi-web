@@ -16,11 +16,11 @@
 }
 
 .v-count {
+    text-align: left;
     position: absolute;
     top: 134px;
     width: 97.5%;
-    background-color: rgba(246, 246, 246, 0.75);
-    background-image: linear-gradient(0deg, rgba(160, 163, 165, 0.77) 20%, rgba(246, 246, 246, 0.75) 100%);
+    background-image: linear-gradient(0deg, rgba(160, 163, 165, 0.84) 20%, rgba(246, 246, 246, 0.2) 100%);
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
@@ -30,7 +30,7 @@
 }
 
 .v-count a span {
-    color: #f6f6f6;
+    color: #ffffff;
 }
 
 .v-count a i {
