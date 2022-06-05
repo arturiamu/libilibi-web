@@ -110,7 +110,7 @@
 
 <script>
 import {main_video} from "@/js/common";
-import {player} from "@/js/common";
+import {play_video} from "@/js/common";
 import LBItem from "@/views/Item";
 
 export default {
@@ -142,7 +142,7 @@ export default {
       main_video(this)
     },
     play: function (video) {
-      player(this, video)
+      play_video(this, video)
     },
     goAnchor: function (id) {
       let anchor = document.getElementById(id);

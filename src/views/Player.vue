@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import {main_video, player} from "@/js/common";
+import {main_video, play_video} from "@/js/common";
 
 export default {
   name: "Player",
@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     play(video) {
-      player(this, video)
+      play_video(this, video)
     }
   }
 }

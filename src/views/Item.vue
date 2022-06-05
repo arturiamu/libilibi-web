@@ -22,19 +22,14 @@
   </div>
 </template>
 <script>
-import {item_video} from '@/js/common'
+import {item_video, play_video} from '@/js/common'
 
 export default {
   name: "Item",
   props: ['item_info'],
   methods: {
-    play: function (video) {
-      this.$router.push({
-        path: '/player',
-        query: {
-          video: video
-        }
-      })
+    play(video) {
+      play_video(this, video)
     },
 
     update: function () {

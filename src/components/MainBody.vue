@@ -25,6 +25,7 @@
 import LBHeader from "@/components/Header";
 import LBFooter from "@/components/Footer";
 import LBHome from "@/views/Home";
+import {ini} from '@/js/common'
 
 export default {
   name: "MainBody",
@@ -35,7 +36,7 @@ export default {
     }
   },
   mounted() {
-
+    ini(this)
   },
   methods: {
     side_f: function (type) {

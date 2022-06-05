@@ -11,6 +11,20 @@ const actions = {
     ch_user(context, value) {
         context.commit('CH_USER', value)
     },
+    logout(context, value) {
+        context.state.user = {
+            id: '',
+            username: "",
+            account: "",
+            msg: 0,
+            dym: 0,
+            items: [
+                {name: '舞蹈', url: 'dance', pid: 129},
+                {name: '番剧', url: 'fan_drama', pid: 13},
+                {name: '鬼畜', url: 'ki_chi_ku', pid: 119},
+            ],
+        }
+    }
 }
 const mutations = {
     CH_SC(state, value) {
@@ -23,7 +37,7 @@ const mutations = {
 
     CH_USER(state, user) {
         state.user = user;
-        if (state.user.items === null) {
+        if (state.user.items === null || user === {}) {
             state.user.items = state.explore
         }
     },

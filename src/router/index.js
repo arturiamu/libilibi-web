@@ -11,6 +11,7 @@ import Collection from "@/views/Collection";
 import Dynamic from "@/views/Dynamic";
 import History from "@/views/History";
 import Register from "@/views/Register";
+import UserInfo from "@/views/UserInfo";
 
 Vue.use(VueRouter)
 
@@ -61,6 +62,14 @@ const routes = [
         component: Live,
         meta: {
             title: 'ad-astra 直播'
+        }
+    },
+    {
+        path: '/user',
+        name: 'user',
+        component: UserInfo,
+        meta: {
+            title: 'ad-astra 用户中心'
         }
     },
     {

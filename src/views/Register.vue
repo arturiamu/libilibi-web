@@ -21,7 +21,7 @@
 
           <el-form-item label="手机号：" prop="phone" size="small">
             <el-input v-model="ruleForm.phone" placeholder="请输入手机号" size="small"></el-input>
-            <el-button :disabled="getCode" id="getVerCode" @click="getVerCode" size="mini">{{ codeBtnWord }}
+            <el-button :disabled="getCode" id="getVerCode" @click="sendCode" size="mini">{{ codeBtnWord }}
             </el-button>
           </el-form-item>
 
@@ -53,10 +53,8 @@
 </template>
 
 <script>
-import axios from "axios";
-import {getVerCode} from '@/js/common'
 
-axios.defaults.withCredentials = true
+import {getVerCode, register} from '@/js/common'
 
 export default {
   name: "Register",
@@ -83,6 +81,8 @@ export default {
       getCode: false,
       codeBtnWord: '获取验证码',
       waitTime: 61,
+
+      tokenId: "",
       ruleForm: {
         username: '',
         password: '',
@@ -120,57 +120,16 @@ export default {
         type: 'success'
       });
     },
-    getVerCode() {
-      const phone_re = /^1[3|4|5|6|7|8|9][0-9]{9}$/
-      if (phone_re.test(this.ruleForm.phone)) {
-        axios.post("http://localhost:9000/user/registerSMS", {
-          account: this.ruleForm.phone
-        }).then(resp => {
-          console.log(resp)
-        })
-        this.waitTime--
-        this.codeBtnWord = `${this.waitTime}s 后重新获取`
-        this.getCode = true
-        let that = this
-        let timer = setInterval(function () {
-          if (that.waitTime > 1) {
-            that.waitTime--
-            that.codeBtnWord = `${that.waitTime}s 后重新获取`
-          } else {
-            clearInterval(timer)
-            that.codeBtnWord = '获取验证码'
-            that.waitTime = 61
-            that.getCode = false
-          }
-        }, 1000)
-      }
+    fail(message) {
+      this.$message.error({
+        message: message,
+      });
+    },
+    sendCode() {
+      getVerCode(this)
     },
     submitForm(formName) {
-      let that = this;
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          if (this.checkedItems.length === 0) {
-            this.checkedItems = this.defaultChecked
-          }
-          console.log(1111)
-          axios.post("http://localhost:9000/user/register", {
-            user: {
-              username: this.ruleForm.username,
-              password: this.ruleForm.password,
-              account: this.ruleForm.phone,
-              items: this.checkedItems,
-            },
-            verCode: this.ruleForm.ver
-          }).then(resp => {
-            console.log(resp)
-            if (resp.data.state === 200) {
-              that.$store.dispatch("ch_user", resp.data.data)
-              that.$router.push("/")
-              that.success()
-            }
-          })
-        }
-      });
+      register(this, formName)
     },
   },
 }

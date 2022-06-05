@@ -28,8 +28,8 @@
     </div>
     <div id="user" class="inl">
       <div id="userinfo" class="inl">
-        <el-link v-if="$store.state.user.username" @click="goto('user')" :underline="false" type="primary">
-          {{ $store.state.user.username.substring(0, 5) }}...
+        <el-link v-if="$store.state.user.username" @click="goto('/user')" :underline="false" type="primary">
+          {{ $store.state.user.username.substring(0, 5) }}
         </el-link>
         <el-link @click="goto('/login')" v-else :underline="false" type="primary">登录</el-link>
       </div>
@@ -101,7 +101,7 @@ export default {
         if (this.$route.path !== '/search') {
           search(this, this.keyword)
         } else {
-          this.$router.push('/temp')
+          this.$router.push('/')
           search(this, this.keyword)
         }
       }
