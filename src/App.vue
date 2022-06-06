@@ -6,11 +6,10 @@
 
 <script>
 import LBMainBody from "@/components/MainBody";
-import {item_list} from '@/js/common'
+import {getItems, getDefaultItems} from '@/js/common'
 export default {
   name: 'App',
   components: {LBMainBody},
-  methods: {},
   beforeCreate() {
     let w = document.body.clientWidth
     this.$store.dispatch('ch_sc', w)
@@ -34,6 +33,9 @@ export default {
         }
       });
     };
+
+    getItems(this)
+    getDefaultItems(this)
   }
 }
 </script>

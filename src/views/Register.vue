@@ -42,9 +42,8 @@
       </div>
       <div id="chose">
         <el-checkbox-group v-model="checkedItems">
-          <el-checkbox :border="true" size="small" v-for="it in items" :label="it" :key="it.pid" style="margin: 6px">{{
-              it.name
-            }}
+          <el-checkbox :border="true" size="small" v-for="it in this.$store.state.all_items" :label="it" :key="it.pid"
+                       style="margin: 6px">{{it.name }}
           </el-checkbox>
         </el-checkbox-group>
       </div>
@@ -68,14 +67,7 @@ export default {
     };
 
     return {
-      defaultChecked: [
-        {name: '舞蹈', url: 'dance', pid: 129},
-        {name: '动画', url: 'animation', pid: 1},
-        {name: '番剧', url: 'fan_drama', pid: 13},
-        {name: '鬼畜', url: 'ki_chi_ku', pid: 119}
-      ],
       checkedItems: [],
-      items: this.$store.state.explore,
       isIndeterminate: true,
 
       getCode: false,

@@ -1,25 +1,39 @@
-import axios from "axios";
-
 // const requestUrl = "http://adastra.isamumu.cn:9000"
 const requestUrl = "http://localhost:9000"
 const phone_re = /^1[3|4|5|6|7|8|9][0-9]{9}$/
 const item_ps = 12
 const main = 13
 
-function ini(that) {
-    let user = localStorage.getItem("user")
-    if (user) {
-        that.$store.dispatch("ch_user", JSON.parse(user))
-    }
+function getItems(that) {
+    let url = requestUrl + "/item/all"
+    that.$axios.get(url).then(resp => {
+        console.log(resp)
+        that.$store.dispatch("ch_all_items", resp.data.data)
+    })
+}
+
+function getDefaultItems(that) {
+    let url = requestUrl + "/item/default"
+    that.$axios.get(url).then(resp => {
+        console.log(resp)
+        that.$store.dispatch("ch_default_items", resp.data.data)
+        that.$store.dispatch("ch_user_items", resp.data.data)
+    })
+}
+
+function isLogin(that) {
+    let url = requestUrl + "/user/isLogin"
+    that.$axios.get(url).then(resp => {
+        that.$store.dispatch("ch_user", resp.data.data)
+    })
 }
 
 function getVerCode(that) {
     let url = requestUrl + "/user/registerSMS"
     if (phone_re.test(that.ruleForm.phone)) {
-        axios.post(url, {
+        that.$axios.post(url, {
             account: that.ruleForm.phone
         }).then(resp => {
-            console.log(resp)
             that.tokenId = resp.data.data
         })
         that.waitTime--
@@ -41,25 +55,21 @@ function getVerCode(that) {
 
 function register(that, form) {
     let url = requestUrl + "/user/register"
+    console.log(that.checkedItems)
     that.$refs[form].validate((valid) => {
         if (valid) {
-            if (that.checkedItems.length === 0) {
-                that.checkedItems = that.defaultChecked
-            }
-            axios.post(url, {
+            that.$axios.post(url, {
                 user: {
                     username: that.ruleForm.username,
                     password: that.ruleForm.password,
                     account: that.ruleForm.phone,
                     items: that.checkedItems,
                 },
-                tokenId: that.tokenId,
                 verCode: that.ruleForm.ver
             }).then(resp => {
                 if (resp.data.state === 200) {
                     that.$store.dispatch("ch_user", resp.data.data)
                     that.$router.push("/")
-                    localStorage.setItem("user", JSON.stringify(resp.data.data))
                     that.success()
                 } else {
                     that.fail(resp.data.message)
@@ -71,17 +81,15 @@ function register(that, form) {
 
 function login(that, form) {
     let url = requestUrl + "/user/login"
-    console.log()
     that.$refs[form].validate((valid) => {
         if (valid) {
-            axios.post(url, {
-                username: that.ruleForm.username,
+            that.$axios.post(url, {
+                account: that.ruleForm.username,
                 password: that.ruleForm.password
             }).then(resp => {
                 if (resp.data.state === 200) {
                     that.$store.dispatch("ch_user", resp.data.data)
                     that.$router.push("/")
-                    localStorage.setItem("user", JSON.stringify(resp.data.data))
                 } else {
                     that.fail(resp.data.message)
                 }
@@ -91,14 +99,15 @@ function login(that, form) {
 }
 
 function logout(that) {
-    localStorage.clear()
-    that.$store.dispatch("logout",{})
+    let url = requestUrl + "/user/logout"
+    that.$axios.get(url)
+    that.$store.dispatch("clear_user", {})
     that.$router.push('/')
 }
 
 function item_video(that, pid, ps) {
     let url = requestUrl + '/video/pid/' + pid + '/' + ps
-    axios.get(url).then(function (response) {
+    that.$axios.get(url).then(function (response) {
         that.videos = response.data.data
     })
 }
@@ -115,9 +124,6 @@ function play_video(that, video) {
     if (that.$route.path === '/player') {
         that.$router.push({
             path: '/',
-            query: {
-                video: video
-            }
         }).then(r => {
             that.$router.push({
                 path: '/player',
@@ -125,6 +131,13 @@ function play_video(that, video) {
                     video: video
                 }
             })
+        })
+    } else {
+        that.$router.push({
+            path: '/player',
+            query: {
+                video: video
+            }
         })
     }
 }
@@ -134,5 +147,5 @@ function search(that, keyword) {
 }
 
 export {
-    ini, item_video, main_video, getVerCode, register, play_video, search, login, logout
+    getDefaultItems, getItems, isLogin, item_video, main_video, getVerCode, register, play_video, search, login, logout
 }
