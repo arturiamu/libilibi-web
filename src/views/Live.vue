@@ -1,12 +1,13 @@
 <template>
-  <div tabindex="0" id="live">
+  <div id="live">
     <div id="tip">
       <el-link :underline="false" type="primary">
         播放提示：直播区域内滚动鼠标切换直播，两侧白边滚动鼠标移动页面，按ESC返回主页面
       </el-link>
     </div>
     <div id="frame">
-      <iframe id="lb-frame" v-bind:src="src + videos[i].roomid"
+<!--      <iframe id="lb-frame" v-bind:src="src + videos[i].roomid"-->
+      <iframe id="lb-frame" src="https://www.bilibili.com/blackboard/live/live-activity-player.html?quality=1&cid=23635060"
               allowfullscreen="allowfullscreen" width="100%" height="100%" allow="autoplay"
               scrolling="no" frameborder="no" framespacing="0" border="0"
               sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
@@ -19,7 +20,6 @@
 </template>
 
 <script>
-import {live_video} from '@/js/common'
 
 export default {
   name: "Live",
@@ -38,6 +38,7 @@ export default {
     document.getElementById('tip').scrollIntoView();
     document.getElementById("mark").addEventListener('mousewheel', this.handleScroll)
   },
+
   methods: {
     handleScroll(e) {
       e.preventDefault()
@@ -80,6 +81,5 @@ export default {
   height: 750px;
   position: relative;
   top: -100%;
-  /*background-color: rgba(238, 91, 122, 0.38);*/
 }
 </style>

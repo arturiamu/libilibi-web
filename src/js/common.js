@@ -1,13 +1,13 @@
 // const requestUrl = "http://adastra.isamumu.cn:9000"
 const requestUrl = "http://localhost:9000"
 const phone_re = /^1[3|4|5|6|7|8|9][0-9]{9}$/
+const mail_re = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
 const item_ps = 12
 const main = 13
 
 function getItems(that) {
     let url = requestUrl + "/item/all"
     that.$axios.get(url).then(resp => {
-        console.log(resp)
         that.$store.dispatch("ch_all_items", resp.data.data)
     })
 }
@@ -15,7 +15,6 @@ function getItems(that) {
 function getDefaultItems(that) {
     let url = requestUrl + "/item/default"
     that.$axios.get(url).then(resp => {
-        console.log(resp)
         that.$store.dispatch("ch_default_items", resp.data.data)
         that.$store.dispatch("ch_user_items", resp.data.data)
     })
@@ -24,15 +23,31 @@ function getDefaultItems(that) {
 function isLogin(that) {
     let url = requestUrl + "/user/isLogin"
     that.$axios.get(url).then(resp => {
-        that.$store.dispatch("ch_user", resp.data.data)
+        console.log(resp)
+        if (resp.data.state === 200) {
+            that.$store.dispatch("ch_user", resp.data.data)
+        }
     })
 }
 
 function getVerCode(that) {
-    let url = requestUrl + "/user/registerSMS"
-    if (phone_re.test(that.ruleForm.phone)) {
+    let url = requestUrl + "/user/registerVerify"
+    let account = ""
+    let ac = false
+    if (that.flag) {
+        account = that.ruleForm.account
+        if (phone_re.test(account)) {
+            ac = true
+        }
+    } else {
+        account = that.ruleForm.email
+        if (mail_re.test(account)) {
+            ac = true
+        }
+    }
+    if (ac) {
         that.$axios.post(url, {
-            account: that.ruleForm.phone
+            account: account,
         }).then(resp => {
             that.tokenId = resp.data.data
         })
@@ -58,13 +73,19 @@ function register(that, form) {
     console.log(that.checkedItems)
     that.$refs[form].validate((valid) => {
         if (valid) {
+            let user = {
+                username: that.ruleForm.username,
+                password: that.ruleForm.password,
+                items: that.checkedItems,
+            }
+            if (that.flag) {
+                user.account = that.ruleForm.account
+            } else {
+                user.account = that.ruleForm.email
+            }
+            console.log(user)
             that.$axios.post(url, {
-                user: {
-                    username: that.ruleForm.username,
-                    password: that.ruleForm.password,
-                    account: that.ruleForm.phone,
-                    items: that.checkedItems,
-                },
+                user: user,
                 verCode: that.ruleForm.ver
             }).then(resp => {
                 if (resp.data.state === 200) {
@@ -84,7 +105,7 @@ function login(that, form) {
     that.$refs[form].validate((valid) => {
         if (valid) {
             that.$axios.post(url, {
-                account: that.ruleForm.username,
+                account: that.ruleForm.account,
                 password: that.ruleForm.password
             }).then(resp => {
                 if (resp.data.state === 200) {
@@ -139,6 +160,10 @@ function play_video(that, video) {
                 video: video
             }
         })
+    }
+    if (that.$store.state.user.id) {
+        console.log(that.$store.state.user.id)
+        console.log(video.aid)
     }
 }
 

@@ -7,7 +7,6 @@
         <el-link :underline="false" type="primary" @click="goto('/')">主页</el-link>
         <el-link :underline="false" type="primary" @click="goto('/explore')">探索</el-link>
         <el-link :underline="false" type="primary" @click="goto('/live')">直播</el-link>
-
       </div>
     </div>
 
@@ -23,7 +22,7 @@
         </el-input>
       </div>
       <div id="search-bt" class="inl">
-        <el-button @click="search" size="small" type="primary" round>搜索</el-button>
+        <el-button icon="el-icon-search" @click="search" size="mini" type="primary" round>搜索</el-button>
       </div>
     </div>
     <div id="user" class="inl">
@@ -31,7 +30,7 @@
         <el-link v-if="$store.state.user.username" @click="goto('/user')" :underline="false" type="primary">
           {{ $store.state.user.username.substring(0, 5) }}
         </el-link>
-        <el-link @click="goto('/login')" v-else :underline="false" type="primary">登录</el-link>
+        <el-link @click="goto('/account')" v-else :underline="false" type="primary">登录</el-link>
       </div>
       <div id="appInfo" class="inl">
         <div id="message" class="inl app-info" @click="goto('/message')">

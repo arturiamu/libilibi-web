@@ -19,18 +19,27 @@
             <el-input v-model="ruleForm.re_pass" show-password placeholder="确认密码" size="small"></el-input>
           </el-form-item>
 
-          <el-form-item label="手机号：" prop="phone" size="small">
-            <el-input v-model="ruleForm.phone" placeholder="请输入手机号" size="small"></el-input>
-            <el-button :disabled="getCode" id="getVerCode" @click="sendCode" size="mini">{{ codeBtnWord }}
+          <el-form-item v-if="flag===true" label="手机号：" prop="account" size="small">
+            <el-input v-model="ruleForm.account" placeholder="请输入手机号" size="small"></el-input>
+            <el-button :disabled="getCode" class="getCode" @click="verCode" size="mini">{{ codeBtnWord }}
             </el-button>
           </el-form-item>
+
+          <el-form-item v-else label="邮箱：" prop="email" size="small">
+            <el-input v-model="ruleForm.email" placeholder="请输入邮箱" size="small"></el-input>
+            <el-button :disabled="getCode" class="getCode" @click="verCode" size="mini">{{ codeBtnWord }}
+            </el-button>
+          </el-form-item>
+
+          <el-button size="mini" icon="el-icon-refresh" type="primary" round @click="changeRegType">{{ tip }}
+          </el-button>
 
           <el-form-item class="inl" label="验证码：" prop="ver" size="small">
             <el-input v-model="ruleForm.ver" placeholder="请输入验证码" size="small"></el-input>
           </el-form-item>
 
           <el-form-item id="reg-bt" size="small" class="inl">
-            <el-button size="small" type="primary" @click="submitForm('ruleForm')">注册并登录</el-button>
+            <el-button size="mini" type="primary" @click="submitForm('ruleForm')">注册并登录</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -42,8 +51,9 @@
       </div>
       <div id="chose">
         <el-checkbox-group v-model="checkedItems">
-          <el-checkbox :border="true" size="small" v-for="it in this.$store.state.all_items" :label="it" :key="it.pid"
-                       style="margin: 6px">{{it.name }}
+          <el-checkbox :border="true" size="mini" v-for="it in items" :label="it" :key="it.pid" style="margin: 6px">{{
+              it.name
+            }}
           </el-checkbox>
         </el-checkbox-group>
       </div>
@@ -68,18 +78,20 @@ export default {
 
     return {
       checkedItems: [],
+      items: this.$store.state.all_items,
       isIndeterminate: true,
 
       getCode: false,
       codeBtnWord: '获取验证码',
       waitTime: 61,
-
-      tokenId: "",
+      flag: true,
+      tip: "邮箱验证",
       ruleForm: {
         username: '',
         password: '',
         re_pass: '',
-        phone: '',
+        account: '',
+        email: '',
         ver: '',
       },
       rules: {
@@ -95,57 +107,69 @@ export default {
           {min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur'},
           {validator: validatePass, trigger: "blur"},
         ],
-        phone: [
-          {required: true, message: '请输入有效手机号', trigger: 'blur', pattern: /^1[3|4|5|6|7|8|9][0-9]{9}$/},
+        account: [
+          {required: true, message: '请输入有效手机号', trigger: 'change', pattern: /^1[3|4|5|6|7|8|9][0-9]{9}$/},
         ],
+        email: [
+          {
+            required: true,
+            message: '请输入有效邮箱',
+            trigger: 'change',
+            pattern: /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
+          }],
         ver: [
           {required: true, message: '请输入6位数字验证码', trigger: 'blur', pattern: /^\d{6}$/},
-        ],
+        ]
       }
-    };
+    }
   },
   computed: {},
   methods: {
+    fail(message) {
+      this.$message.error({
+        message: message,
+      });
+    },
     success() {
       this.$message({
         message: '注册成功，已为您自动登录！！！',
         type: 'success'
       });
     },
-    fail(message) {
-      this.$message.error({
-        message: message,
-      });
-    },
-    sendCode() {
+    verCode() {
       getVerCode(this)
     },
-    submitForm(formName) {
-      register(this, formName)
+    submitForm() {
+      register(this, 'ruleForm')
     },
+    changeRegType() {
+      this.flag = !this.flag
+      if (this.tip === "邮箱验证") {
+        this.tip = "手机验证"
+      } else {
+        this.tip = "邮箱验证"
+      }
+    }
   },
 }
 </script>
 
 <style scoped>
+
+#register {
+  margin: 0 auto;
+  width: 80%;
+}
+
 #reg-bt {
   position: relative;
-  left: 16%;
-}
-
-#info {
-  margin-top: 5px;
-}
-
-#chose {
-  margin-top: 5px;
+  left: 2px;
 }
 
 #userInfo {
-  width: 355px;
+  width: 295px;
   text-align: left;
   vertical-align: top;
-  padding: 5px;
 }
 
 #userItem {
@@ -153,19 +177,12 @@ export default {
   width: 14%;
   text-align: left;
   vertical-align: top;
-  padding: 5px;
 }
 
-#register {
-  margin: 20px auto;
-  width: 80%;
-}
-
-#getVerCode {
+.getCode {
   width: 100px;
   position: absolute;
   right: 2px;
   top: 3px;
 }
-
 </style>

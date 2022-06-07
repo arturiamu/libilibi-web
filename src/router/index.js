@@ -4,14 +4,15 @@ import Home from "@/views/Home";
 import Explore from "@/views/Explore"
 import Player from "@/views/Player";
 import Search from "@/views/Search";
-import Login from "@/views/Login";
+import LoginTH from "@/views/Login";
 import Live from "@/views/Live";
 import Message from "@/views/Message";
 import Collection from "@/views/Collection";
 import Dynamic from "@/views/Dynamic";
 import History from "@/views/History";
-import Register from "@/views/Register";
+import RegisterTH from "@/views/Register";
 import UserInfo from "@/views/UserInfo";
+import Account from "@/views/Account";
 
 Vue.use(VueRouter)
 
@@ -73,21 +74,39 @@ const routes = [
         }
     },
     {
-        path: '/login',
-        name: 'login',
-        component: Login,
+        path: '/account',
+        name: 'account',
+        component: Account,
         meta: {
             title: 'ad-astra 用户登录'
-        }
+        },
+        children:[
+            {
+                path: 'login',
+                component: LoginTH,
+            },
+            {
+                path: 'register',
+                component: RegisterTH,
+            },
+        ]
     },
-    {
-        path: '/register',
-        name: 'register',
-        component: Register,
-        meta: {
-            title: 'ad-astra 用户注册'
-        }
-    },
+    // {
+    //     path: '/login',
+    //     name: 'login',
+    //     component: Login,
+    //     meta: {
+    //         title: 'ad-astra 用户登录'
+    //     }
+    // },
+    // {
+    //     path: '/register',
+    //     name: 'register',
+    //     component: Register,
+    //     meta: {
+    //         title: 'ad-astra 用户注册'
+    //     }
+    // },
     {
         path: '/message',
         name: 'message',
