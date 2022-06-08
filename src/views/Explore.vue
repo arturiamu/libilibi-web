@@ -14,7 +14,7 @@
             <div class="pt pt-top" @click="goAnchor('lb-header')">
               <el-link :underline="false" icon="el-icon-arrow-up"></el-link>
             </div>
-            <div class="pt" v-for="item in $store.state.explore" @click="goAnchor(item.url)">
+            <div class="pt" v-for="item in $store.state.all_items" @click="goAnchor(item.uri)">
               <el-link :underline="false">{{ item.name }}</el-link>
             </div>
             <div class="pt pt-top" @click="goAnchor('lb-footer')">
@@ -32,7 +32,7 @@
         </div>
       </div>
     </div>
-    <LBItem v-for="it in $store.state.all_items" v-bind:item_info="it" :id="it.url"></LBItem>
+    <LBItem v-for="it in $store.state.all_items" v-bind:item_info="it" :id="it.uri"></LBItem>
   </div>
 </template>
 

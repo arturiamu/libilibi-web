@@ -23,7 +23,6 @@ function getDefaultItems(that) {
 function isLogin(that) {
     let url = requestUrl + "/user/isLogin"
     that.$axios.get(url).then(resp => {
-        console.log(resp)
         if (resp.data.state === 200) {
             that.$store.dispatch("ch_user", resp.data.data)
         }

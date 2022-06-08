@@ -1,18 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from "@/views/Home";
-import Explore from "@/views/Explore"
-import Player from "@/views/Player";
-import Search from "@/views/Search";
-import LoginTH from "@/views/Login";
-import Live from "@/views/Live";
-import Message from "@/views/Message";
-import Collection from "@/views/Collection";
-import Dynamic from "@/views/Dynamic";
-import History from "@/views/History";
-import RegisterTH from "@/views/Register";
-import UserInfo from "@/views/UserInfo";
-import Account from "@/views/Account";
 
 Vue.use(VueRouter)
 
@@ -20,7 +7,7 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: Home,
+        component: () => import('@/views/Home'),
         meta: {
             title: 'ad-astra 首页'
         }
@@ -28,7 +15,7 @@ const routes = [
     {
         path: '/history',
         name: 'history',
-        component: History,
+        component: () => import('@/views/History'),
         meta: {
             title: 'ad-astra 历史'
         }
@@ -36,7 +23,7 @@ const routes = [
     {
         path: '/dynamic',
         name: 'dynamic',
-        component: Dynamic,
+        component: () => import('@/views/Dynamic'),
         meta: {
             title: 'ad-astra 动态'
         }
@@ -44,7 +31,7 @@ const routes = [
     {
         path: '/collection',
         name: 'collection',
-        component: Collection,
+        component: () => import('@/views/Collection'),
         meta: {
             title: 'ad-astra 收藏'
         }
@@ -52,7 +39,7 @@ const routes = [
     {
         path: '/explore',
         name: 'explore',
-        component: Explore,
+        component: () => import('@/views/Explore'),
         meta: {
             title: 'ad-astra 探索'
         }
@@ -60,7 +47,7 @@ const routes = [
     {
         path: '/live',
         name: 'live',
-        component: Live,
+        component: () => import('@/views/Live'),
         meta: {
             title: 'ad-astra 直播'
         }
@@ -68,49 +55,15 @@ const routes = [
     {
         path: '/user',
         name: 'user',
-        component: UserInfo,
+        component: () => import('@/views/UserInfo'),
         meta: {
             title: 'ad-astra 用户中心'
         }
     },
     {
-        path: '/account',
-        name: 'account',
-        component: Account,
-        meta: {
-            title: 'ad-astra 用户登录'
-        },
-        children:[
-            {
-                path: 'login',
-                component: LoginTH,
-            },
-            {
-                path: 'register',
-                component: RegisterTH,
-            },
-        ]
-    },
-    // {
-    //     path: '/login',
-    //     name: 'login',
-    //     component: Login,
-    //     meta: {
-    //         title: 'ad-astra 用户登录'
-    //     }
-    // },
-    // {
-    //     path: '/register',
-    //     name: 'register',
-    //     component: Register,
-    //     meta: {
-    //         title: 'ad-astra 用户注册'
-    //     }
-    // },
-    {
         path: '/message',
         name: 'message',
-        component: Message,
+        component: () => import('@/views/Message'),
         meta: {
             title: 'ad-astra 消息中心'
         }
@@ -118,7 +71,7 @@ const routes = [
     {
         path: '/player',
         name: 'player',
-        component: Player,
+        component: () => import('@/views/Player'),
         meta: {
             title: 'ad-astra 视频播放'
         }
@@ -126,7 +79,7 @@ const routes = [
     {
         path: '/search',
         name: 'search',
-        component: Search,
+        component: () => import('@/views/Search'),
         meta: {
             title: 'ad-astra 搜索'
         }

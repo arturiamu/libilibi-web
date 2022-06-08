@@ -1,41 +1,27 @@
 <template>
   <div id="app">
-    <LBMainBody></LBMainBody>
+    <MainBody></MainBody>
   </div>
 </template>
 
 <script>
-import LBMainBody from "@/components/MainBody";
-import {getItems, getDefaultItems} from '@/js/common'
+import MainBody from "@/components/MainBody";
+
 export default {
   name: 'App',
-  components: {LBMainBody},
-  beforeCreate() {
+  components: {MainBody},
+  mounted() {
     let w = document.body.clientWidth
-    this.$store.dispatch('ch_sc', w)
-    if (w > 1000 && w < 1400) {
-      document.body.style.zoom = '0.70'
-    } else if (w > 1400 && w < 1900) {
-      document.body.style.zoom = '0.80'
-    }
+    console.log(w)
     window.onresize = () => {
       return (() => {
-        let w = document.body.clientWidth
-        this.$store.dispatch('ch_sc', w)
-        if (w >= 1900) {
-          document.body.style.zoom = '1.0'
-        } else if (w > 1400 && w < 1900) {
-          document.body.style.zoom = '0.80'
-        } else if (w > 1000 && w < 1400) {
-          document.body.style.zoom = '0.70'
-        } else if (w <= 1000) {
-          document.body.style.zoom = '0.5'
-        }
-      });
+        w = document.body.clientWidth
+        console.log(w)
+        let alpha = w / 1903
+        console.log(alpha)
+        document.body.style.zoom = alpha.toString()
+      })();
     };
-
-    getItems(this)
-    getDefaultItems(this)
   }
 }
 </script>

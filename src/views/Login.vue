@@ -3,7 +3,7 @@
     <div id="top">
       <div id="top_total_length">
         <img id="top_total_length_picture" src="../assets/logo.jpg">
-        <h4 style="display: inline"> 登录 ad astra</h4>
+        <h1 style="display: inline"> 登录 ad astra</h1>
       </div>
     </div>
 
@@ -72,59 +72,14 @@ export default {
 </script>
 
 <style scoped>
-#border {
-  width: 420px;
-  height: 378px;
-  border-radius: 5px;
-  background-color: white;
-  font-weight: bold;
-  margin: 0 auto;
-}
-
-#top {
-  width: 250px;
-  height: 40px;
-  background-color: white;
-  margin: 0 auto;
-  padding-top: 30px;
-}
-
-#top_total_length {
-  width: 380px;
-  height: 40px;
-  margin-left: -125px;
-}
-
 #top_total_length_picture {
-  width: 47px;
-  height: 40px;
-  margin-left: 110px;
-
-}
-
-h4 {
   position: relative;
-  top: -12px;
-  left: 0px;
-  font-size: 20px;
+  top:15px
 }
-
-#nav_total_size {
-  width: 380px;
-  height: 205px;
-  margin-left: 20px;
-  margin-right: 10px;
-}
-
-#nav_input {
-  width: 355px;
+#nav{
   text-align: left;
-  vertical-align: top;
-  padding: 5px;
-}
-
-#help_button {
-  margin-top: 5px;
+  margin: 15px auto;
+  width: 55%;
 }
 </style>
 

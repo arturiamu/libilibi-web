@@ -21,7 +21,7 @@
             <div class="pt pt-top" @click="goAnchor('lb-header')">
               <el-link :underline="false" icon="el-icon-arrow-up"></el-link>
             </div>
-            <div class="pt" v-for="item in $store.state.user.items" @click="goAnchor(item.url)">
+            <div class="pt" v-for="item in $store.state.user.items" @click="goAnchor(item.uri)">
               <el-link :underline="false">{{ item.name }}</el-link>
             </div>
             <div class="pt pt-top" @click="goAnchor('lb-footer')">
@@ -104,13 +104,12 @@
         </div>
       </div>
     </div>
-    <LBItem v-for="it in $store.state.user.items" v-bind:item_info="it" :id="it.url"></LBItem>
+    <LBItem v-for="it in $store.state.user.items" v-bind:item_info="it" :id="it.uri"></LBItem>
   </div>
 </template>
 
 <script>
-import {main_video} from "@/js/common";
-import {play_video} from "@/js/common";
+import {main_video, play_video, getItems, getDefaultItems} from "@/js/common";
 import LBItem from "@/views/Item";
 
 export default {
@@ -148,6 +147,10 @@ export default {
       let anchor = document.getElementById(id);
       anchor.scrollIntoView();
     },
+  },
+  mounted() {
+    getItems(this)
+    getDefaultItems(this)
   },
   created() {
     this.load_videos()

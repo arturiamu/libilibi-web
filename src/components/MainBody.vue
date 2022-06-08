@@ -68,11 +68,10 @@ export default {
 }
 </script>
 
-
 <style scoped>
 #main-body {
-  width: 1630px;
   margin: 0 auto;
+  max-width: 1630px;
 }
 
 .s-h:hover {

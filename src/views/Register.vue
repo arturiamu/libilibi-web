@@ -31,7 +31,7 @@
             </el-button>
           </el-form-item>
 
-          <el-button size="mini" icon="el-icon-refresh" type="primary" round @click="changeRegType">{{ tip }}
+          <el-button size="mini" icon="el-icon-refresh" type="primary" @click="changeRegType">{{ tip }}
           </el-button>
 
           <el-form-item class="inl" label="验证码：" prop="ver" size="small">
@@ -157,10 +157,8 @@ export default {
 <style scoped>
 
 #register {
-  margin: 0 auto;
-  width: 80%;
+  margin: 15px auto;
 }
-
 #reg-bt {
   position: relative;
   left: 2px;
@@ -174,7 +172,7 @@ export default {
 
 #userItem {
   margin-left: 5px;
-  width: 14%;
+  width: 33%;
   text-align: left;
   vertical-align: top;
 }
@@ -185,4 +183,5 @@ export default {
   right: 2px;
   top: 3px;
 }
+
 </style>

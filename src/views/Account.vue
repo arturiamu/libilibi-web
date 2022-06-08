@@ -2,41 +2,35 @@
   <div id="account">
     <div id="menu">
       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
-        <el-menu-item index="1" @click="to('login')">登录</el-menu-item>
-        <el-menu-item index="2" @click="to('register')">注册</el-menu-item>
+        <el-menu-item index="1" @click="tag = 'login'">登录</el-menu-item>
+        <el-menu-item index="2" @click="tag = 'register'">注册</el-menu-item>
       </el-menu>
     </div>
-    <router-view></router-view>
+    <div v-if="tag === 'login'">
+      <Login></Login>
+    </div>
+    <div v-else>
+      <Register></Register>
+    </div>
   </div>
 </template>
 
 <script>
+import Login from "@/views/Login";
+import Register from "@/views/Register";
+
 export default {
   name: "Account",
+  components: {Register, Login},
   data() {
     return {
       activeIndex: '1',
+      tag: "login"
     }
   },
-  methods: {
-    to(target) {
-      if (target === 'login') {
-        this.$router.push('/account/login')
-      }
-      if (target === 'register') {
-        this.$router.push('/account/register')
-      }
-    }
-  },
-  mounted() {
-    this.to('login')
-  }
 }
 </script>
 
 <style scoped>
-#menu{
-  width: 420px;
-  margin: 0 auto;
-}
+
 </style>

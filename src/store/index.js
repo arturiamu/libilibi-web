@@ -10,7 +10,7 @@ const actions = {
     ch_user(context, value) {
         context.state.user = value
     },
-    clear_user(context, value){
+    clear_user(context, value) {
         context.state.user.id = ""
         context.state.user.username = ""
         context.state.user.account = ""
@@ -28,13 +28,9 @@ const actions = {
         context.state.default_items = value
     },
 }
-const mutations = {
+const mutations = {// 1630
     CH_SC(state, value) {
-        if (value < 1500 && value > 1200) {
-            state.per = '96%'
-        } else if (value < 1000) {
-            state.per = '-200px'
-        }
+        state.per = value;
     },
 }
 

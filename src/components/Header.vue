@@ -9,7 +9,6 @@
         <el-link :underline="false" type="primary" @click="goto('/live')">直播</el-link>
       </div>
     </div>
-
     <div id="search" class="inl">
       <div id="search-input" class="inl s-c">
         <el-input
@@ -27,10 +26,23 @@
     </div>
     <div id="user" class="inl">
       <div id="userinfo" class="inl">
-        <el-link v-if="$store.state.user.username" @click="goto('/user')" :underline="false" type="primary">
-          {{ $store.state.user.username.substring(0, 5) }}
-        </el-link>
-        <el-link @click="goto('/account')" v-else :underline="false" type="primary">登录</el-link>
+        <div @click="goto('/user')" v-if="$store.state.user.username">
+          <div id="avatar">
+            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                       size="large  "></el-avatar>
+          </div>
+        </div>
+
+        <div v-else>
+          <el-link @click="loginVisible = true" :underline="false" type="primary">登录</el-link>
+          <el-dialog
+              :visible.sync="loginVisible"
+              destroy-on-close="true"
+              width="35%">
+            <Account></Account>
+          </el-dialog>
+        </div>
+
       </div>
       <div id="appInfo" class="inl">
         <div id="message" class="inl app-info" @click="goto('/message')">
@@ -76,9 +88,11 @@
 
 <script>
 import {search} from '@/js/common'
+import Account from '@/views/Account'
 
 export default {
   name: "LBHeader",
+  components: {Account},
   data() {
     return {
       keyword: "",
@@ -113,6 +127,12 @@ export default {
 #nav a {
   font-size: 20px;
   padding-left: 25px;
+}
+
+#avatar {
+  position: absolute;
+  top: -27px;
+  left: -30px
 }
 
 #search {
