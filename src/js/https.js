@@ -1,6 +1,5 @@
-
-// const requestUrl = "http://localhost:9000"
-const requestUrl = "http://adastra.isamumu.cn:9000"
+const requestUrl = "http://localhost:9000"
+// const requestUrl = "http://adastra.isamumu.cn:9000"
 // const requestUrl = "/app"
 const phone_re = /^1[3|4|5|6|7|8|9][0-9]{9}$/
 const mail_re = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
@@ -174,6 +173,36 @@ function search(that, keyword) {
     that.$router.push('/search')
 }
 
+function feedBack(that, adv) {
+    that.$axios.post(requestUrl + "/advise/add", {
+        advise: adv,
+        userId: that.$store.state.user.id
+    }).then(resp => {
+        if (resp.data.state === 200) {
+            that.$message({
+                type: 'success',
+                message: resp.data.message
+            });
+        } else {
+            that.$message({
+                type: 'info',
+                message: resp.data.message
+            });
+        }
+    })
+}
+
 export {
-    getDefaultItems, getItems, isLogin, item_video, main_video, getVerCode, register, play_video, search, login, logout
+    getDefaultItems,
+    getItems,
+    isLogin,
+    item_video,
+    main_video,
+    getVerCode,
+    register,
+    play_video,
+    search,
+    login,
+    logout,
+    feedBack
 }

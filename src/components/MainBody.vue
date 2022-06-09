@@ -25,7 +25,7 @@
 import LBHeader from "@/components/Header";
 import LBFooter from "@/components/Footer";
 import LBHome from "@/views/Home";
-import {isLogin} from '@/js/common'
+import {isLogin, feedBack} from '@/js/https'
 
 export default {
   name: "MainBody",
@@ -52,10 +52,15 @@ export default {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
         }).then(({value}) => {
-          this.$message({
-            type: 'success',
-            message: '反馈成功，感谢您的宝贵意见！！！: '
-          });
+          let that = this;
+          if (!value.match(/^\s+$/)) {
+            feedBack(that, value)
+          } else {
+            this.$message({
+              type: 'info',
+              message: '信息无效'
+            });
+          }
         }).catch(() => {
           this.$message({
             type: 'info',

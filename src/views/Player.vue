@@ -125,7 +125,7 @@
 </template>
 
 <script>
-import {main_video, play_video} from "@/js/common";
+import {main_video, play_video} from "@/js/https";
 
 export default {
   name: "Player",
