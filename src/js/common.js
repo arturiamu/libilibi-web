@@ -1,5 +1,7 @@
-// const requestUrl = "http://adastra.isamumu.cn:9000"
-const requestUrl = "http://localhost:9000"
+
+// const requestUrl = "http://localhost:9000"
+const requestUrl = "http://adastra.isamumu.cn:9000"
+// const requestUrl = "/app"
 const phone_re = /^1[3|4|5|6|7|8|9][0-9]{9}$/
 const mail_re = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
 const item_ps = 12
@@ -161,8 +163,10 @@ function play_video(that, video) {
         })
     }
     if (that.$store.state.user.id) {
-        console.log(that.$store.state.user.id)
-        console.log(video.aid)
+        that.$axios.post(requestUrl + "/history/add", {
+            historyVideoId: video.pid,
+            videoId: video.aid
+        })
     }
 }
 

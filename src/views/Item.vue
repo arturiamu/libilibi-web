@@ -31,7 +31,6 @@ export default {
     play(video) {
       play_video(this, video)
     },
-
     update: function () {
       item_video(this, this.item_info.pid, 12)
     }

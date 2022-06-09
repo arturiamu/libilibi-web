@@ -24,7 +24,64 @@
         >您的浏览器不支持iframe，请升级或更换浏览器
         </iframe>
       </div>
+      <div id="video-op">
+        <div id="like" class="inl op" @click="op('like')">
+          <div class="inl">
+            <img src="../assets/like.png">
+          </div>
+          <div class="inl cnt">
+            <el-link :underline="false" type="primary">{{ video.like }}</el-link>
+          </div>
+        </div>
+        <div id="collection" class="inl op" @click="op('collection')">
+          <div class="inl">
+            <img src="../assets/collection.png">
+          </div>
+          <div class="inl cnt">
+            <el-link :underline="false" type="primary">{{ video.favorite }}</el-link>
+          </div>
+        </div>
 
+        <div id="share" class="inl op">
+          <div class="inl">
+            <el-popover
+                placement="top"
+                trigger="hover">
+              <div id="popover-root">
+                <div id="qq" class="share-sub inl" @click="share('qq')">
+                  <div class="share-pic">
+                    <img src="../assets/qq.png">
+                  </div>
+                  <div>
+                    <el-link :underline="false" type="primary">空间</el-link>
+                  </div>
+                </div>
+                <div id="wechat" class="share-sub inl" @click="share('wechat')">
+                  <div class="share-pic">
+                    <img src="../assets/wechat.png">
+                  </div>
+                  <div>
+                    <el-link :underline="false" type="primary">朋友圈</el-link>
+                  </div>
+                </div>
+                <div id="weibo" class="share-sub inl" @click="share('weibo')">
+                  <div class="share-pic">
+                    <img src="../assets/weibo.png">
+                  </div>
+                  <div>
+                    <el-link :underline="false" type="primary">微博</el-link>
+                  </div>
+                </div>
+              </div>
+              <img src="../assets/share.png" slot="reference">
+            </el-popover>
+          </div>
+          <div class="inl cnt">
+            <el-link :underline="false" type="primary">{{ video.share }}</el-link>
+          </div>
+        </div>
+        <el-divider></el-divider>
+      </div>
       <div id="describe">
         <div v-for="i in desc">
           <el-link :underline="false">{{ i }}</el-link>
@@ -84,6 +141,12 @@ export default {
     main_video(this)
   },
   methods: {
+    op(type) {
+
+    },
+    share(type) {
+
+    },
     play(video) {
       play_video(this, video)
     }
@@ -106,6 +169,33 @@ export default {
 
 .re-video {
   padding-bottom: 10px;
+}
+
+#popover-root {
+  justify-content: space-between;
+}
+
+.share-pic {
+  width: 40px;
+  height: 40px;
+}
+
+.share-sub {
+  margin: 15px;
+}
+
+#video-op {
+  text-align: left;
+}
+
+.op {
+  padding: 5px 15px 0 15px;
+}
+
+.cnt {
+  padding: 0 5px 0 5px;
+  position: relative;
+  top: -5px
 }
 
 #re {
