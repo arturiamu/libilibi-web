@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {video_detail} from "@/js/https";
+import {video_detail} from "@/js/common";
 
 export default {
   name: "Search",

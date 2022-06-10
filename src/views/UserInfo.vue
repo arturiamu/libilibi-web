@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import {logout} from "@/js/https";
+import {logout} from "@/js/common";
 
 export default {
   name: "UserInfo",

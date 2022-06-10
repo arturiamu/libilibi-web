@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import {item_video, play_video} from '@/js/https'
+import {item_video, play_video} from '@/js/common'
 
 export default {
   name: "Item",

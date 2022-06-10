@@ -25,7 +25,7 @@
 import LBHeader from "@/components/Header";
 import LBFooter from "@/components/Footer";
 import LBHome from "@/views/Home";
-import {isLogin, feedBack} from '@/js/https'
+import {isLogin, feedBack} from '@/js/common'
 
 export default {
   name: "MainBody",

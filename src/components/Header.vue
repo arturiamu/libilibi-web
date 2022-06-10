@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import {search} from '@/js/https'
+import {search} from '@/js/common'
 import Account from '@/views/Account'
 
 export default {
@@ -103,7 +103,17 @@ export default {
       mode: 'login'
     }
   },
+  mounted() {
+    this.$bus.$on('show', this.show)
+    this.$bus.$on('close', this.close)
+  },
   methods: {
+    show() {
+      this.loginVisible = true
+    },
+    close() {
+      this.loginVisible = false
+    },
     goto(type) {
       if (this.$route.path !== type) {
         this.$router.push(type)

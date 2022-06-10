@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import {main_video} from "@/js/https";
-import {player} from "@/js/https";
+import {main_video} from "@/js/common";
+import {player} from "@/js/common";
 import LBItem from "@/views/Item";
 
 export default {
