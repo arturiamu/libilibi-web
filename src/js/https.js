@@ -192,6 +192,19 @@ function feedBack(that, adv) {
     })
 }
 
+function isLike(that) {
+    let url = requestUrl + '/like/'
+}
+
+function like(that, id, aid, pid) {
+    let url = requestUrl + '/like/add'
+    that.$axios.post(url, {
+        id: id,
+        aid: aid,
+        pid: pid
+    })
+}
+
 export {
     getDefaultItems,
     getItems,
@@ -204,5 +217,6 @@ export {
     search,
     login,
     logout,
-    feedBack
+    feedBack,
+    like
 }
