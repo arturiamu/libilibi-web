@@ -134,11 +134,21 @@ function item_video(that, pid, ps) {
 }
 
 function main_video(that) {
-    // let lo_url = requestUrl + '/api/recommend'
-    // axios.get(lo_url).then(function (response) {
-    //     that.videos = response.data.data
-    // })
-    item_video(that, 129, 13)
+    let url = requestUrl + '/video/pid/' + 129 + '/' + 13
+
+    that.$axios.get(url).then(function (response) {
+        that.videos = response.data.data
+        that.$forceUpdate()
+    })
+}
+
+function addHistory(that) {
+    if (that.$store.state.user.id) {
+        that.$axios.post(requestUrl + "/history/add", {
+            aid: that.video.aid,
+            pid: that.video.pid
+        })
+    }
 }
 
 function play_video(that, video) {
@@ -159,12 +169,6 @@ function play_video(that, video) {
             query: {
                 video: video
             }
-        })
-    }
-    if (that.$store.state.user.id) {
-        that.$axios.post(requestUrl + "/history/add", {
-            historyVideoId: video.pid,
-            videoId: video.aid
         })
     }
 }
@@ -193,15 +197,29 @@ function feedBack(that, adv) {
 }
 
 function isLike(that) {
-    let url = requestUrl + '/like/'
+    let url = requestUrl + '/like/isLike'
+    that.$axios.post(url, {
+        aid: that.video.aid,
+        pid: that.video.pid
+    }).then(resp => {
+        that.video.islike = resp.data.message
+        that.$forceUpdate()
+    })
 }
 
-function like(that, id, aid, pid) {
+function unLike(that) {
+    let url = requestUrl + '/like/cancel'
+    that.$axios.post(url, {
+        aid: that.video.aid,
+        pid: that.video.pid
+    })
+}
+
+function like(that) {
     let url = requestUrl + '/like/add'
     that.$axios.post(url, {
-        id: id,
-        aid: aid,
-        pid: pid
+        aid: that.video.aid,
+        pid: that.video.pid
     })
 }
 
@@ -218,5 +236,8 @@ export {
     login,
     logout,
     feedBack,
-    like
+    like,
+    isLike,
+    unLike,
+    addHistory
 }

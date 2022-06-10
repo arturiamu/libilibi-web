@@ -25,7 +25,7 @@
 import LBHeader from "@/components/Header";
 import LBFooter from "@/components/Footer";
 import LBHome from "@/views/Home";
-import {isLogin, feedBack} from '@/js/https'
+import {feedBack} from '@/js/https'
 
 export default {
   name: "MainBody",
@@ -36,7 +36,7 @@ export default {
     }
   },
   mounted() {
-    isLogin(this)
+    this.$router.push('/')
   },
   methods: {
     side_f: function (type) {

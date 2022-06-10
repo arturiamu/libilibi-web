@@ -13,6 +13,14 @@ const routes = [
         }
     },
     {
+        path: '/empty',
+        name: 'empty',
+        component: () => import('@/views/Empty'),
+        meta: {
+            title: 'ad-astra 加载中...'
+        }
+    },
+    {
         path: '/history',
         name: 'history',
         component: () => import('@/views/History'),

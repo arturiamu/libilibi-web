@@ -6,11 +6,15 @@
 
 <script>
 import MainBody from "@/components/MainBody";
+import {getDefaultItems, getItems, isLogin} from "@/js/https";
 
 export default {
   name: 'App',
   components: {MainBody},
   mounted() {
+    isLogin(this)
+    getItems(this)
+    getDefaultItems(this)
     let w = document.body.clientWidth
     console.log(w)
     window.onresize = () => {
