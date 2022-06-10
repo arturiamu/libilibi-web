@@ -80,6 +80,7 @@
           </div>
           <div id="browsing_history">
             <div class="section-title" id="e3">历史浏览</div>
+            <a href="" class="more">更多></a>
             <div id="item2" class="video-type">
               <div id="it-h2">
               </div>
@@ -100,6 +101,7 @@
             </div>
         <div id="bookmarks">
           <div class="section-title" id="e4">我的收藏夹</div>
+          <a href="" class="more">更多></a>
           <el-row :gutter="25" style="margin-left: 5px">
             <el-col :span="5">
               <el-card :body-style="{ padding: '0px' }">
@@ -522,7 +524,7 @@ div#e2 {
 }
 #item2[data-v-10c844d3] {
   left: 17px;
-  margin-top: 0;
+  margin-top: -19px;
   position: relative;
   display: flex;
 }
@@ -552,7 +554,7 @@ img {
 [class*="el-col-"] {
   float: left;
   box-sizing: border-box;
-  margin: 0 28px 0 0;
+  margin: -19px 28px 0 0;
 }
 .more[data-v-10c844d3] {
   background-position: -310px -405px;
