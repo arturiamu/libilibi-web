@@ -10,42 +10,54 @@
       </div>
     </div>
 
-    <div id="history" >
+    <div id="history">
       <el-timeline>
-        <el-timeline-item timestamp="2022/6/13" placement="top" size="large">
+        <el-timeline-item v-for="video in videos" placement="top" size="normal">
           <el-card>
-            视频一
-          </el-card>
-        </el-timeline-item>
-
-        <el-timeline-item timestamp="2022/6/12" placement="top" size="large">
-          <el-card>
-            视频二
-          </el-card>
-        </el-timeline-item>
-
-        <el-timeline-item timestamp="2022/6/11" placement="top" size="large">
-          <el-card>
-            视频三
+            <div class="center">
+              <div class="videoimg inl">
+                <img :src="video.pic">
+              </div>
+              <div class="videocontent inl">
+                <div class="videocontent1 ">
+                  <el-link>{{ video.title }}</el-link>
+                </div>
+                <div class="videocontent2 ">
+                  <el-link>{{ video.desc }}</el-link>
+                </div>
+                <div class="videocontent3">
+                  <el-link>类型 | {{ video.tname }}</el-link>
+                </div>
+              </div>
+            </div>
           </el-card>
         </el-timeline-item>
       </el-timeline>
     </div>
 
-    <div>
+    <div id="footimg">
       <img src="../assets/historyend.png">
     </div>
   </div>
 </template>
 
 <script>
+import {httpGet} from "@/js/https";
+
 export default {
   name: "History",
   data() {
     return {
+      videos: [],
       content: '',
       count: 0,
     }
+  },
+  mounted() {
+    httpGet("/history/get/13").then(data => {
+      console.log(data)
+      this.videos = data.data
+    })
   },
   methods: {
     clean() {
@@ -65,9 +77,6 @@ export default {
         });
       });
     },
-    load() {
-      this.count += 2
-    }
   }
 }
 </script>
@@ -98,9 +107,51 @@ export default {
 
 #history {
   width: 50%;
-  padding-left: 400px;
   padding-top: 50px;
+  margin: 0 auto;
 
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+.videoimg {
+  width: 160px;
+  height: 100px;
+  position: relative;
+}
+
+.center {
+  text-align: left;
+}
+
+#footimg {
+  width: 450px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.videocontent {
+  position: relative;
+  left: 40px;
+  top: -90px;
+}
+.videocontent1 a{
+  font-size: larger;
+  font-weight: bold;
+
+}
+
+.videocontent2 {
+  position: absolute;
+  top: 85px;
+}
+.videocontent3 {
+  position: absolute;
+  top: 85px;
+  left: 200px;
 }
 
 </style>

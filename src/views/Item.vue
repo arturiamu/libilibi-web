@@ -32,12 +32,15 @@ export default {
       play_video(this, video)
     },
     update: function () {
-      httpGet('/video/pid/' + this.item_info.pid + '/' + 12).then(data => {
+      httpGet('/video/pid/' + this.item_info.pid + '/12').then(data => {
         if (data.state === 200) {
           this.videos = data.data
         }
       })
     }
+  },
+  mounted() {
+
   },
   data: function () {
     return {
