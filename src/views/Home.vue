@@ -104,17 +104,17 @@
         </div>
       </div>
     </div>
-    <LBItem v-for="it in $store.state.user.items" v-bind:item_info="it" :id="it.uri"></LBItem>
+    <Item v-for="it in $store.state.user.items" v-bind:item_info="it" :id="it.uri"></Item>
   </div>
 </template>
 
 <script>
-import {main_video, play_video, getItems, getDefaultItems} from "@/js/https";
-import LBItem from "@/views/Item";
+import {httpPost, httpGet, play_video} from "@/js/https";
+import Item from "@/views/Item";
 
 export default {
   name: "Home",
-  components: {LBItem},
+  components: {Item},
   data() {
     return {
       videos: [{
@@ -138,7 +138,11 @@ export default {
   },
   methods: {
     load_videos: function () {
-      main_video(this)
+      httpGet('/video/pid/' + 129 + '/' + 13).then(data => {
+        if(data.state === 200){
+          this.videos = data.data
+        }
+      })
     },
     play: function (video) {
       play_video(this, video)
@@ -148,13 +152,9 @@ export default {
       anchor.scrollIntoView();
     },
   },
-  mounted() {
-    getItems(this)
-    getDefaultItems(this)
-  },
   created() {
     this.load_videos()
-  },
+  }
 }
 </script>
 

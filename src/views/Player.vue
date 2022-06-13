@@ -25,12 +25,15 @@
         </iframe>
       </div>
       <div id="video-op">
-        <div id="like" class="inl op" @click="op('like')">
-          <div class="inl">
+        <div id="liked" class="inl op">
+          <div v-if="video.islike === 'like'" class="inl" @click="op('unlike')">
+            <img src="../assets/liked.png">
+          </div>
+          <div v-else class="inl" @click="op('like')">
             <img src="../assets/like.png">
           </div>
           <div class="inl cnt">
-            <el-link :underline="false" type="primary">{{ video.like }}</el-link>
+            <el-link :underline="false">{{ video.like }}</el-link>
           </div>
         </div>
         <div id="collection" class="inl op" @click="op('collection')">
@@ -38,7 +41,7 @@
             <img src="../assets/collection.png">
           </div>
           <div class="inl cnt">
-            <el-link :underline="false" type="primary">{{ video.favorite }}</el-link>
+            <el-link :underline="false">{{ video.favorite }}</el-link>
           </div>
         </div>
 
@@ -47,21 +50,16 @@
             <el-popover
                 placement="top"
                 trigger="hover">
+              <div>
+                <el-link :underline="false">好东西要和朋友一起分享哦~</el-link>
+              </div>
               <div id="popover-root">
                 <div id="qq" class="share-sub inl" @click="share('qq')">
                   <div class="share-pic">
                     <img src="../assets/qq.png">
                   </div>
                   <div>
-                    <el-link :underline="false" type="primary">空间</el-link>
-                  </div>
-                </div>
-                <div id="wechat" class="share-sub inl" @click="share('wechat')">
-                  <div class="share-pic">
-                    <img src="../assets/wechat.png">
-                  </div>
-                  <div>
-                    <el-link :underline="false" type="primary">朋友圈</el-link>
+                    <el-link :underline="false" type="primary">QQ空间</el-link>
                   </div>
                 </div>
                 <div id="weibo" class="share-sub inl" @click="share('weibo')">
@@ -72,12 +70,44 @@
                     <el-link :underline="false" type="primary">微博</el-link>
                   </div>
                 </div>
+                <div id="facebook" class="share-sub inl" @click="share('facebook')">
+                  <div class="share-pic">
+                    <img src="../assets/facebook.png">
+                  </div>
+                  <div>
+                    <el-link :underline="false" type="primary">facebook</el-link>
+                  </div>
+                </div>
+                <div id="twitter" class="share-sub inl" @click="share('twitter')">
+                  <div class="share-pic">
+                    <img src="../assets/twitter.png">
+                  </div>
+                  <div>
+                    <el-link :underline="false" type="primary">twitter</el-link>
+                  </div>
+                </div>
+                <div id="linkedin" class="share-sub inl" @click="share('linkedin')">
+                  <div class="share-pic">
+                    <img src="../assets/linkedin.png">
+                  </div>
+                  <div>
+                    <el-link :underline="false" type="primary">linkedin</el-link>
+                  </div>
+                </div>
+                <div id="pinterest" class="share-sub inl" @click="share('pinterest')">
+                  <div class="share-pic">
+                    <img src="../assets/pinterest.png">
+                  </div>
+                  <div>
+                    <el-link :underline="false" type="primary">pinterest</el-link>
+                  </div>
+                </div>
               </div>
               <img src="../assets/share.png" slot="reference">
             </el-popover>
           </div>
           <div class="inl cnt">
-            <el-link :underline="false" type="primary">{{ video.share }}</el-link>
+            <el-link :underline="false">{{ video.share }}</el-link>
           </div>
         </div>
         <el-divider></el-divider>
@@ -125,7 +155,7 @@
 </template>
 
 <script>
-import {main_video, play_video} from "@/js/https";
+import {main_video, play_video, like, unLike, isLike, addHistory} from "@/js/https";
 
 export default {
   name: "Player",
@@ -134,18 +164,54 @@ export default {
       video: this.$route.query.video,
       src: "https://player.bilibili.com/player.html?high_quality=1&autoplay=1&aid=",
       desc: this.$route.query.video.desc.split('\n'),
-      videos: ''
+      videos: '',
     }
   },
   mounted() {
     main_video(this)
+    isLike(this)
+    addHistory(this)
   },
   methods: {
     op(type) {
-
+      if (this.$store.state.user.id) {
+        if (type === 'like') {
+          this.video.islike = 'like'
+          this.video.like++
+          like(this)
+        } else if (type === 'unlike') {
+          this.video.islike = 'unlike'
+          this.video.like--
+          unLike(this)
+        }
+        this.$forceUpdate()
+      } else {
+        this.$message.error({
+          message: "请先登录",
+        });
+      }
     },
     share(type) {
-
+      let url = 'http://adastra.isamumu.cn'
+      let title = "aid:" + this.video.aid + '  ' + this.video.title
+      let pic = this.video.pic
+      let summary = '我发现了一个宝藏网站，快来加入吧~'
+      let share = ''
+      if (type === 'qq') {
+        share = 'https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?sharesource=qzone&url=' + url + '&title='
+            + title + '&pics=' + pic + '&summary=' + summary
+      } else if (type === 'facebook') {
+        share = 'https://www.facebook.com/sharer/sharer.php?u=' + url
+      } else if (type === 'twitter') {
+        share = 'https://twitter.com/intent/tweet?url=' + url + '&text=' + title
+      } else if (type === 'linkedin') {
+        share = 'https://www.linkedin.com/shareArticle?mini=true&url=' + url
+      } else if (type === 'pinterest') {
+        share = 'https://pinterest.com/pin/create/button/?url' + url + '&media=' + pic + '&description=' + title
+      } else if (type === 'weibo') {
+        share = 'http://service.weibo.com/share/share.php?title=' + title + '&url=' + url + '&pic=' + pic
+      }
+      window.open(share, "adastra 视频分享", 'height=720, width=900, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no')
     },
     play(video) {
       play_video(this, video)
@@ -154,6 +220,24 @@ export default {
 }
 </script>
 <style scoped>
+#popover-root {
+  margin-top: 15px;
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.share-pic {
+  margin: 0 auto;
+  width: 40px;
+  height: 40px;
+}
+.share-pic img{
+  border-radius: 20px;
+}
+.share-sub{
+
+}
 .a-re {
   position: absolute;
   left: 150px;
@@ -169,19 +253,6 @@ export default {
 
 .re-video {
   padding-bottom: 10px;
-}
-
-#popover-root {
-  justify-content: space-between;
-}
-
-.share-pic {
-  width: 40px;
-  height: 40px;
-}
-
-.share-sub {
-  margin: 15px;
 }
 
 #video-op {

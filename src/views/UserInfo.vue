@@ -1,17 +1,19 @@
 <template>
-  <div id="user_info">
+  <div>
     <el-button @click="exit">退出登录</el-button>
   </div>
 </template>
 
 <script>
-import {logout} from "@/js/https";
+import {logout,httpGet} from "@/js/https";
 
 export default {
   name: "UserInfo",
-  methods: {
+  methods:{
     exit() {
-      logout(this)
+      httpGet("/user/logout")
+      this.$store.dispatch("clear_user", {})
+      this.$router.push('/')
     }
   }
 }

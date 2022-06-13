@@ -87,7 +87,6 @@
 </template>
 
 <script>
-import {search} from '@/js/https'
 import Account from '@/views/Account'
 
 export default {
@@ -97,9 +96,6 @@ export default {
     return {
       keyword: "",
       loginVisible: false,
-      account: '',
-      password: '',
-      nickname: '',
       mode: 'login'
     }
   },
@@ -122,10 +118,10 @@ export default {
     search: function () {
       if (this.keyword.replaceAll(" ", '') !== "") {
         if (this.$route.path !== '/search') {
-          search(this, this.keyword)
+
         } else {
           this.$router.push('/')
-          search(this, this.keyword)
+
         }
       }
     }

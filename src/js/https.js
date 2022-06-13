@@ -1,10 +1,34 @@
 const requestUrl = "http://localhost:9000"
 // const requestUrl = "http://adastra.isamumu.cn:9000"
 // const requestUrl = "/app"
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 const phone_re = /^1[3|4|5|6|7|8|9][0-9]{9}$/
 const mail_re = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
 const item_ps = 12
-const main = 13
+const main_ps = 13
+
+function httpGet(url) {
+    return new Promise((resolve, reject) => {
+        axios.get(requestUrl + url).then(r => {
+            resolve(r.data);
+        }).catch(e => {
+            reject(e.data)
+        })
+    })
+}
+
+function httpPost(url, params) {
+    return new Promise((resolve, reject) => {
+        axios.post(requestUrl + url, params).then(r => {
+            console.log(params)
+            resolve(r.data);
+        }).catch(e => {
+            reject(e.data)
+        })
+    })
+}
 
 function getItems(that) {
     let url = requestUrl + "/item/all"
@@ -30,42 +54,11 @@ function isLogin(that) {
     })
 }
 
-function getVerCode(that) {
+function getVerCode(account) {
     let url = requestUrl + "/user/registerVerify"
-    let account = ""
-    let ac = false
-    if (that.flag) {
-        account = that.ruleForm.account
-        if (phone_re.test(account)) {
-            ac = true
-        }
-    } else {
-        account = that.ruleForm.email
-        if (mail_re.test(account)) {
-            ac = true
-        }
-    }
-    if (ac) {
-        that.$axios.post(url, {
-            account: account,
-        }).then(resp => {
-            that.tokenId = resp.data.data
-        })
-        that.waitTime--
-        that.codeBtnWord = `${that.waitTime}s 后重新获取`
-        that.getCode = true
-        let timer = setInterval(function () {
-            if (that.waitTime > 1) {
-                that.waitTime--
-                that.codeBtnWord = `${that.waitTime}s 后重新获取`
-            } else {
-                clearInterval(timer)
-                that.codeBtnWord = '获取验证码'
-                that.waitTime = 61
-                that.getCode = false
-            }
-        }, 1000)
-    }
+    httpPost(url, {
+        account
+    })
 }
 
 function register(that, form) {
@@ -134,11 +127,21 @@ function item_video(that, pid, ps) {
 }
 
 function main_video(that) {
-    // let lo_url = requestUrl + '/api/recommend'
-    // axios.get(lo_url).then(function (response) {
-    //     that.videos = response.data.data
-    // })
-    item_video(that, 129, 13)
+    let url = requestUrl + '/video/pid/' + 129 + '/' + 13
+
+    that.$axios.get(url).then(function (response) {
+        that.videos = response.data.data
+        that.$forceUpdate()
+    })
+}
+
+function addHistory(that) {
+    if (that.$store.state.user.id) {
+        that.$axios.post(requestUrl + "/history/add", {
+            aid: that.video.aid,
+            pid: that.video.pid
+        })
+    }
 }
 
 function play_video(that, video) {
@@ -159,12 +162,6 @@ function play_video(that, video) {
             query: {
                 video: video
             }
-        })
-    }
-    if (that.$store.state.user.id) {
-        that.$axios.post(requestUrl + "/history/add", {
-            historyVideoId: video.pid,
-            videoId: video.aid
         })
     }
 }
@@ -192,6 +189,33 @@ function feedBack(that, adv) {
     })
 }
 
+function isLike(that) {
+    let url = requestUrl + '/like/isLike'
+    that.$axios.post(url, {
+        aid: that.video.aid,
+        pid: that.video.pid
+    }).then(resp => {
+        that.video.islike = resp.data.message
+        that.$forceUpdate()
+    })
+}
+
+function unLike(that) {
+    let url = requestUrl + '/like/cancel'
+    that.$axios.post(url, {
+        aid: that.video.aid,
+        pid: that.video.pid
+    })
+}
+
+function like(that) {
+    let url = requestUrl + '/like/add'
+    that.$axios.post(url, {
+        aid: that.video.aid,
+        pid: that.video.pid
+    })
+}
+
 export {
     getDefaultItems,
     getItems,
@@ -204,5 +228,11 @@ export {
     search,
     login,
     logout,
-    feedBack
+    feedBack,
+    like,
+    isLike,
+    unLike,
+    addHistory,
+    httpGet,
+    httpPost
 }

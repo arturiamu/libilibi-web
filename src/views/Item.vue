@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import {item_video, play_video} from '@/js/https'
+import {httpGet, play_video} from '@/js/https'
 
 export default {
   name: "Item",
@@ -32,7 +32,11 @@ export default {
       play_video(this, video)
     },
     update: function () {
-      item_video(this, this.item_info.pid, 12)
+      httpGet('/video/pid/' + this.item_info.pid + '/' + 12).then(data => {
+        if (data.state === 200) {
+          this.videos = data.data
+        }
+      })
     }
   },
   data: function () {

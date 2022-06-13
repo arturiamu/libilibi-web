@@ -63,7 +63,7 @@
 
 <script>
 
-import {getVerCode, register} from '@/js/https'
+import {httpGet, httpPost} from '@/js/https'
 
 export default {
   name: "Register",
@@ -130,24 +130,84 @@ export default {
         message: message,
       });
     },
-    success() {
+    success(message) {
       this.$message({
-        message: '注册成功，已为您自动登录！！！',
+        message: message,
         type: 'success'
       });
     },
     verCode() {
-      getVerCode(this)
+      let that = this
+      let ac = ''
+      if (this.flag) { //  手机号验证
+        ac = this.ruleForm.account
+      } else {
+        ac = this.ruleForm.email
+      }
+      if (ac === '' || ac.match(/^\s+$/)) {
+        return
+      }
+      httpPost("/user/verifyCode", {
+        account: ac
+      }).then(data => {
+        if (data.state !== 200) {
+          that.fail(data.message)
+        } else {
+          that.success(data.message)
+          that.waitTime--
+          that.codeBtnWord = `${this.waitTime}s 后重新获取`
+          that.getCode = true
+          let timer = setInterval(function () {
+            if (that.waitTime > 1) {
+              that.waitTime--
+              that.codeBtnWord = `${that.waitTime}s 后重新获取`
+            } else {
+              clearInterval(timer)
+              that.codeBtnWord = '获取验证码'
+              that.waitTime = 61
+              that.getCode = false
+            }
+          }, 1000)
+        }
+      })
+
     },
     submitForm() {
-      register(this, 'ruleForm')
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid) {
+          let user = {
+            username: this.ruleForm.username,
+            password: this.ruleForm.password,
+            items: this.checkedItems,
+          }
+          if (this.flag) {
+            user.account = this.ruleForm.account
+          } else {
+            user.account = this.ruleForm.email
+          }
+          httpPost("/user/register", {
+            user: user,
+            verCode: this.ruleForm.ver
+          }).then(data => {
+            if (data.state === 200) {
+              this.$store.dispatch("ch_user", data.data)
+              this.$router.push("/")
+              this.success(data.message)
+            } else {
+              this.fail(data.message)
+            }
+          })
+        }
+      })
     },
     changeRegType() {
       this.flag = !this.flag
-      if (this.tip === "邮箱验证") {
+      if (this.tip === "邮箱验证") { // 手机号验证
         this.tip = "手机验证"
+        this.ruleForm.account = ''
       } else {
         this.tip = "邮箱验证"
+        this.ruleForm.email = ''
       }
     }
   },
@@ -159,6 +219,7 @@ export default {
 #register {
   margin: 15px auto;
 }
+
 #reg-bt {
   position: relative;
   left: 2px;
