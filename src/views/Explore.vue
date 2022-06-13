@@ -37,8 +37,6 @@
 </template>
 
 <script>
-import {main_video} from "@/js/https";
-import {player} from "@/js/https";
 import LBItem from "@/views/Item";
 
 export default {
@@ -51,19 +49,10 @@ export default {
     }
   },
   methods: {
-    load_videos: function () {
-      main_video(this)
-    },
-    play: function (video) {
-      player(this, video)
-    },
     goAnchor: function (id) {
       let anchor = document.getElementById(id);
       anchor.scrollIntoView();
     },
-  },
-  mounted() {
-    this.load_videos()
   },
 }
 </script>

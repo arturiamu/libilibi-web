@@ -5,13 +5,15 @@
 </template>
 
 <script>
-import {logout} from "@/js/https";
+import {logout,httpGet} from "@/js/https";
 
 export default {
   name: "UserInfo",
   methods:{
     exit() {
-      logout(this)
+      httpGet("/user/logout")
+      this.$store.dispatch("clear_user", {})
+      this.$router.push('/')
     }
   }
 }

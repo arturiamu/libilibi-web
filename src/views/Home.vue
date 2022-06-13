@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import {main_video, play_video} from "@/js/https";
+import {httpPost, httpGet, play_video} from "@/js/https";
 import Item from "@/views/Item";
 
 export default {
@@ -138,7 +138,11 @@ export default {
   },
   methods: {
     load_videos: function () {
-      main_video(this)
+      httpGet('/video/pid/' + 129 + '/' + 13).then(data => {
+        if(data.state === 200){
+          this.videos = data.data
+        }
+      })
     },
     play: function (video) {
       play_video(this, video)

@@ -38,13 +38,23 @@
 </template>
 
 <script>
-import {login} from "@/js/https";
+import {login, httpPost} from "@/js/https";
 
 export default {
   name: 'Login',
   methods: {
     submitForm(formName) {
-      login(this, formName)
+      httpPost("/user/login", {
+        account: this.ruleForm.account,
+        password: this.ruleForm.password
+      }).then(data => {
+        if (data.state === 200) {
+          this.$store.dispatch("ch_user", data.data)
+          this.$router.push("/")
+        } else {
+          this.fail(data.message)
+        }
+      })
     },
     fail(message) {
       this.$message.error({

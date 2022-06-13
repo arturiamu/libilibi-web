@@ -7,11 +7,10 @@ import ElementUI from 'element-ui';
 import './css/element-variables.scss'
 import './css/common.css'
 
-import axios from 'axios';
-axios.defaults.withCredentials=true;
+// import axios from 'axios';
+// axios.defaults.withCredentials=true;
+// Vue.prototype.$axios = axios;
 Vue.config.productionTip = false
-
-Vue.prototype.$axios = axios;
 Vue.use(ElementUI)
 router.beforeEach((to, from, next) => {
     document.title = to.meta.title

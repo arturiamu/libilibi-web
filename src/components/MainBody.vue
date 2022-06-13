@@ -25,7 +25,7 @@
 import LBHeader from "@/components/Header";
 import LBFooter from "@/components/Footer";
 import LBHome from "@/views/Home";
-import {feedBack} from '@/js/https'
+import {httpPost} from '@/js/https'
 
 export default {
   name: "MainBody",
@@ -39,7 +39,20 @@ export default {
     this.$router.push('/')
   },
   methods: {
+    success_tip: function (text) {
+      this.$message({
+        type: 'success',
+        message: text
+      });
+    },
+    failed_tip: function (text) {
+      this.$message({
+        type: 'info',
+        message: text
+      });
+    },
     side_f: function (type) {
+      let that = this
       if (type === 'get') {
         this.$alert('<a href="https://gitee.com/arturiamu/libilibi-web.git" target="_blank">前端 </a>' +
             '<a href="https://gitee.com/arturiamu/libilibi-host.git" target="_blank"> 后端</a>', 'gitee仓库地址', {
@@ -52,20 +65,24 @@ export default {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
         }).then(({value}) => {
-          let that = this;
           if (!value.match(/^\s+$/)) {
-            feedBack(that, value)
+            httpPost("/advise/add", {
+              advise: value,
+              userId: this.$store.state.user.id
+            }).then(data => {
+              if (data.state === 200) {
+                that.success_tip(data.message)
+              } else {
+                that.failed_tip(data.message)
+              }
+            }).catch(err => {
+              that.failed_tip("网络繁忙，请稍后重试")
+            })
           } else {
-            this.$message({
-              type: 'info',
-              message: '信息无效'
-            });
+            that.failed_tip("输入无效")
           }
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '取消输入'
-          });
+          that.failed_tip("输入无效")
         });
       }
     }
