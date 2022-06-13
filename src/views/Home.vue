@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import {main_video, play_video, getItems, getDefaultItems} from "@/js/common";
+import {main_video, play_video, getItems, getDefaultItems} from "@/js/https";
 import LBItem from "@/views/Item";
 
 export default {

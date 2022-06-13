@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import {login} from "@/js/common";
+import {login} from "@/js/https";
 
 export default {
   name: 'Login',

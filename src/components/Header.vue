@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import {search} from '@/js/common'
+import {search} from '@/js/https'
 import Account from '@/views/Account'
 
 export default {

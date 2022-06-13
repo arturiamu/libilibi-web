@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import {getVerCode, login} from "@/js/common";
+import {getVerCode, login} from "@/js/https";
 
 export default {
   name: 'ForgetPassword',

@@ -63,7 +63,7 @@
 
 <script>
 
-import {getVerCode, register} from '@/js/common'
+import {getVerCode, register} from '@/js/https'
 
 export default {
   name: "Register",
