@@ -29,8 +29,9 @@
     <div id="button_size">
       <el-button size="small" type="primary" @click="submitForm('ruleForm')" style="width: 30%">登录</el-button>
       <div id="help_button">
-        <el-link :underline="false" type="primary">忘记密码?</el-link>
+        <router-link to="/forgetPassword">忘记密码?</router-link>
       </div>
+
     </div>
   </div>
 
@@ -74,9 +75,10 @@ export default {
 <style scoped>
 #top_total_length_picture {
   position: relative;
-  top:15px
+  top: 15px
 }
-#nav{
+
+#nav {
   text-align: left;
   margin: 15px auto;
   width: 55%;

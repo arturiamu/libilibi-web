@@ -92,6 +92,14 @@ const routes = [
             title: 'ad-astra 搜索'
         }
     },
+    {
+        path: '/forgetPassword',
+        name: 'forgetPassword',
+        component: () => import('@/views/ForgetPassword'),
+        meta: {
+            title: 'ad-astra 忘记密码'
+        }
+    },
 ]
 
 export default new VueRouter({
