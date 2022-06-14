@@ -5,8 +5,17 @@
 </template>
 
 <script>
+import {httpGet} from "@/js/https";
+
 export default {
-  name: "History"
+  name: "History",
+  mounted() {
+    if (this.$store.state.user.id) {
+      httpGet("/history/get/10").then(data=>{
+        console.log(data)
+      })
+    }
+  }
 }
 </script>
 
