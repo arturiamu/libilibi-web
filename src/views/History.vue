@@ -21,17 +21,20 @@
               </div>
               <div class="videocontent inl">
                 <div class="videocontent1 ">
-                  <el-link>{{ video.video.title }}</el-link>
+                  <el-link :underline="false">{{ video.video.title }}</el-link>
+                </div>
+                <div class="desript">
+                 <h4>描述 :</h4>
                 </div>
                 <div class="videocontent2 ">
-                  <el-link>描述 | {{ video.video.desc.substring(0, 25) + "..." }}</el-link>
+                  <el-link :underline="false">{{ video.video.desc.replaceAll(/\r/g,"&nbsp;")}}</el-link>
                 </div>
                 <div class="videocontent3">
-                  <el-link>类型 | {{ video.video.tname }}</el-link>
+                  <el-link :underline="false">类型 | {{ video.video.tname }}</el-link>
                 </div>
               </div>
               <div class="videodelete ">
-                <el-button type="danger" @click="deletehistory" icon="el-icon-delete" circle></el-button>
+                <el-button type="danger" @click="deletehistory(video)" icon="el-icon-delete" circle></el-button>
               </div>
             </div>
           </el-card>
@@ -60,20 +63,21 @@ export default {
   },
   mounted() {
     httpGet("/history/get/13").then(data => {
-      console.log(data)
       this.videos = data.data
     })
   },
   methods: {
     clean() {
+      let that = this
       this.$confirm('清空之后就什么都没有了哦~', '提示', {
         confirmButtonText: '确定清空',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
+        that.videos = []
         this.$message({
           type: 'success',
-          message: '删除成功!'
+          message: '删除成功!',
         });
       }).catch(() => {
         this.$message({
@@ -85,8 +89,13 @@ export default {
     gotoplay(v) {
       play_video(this, v.video)
     },
-    deletehistory() {
-
+    deletehistory(his) {
+      for (let i = 0; i < this.videos.length; i++) {
+        if (this.videos[i].id === his.id) {
+          this.videos.splice(i, 1)
+          break
+        }
+      }
     }
   }
 }
@@ -129,9 +138,10 @@ img {
 }
 
 .videoimg {
+  position: relative;
   width: 160px;
   height: 100px;
-  position: relative;
+
 }
 
 .center {
@@ -156,27 +166,35 @@ img {
 }
 
 .videocontent1 {
-  position: relative;
-  top: 45px;
-  width: 75%;
+  position: absolute;
+  width: 380%;
 }
 
 .videocontent2 {
   position: absolute;
-  top: 130px;
+  top: 80px;
+  width: 350px;
+  max-height: 60px;
+  overflow: hidden;
+
 }
 
 .videocontent3 {
   position: relative;
-  top: 85px;
-  left: 420px;
+  top: 90px;
+  left: 410px;
   margin-left: 10px;
 }
 
 .videodelete {
   position: relative;
-  top: -80px;
-  left: 660px;
+  top: -105px;
+  left: 690px;
+}
+
+.desript{
+  position: absolute;
+  top: 60px;
 }
 
 </style>
