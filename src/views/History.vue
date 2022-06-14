@@ -12,22 +12,26 @@
 
     <div id="history">
       <el-timeline>
-        <el-timeline-item v-for="video in videos" placement="top" size="normal">
+        <el-timeline-item v-for="video in videos" :timestamp="video.createTime" placement="top" type="primary"
+                          size="normal">
           <el-card>
             <div class="center">
-              <div class="videoimg inl">
-                <img :src="video.pic">
+              <div class="videoimg inl" @click="gotoplay(video)">
+                <img :src="video.video.pic" @click="gotoplay(video)">
               </div>
               <div class="videocontent inl">
                 <div class="videocontent1 ">
-                  <el-link>{{ video.title }}</el-link>
+                  <el-link>{{ video.video.title }}</el-link>
                 </div>
                 <div class="videocontent2 ">
-                  <el-link>{{ video.desc }}</el-link>
+                  <el-link>描述 | {{ video.video.desc.substring(0, 25) + "..." }}</el-link>
                 </div>
                 <div class="videocontent3">
-                  <el-link>类型 | {{ video.tname }}</el-link>
+                  <el-link>类型 | {{ video.video.tname }}</el-link>
                 </div>
+              </div>
+              <div class="videodelete ">
+                <el-button type="danger" @click="deletehistory" icon="el-icon-delete" circle></el-button>
               </div>
             </div>
           </el-card>
@@ -42,7 +46,8 @@
 </template>
 
 <script>
-import {httpGet} from "@/js/https";
+import {httpGet, play_video} from "@/js/https";
+
 
 export default {
   name: "History",
@@ -77,6 +82,12 @@ export default {
         });
       });
     },
+    gotoplay(v) {
+      play_video(this, v.video)
+    },
+    deletehistory() {
+
+    }
   }
 }
 </script>
@@ -138,20 +149,34 @@ img {
   left: 40px;
   top: -90px;
 }
-.videocontent1 a{
+
+.videocontent1 a {
   font-size: larger;
   font-weight: bold;
+}
 
+.videocontent1 {
+  position: relative;
+  top: 45px;
+  width: 75%;
 }
 
 .videocontent2 {
   position: absolute;
-  top: 85px;
+  top: 130px;
 }
+
 .videocontent3 {
-  position: absolute;
+  position: relative;
   top: 85px;
-  left: 200px;
+  left: 420px;
+  margin-left: 10px;
+}
+
+.videodelete {
+  position: relative;
+  top: -80px;
+  left: 660px;
 }
 
 </style>
