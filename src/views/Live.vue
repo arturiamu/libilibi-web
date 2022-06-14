@@ -6,8 +6,9 @@
       </el-link>
     </div>
     <div id="frame">
-<!--      <iframe id="lb-frame" v-bind:src="src + videos[i].roomid"-->
-      <iframe id="lb-frame" src="https://www.bilibili.com/blackboard/live/live-activity-player.html?quality=1&cid=23635060"
+      <!--      <iframe id="lb-frame" v-bind:src="src + videos[i].roomid"-->
+      <iframe id="lb-frame"
+              src="https://www.bilibili.com/blackboard/live/live-activity-player.html?quality=1&cid=23635060"
               allowfullscreen="allowfullscreen" width="100%" height="100%" allow="autoplay"
               scrolling="no" frameborder="no" framespacing="0" border="0"
               sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
