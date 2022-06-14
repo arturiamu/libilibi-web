@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import {httpPost, httpGet, play_video} from "@/js/https";
+import {httpGet, play_video} from "@/js/https";
 import Item from "@/views/Item";
 
 export default {

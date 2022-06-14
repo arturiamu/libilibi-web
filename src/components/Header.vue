@@ -117,12 +117,15 @@ export default {
     },
     search: function () {
       if (this.keyword.replaceAll(" ", '') !== "") {
-        if (this.$route.path !== '/search') {
-
-        } else {
+        if (this.$route.path === '/search') {
           this.$router.push('/')
-
         }
+        this.$router.push({
+          path: '/search',
+          query: {
+            keyword: this.keyword
+          }
+        })
       }
     }
   }

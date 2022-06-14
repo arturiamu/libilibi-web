@@ -155,7 +155,7 @@
 </template>
 
 <script>
-import {main_video, play_video, like, unLike, isLike, addHistory} from "@/js/https";
+import {httpGet, httpPost, play_video} from "@/js/https";
 
 export default {
   name: "Player",
@@ -168,9 +168,19 @@ export default {
     }
   },
   mounted() {
-    main_video(this)
-    isLike(this)
-    addHistory(this)
+    httpGet('/video/pid/' + 129 + '/' + 12).then(data => {
+      if (data.state === 200) {
+        this.videos = data.data
+      }
+      this.$forceUpdate()
+    })
+    httpPost('/like/isLike', {
+      aid: this.video.aid,
+      pid: this.video.pid
+    }).then(resp => {
+      this.video.islike = resp.data.message
+      this.$forceUpdate()
+    })
   },
   methods: {
     op(type) {
@@ -178,11 +188,17 @@ export default {
         if (type === 'like') {
           this.video.islike = 'like'
           this.video.like++
-          like(this)
+          httpPost('/like/add', {
+            aid: this.video.aid,
+            pid: this.video.pid
+          })
         } else if (type === 'unlike') {
           this.video.islike = 'unlike'
           this.video.like--
-          unLike(this)
+          httpPost('/like/cancel', {
+            aid: this.video.aid,
+            pid: this.video.pid
+          })
         }
         this.$forceUpdate()
       } else {
@@ -232,12 +248,15 @@ export default {
   width: 40px;
   height: 40px;
 }
-.share-pic img{
+
+.share-pic img {
   border-radius: 20px;
 }
-.share-sub{
+
+.share-sub {
 
 }
+
 .a-re {
   position: absolute;
   left: 150px;

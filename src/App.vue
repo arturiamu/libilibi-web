@@ -6,30 +6,31 @@
 
 <script>
 import MainBody from "@/components/MainBody";
-import {httpGet, httpPost, getDefaultItems, getItems, isLogin} from "@/js/https";
+import {httpGet} from "@/js/https";
 
 export default {
   name: 'App',
   components: {MainBody},
   mounted() {
-    httpGet("/user/isLogin").then(data=>{
-      if(data.state === 200){
+    httpGet("/user/isLogin").then(data => {
+      if (data.state === 200) {
         this.$store.dispatch("ch_user", data.data)
       }
     })
-    httpGet("/item/all").then(data=>{
-      if(data.state === 200){
+    httpGet("/item/all").then(data => {
+      if (data.state === 200) {
         this.$store.dispatch("ch_all_items", data.data)
       }
     })
-    httpGet("/item/default").then(data=>{
-      if(data.state === 200){
+    httpGet("/item/default").then(data => {
+      if (data.state === 200) {
         this.$store.dispatch("ch_default_items", data.data)
-        // this.$store.dispatch("ch_user_items", data.data)
+        if (!this.$store.state.user.id) {
+          this.$store.dispatch("ch_user_items", data.data)
+        }
       }
     })
 
-    // getDefaultItems(this)
     let w = document.body.clientWidth
     console.log(w)
     console.log(this)

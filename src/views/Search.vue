@@ -15,24 +15,24 @@
 </template>
 
 <script>
-import {video_detail} from "@/js/https";
+import {play_video} from "@/js/https";
 
 export default {
   name: "Search",
   data: function () {
     return {
-      // videos: this.$route.params.videos,
+      keyword: this.$route.query.keyword,
       videos: ""
     }
   },
   methods: {
     play: function (video) {
-      video_detail(this, video.bvid)
+      play_video(this, video)
     }
   },
   mounted() {
-    this.videos = this.$route.params.videos
-  },
+    console.log(this.keyword)
+  }
 }
 </script>
 
