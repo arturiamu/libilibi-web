@@ -51,7 +51,6 @@
 <script>
 import {httpGet, play_video} from "@/js/https";
 
-
 export default {
   name: "History",
   data() {
@@ -62,7 +61,7 @@ export default {
     }
   },
   mounted() {
-    httpGet("/history/get/13").then(data => {
+    httpGet("/history/get/100").then(data => {
       this.videos = data.data
     })
   },
