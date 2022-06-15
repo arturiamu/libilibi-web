@@ -17,10 +17,10 @@
           <el-card>
             <div class="center">
               <div class="videoimg inl" @click="gotoplay(video)">
-                <img :src="video.video.pic" @click="gotoplay(video)">
+                <img :src="video.video.pic">
               </div>
               <div class="videocontent inl">
-                <div class="videocontent1 ">
+                <div class="videocontent1 "  @click="gotoplay(video)">
                   <el-link :underline="false">{{ video.video.title }}</el-link>
                 </div>
                 <div class="desript">
