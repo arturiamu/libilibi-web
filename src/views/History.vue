@@ -62,7 +62,7 @@ export default {
     }
   },
   mounted() {
-    httpGet("/history/get/13").then(data => {
+    httpGet("/history/get/100").then(data => {
       this.videos = data.data
     })
   },

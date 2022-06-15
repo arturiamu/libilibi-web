@@ -1,90 +1,45 @@
 <template>
-  <div>
-
-    <el-row class="tac">
-      <el-col :span="12">
-        <h5>默认颜色</h5>
-        <el-menu
-            default-act     ive="2"
-            class="el-menu-vertical-demo"
-            @open="handleOpen"
-            @close="handleClose">
-          <el-submenu index="1">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>导航一</span>
-            </template>
-            <el-menu-item-group>
-              <template slot="title">分组一</template>
-              <el-menu-item index="1-1">选项1</el-menu-item>
-              <el-menu-item index="1-2">选项2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-              <el-menu-item index="1-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="1-4">
-              <template slot="title">选项4</template>
-              <el-menu-item index="1-4-1">选项1</el-menu-item>
-            </el-submenu>
-          </el-submenu>
-          <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
-          </el-menu-item>
-          <el-menu-item index="3" disabled>
-            <i class="el-icon-document"></i>
-            <span slot="title">导航三</span>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <i class="el-icon-setting"></i>
-            <span slot="title">导航四</span>
-          </el-menu-item>
-        </el-menu>
-      </el-col>
-      <el-col :span="12">
-        <h5>自定义颜色</h5>
-        <el-menu
-            default-active="2"
-            class="el-menu-vertical-demo"
-            @open="handleOpen"
-            @close="handleClose"
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b">
-          <el-submenu index="1">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>导航一</span>
-            </template>
-            <el-menu-item-group>
-              <template slot="title">分组一</template>
-              <el-menu-item index="1-1">选项1</el-menu-item>
-              <el-menu-item index="1-2">选项2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-              <el-menu-item index="1-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="1-4">
-              <template slot="title">选项4</template>
-              <el-menu-item index="1-4-1">选项1</el-menu-item>
-            </el-submenu>
-          </el-submenu>
-          <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
-          </el-menu-item>
-          <el-menu-item index="3" disabled>
-            <i class="el-icon-document"></i>
-            <span slot="title">导航三</span>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <i class="el-icon-setting"></i>
-            <span slot="title">导航四</span>
-          </el-menu-item>
-        </el-menu>
-      </el-col>
-    </el-row>
-
+  <div id="collection">
+    <div id="nav">
+      <el-row class="tac">
+        <el-col :span="12">
+          <div id="collectiontitle">
+            <h4>我的创建</h4>
+          </div>
+          <el-menu
+              default-act ive="2"
+              class="el-menu-vertical-demo"
+              @open="handleOpen"
+              @close="handleClose">
+            <div id="addCollection">
+              <el-button icon="el-icon-circle-plus-outline" type="primary">新建收藏夹</el-button>
+            </div>
+            <div id="default">
+              <el-submenu index="1">
+                <template slot="title">
+                  <i class="el-icon-star-on"></i>
+                  <span>默认收藏夹</span>
+                </template>
+              </el-submenu>
+            </div>
+            <div id="createdCollection">
+              <el-submenu index="2">
+                <template slot="title">
+                  <i class="el-icon-folder-add"></i>
+                  <span>创建的收藏夹</span>
+                </template>
+                <el-menu-item-group>
+                  <el-menu-item index="1-1">xx收藏夹</el-menu-item>
+                  <el-menu-item index="1-2">xx收藏夹</el-menu-item>
+                </el-menu-item-group>
+              </el-submenu>
+            </div>
+          </el-menu>
+        </el-col>
+        <el-col :span="12">
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -103,5 +58,27 @@ export default {
 </script>
 
 <style scoped>
+#nav {
+  margin-left: 20px;
+  width: 50%;
+}
+
+#collectiontitle {
+  padding-top: 40px;
+}
+
+#addCollection {
+  padding-top: 20%;
+}
+
+#default {
+  padding-top: 20%;
+
+}
+
+#createdCollection {
+  padding-top: 20%;
+
+}
 
 </style>

@@ -65,7 +65,7 @@
             <el-link type="primary" :underline="false">动态</el-link>
           </div>
         </div>
-        <div id="collect" class="inl app-info" @click="goto('/favorite')">
+        <div id="collect" class="inl app-info" @click="goto('/collection')">
           <div id="c-icon" class="mess">
             <el-link icon="el-icon-star-off" type="primary" :underline="false"></el-link>
           </div>
