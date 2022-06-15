@@ -1,7 +1,7 @@
 <template>
   <div id="main-body">
     <LBHeader></LBHeader>
-    <keep-alive include="Home,Explore">
+    <keep-alive include="Home,Explore,Player">
       <RouterView></RouterView>
     </keep-alive>
     <LBFooter></LBFooter>

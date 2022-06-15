@@ -16,25 +16,25 @@
                           size="normal">
           <el-card>
             <div class="center">
-              <div class="videoimg inl" @click="gotoplay(video)">
+              <div class="videoImg inl" @click="gotoPlay(video)">
                 <img :src="video.video.pic">
               </div>
-              <div class="videocontent inl">
-                <div class="videocontent1 "  @click="gotoplay(video)">
+              <div class="videoContent inl">
+                <div class="videoContent1 " @click="gotoPlay(video)">
                   <el-link :underline="false">{{ video.video.title }}</el-link>
                 </div>
-                <div class="desript">
-                 <h4>描述 :</h4>
+                <div class="desc">
+                  <h4>描述 :</h4>
                 </div>
-                <div class="videocontent2 ">
-                  <el-link :underline="false">{{ video.video.desc.replaceAll(/\r/g,"&nbsp;")}}</el-link>
+                <div class="videoContent2 ">
+                  <el-link :underline="false">{{ video.video.desc.replaceAll(/\r/g, "&nbsp;") }}</el-link>
                 </div>
-                <div class="videocontent3">
+                <div class="videoContent3">
                   <el-link :underline="false">类型 | {{ video.video.tname }}</el-link>
                 </div>
               </div>
-              <div class="videodelete ">
-                <el-button type="danger" @click="deletehistory(video)" icon="el-icon-delete" circle></el-button>
+              <div class="videoDelete ">
+                <el-button type="danger" @click="deleteHistory(video)" icon="el-icon-delete" circle></el-button>
               </div>
             </div>
           </el-card>
@@ -42,8 +42,8 @@
       </el-timeline>
     </div>
 
-    <div id="footimg">
-      <img src="../assets/historyend.png">
+    <div id="footImg">
+      <img src="../assets/historyEnd.png">
     </div>
   </div>
 </template>
@@ -74,6 +74,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
+        httpGet("/history/del/all")
         that.videos = []
         this.$message({
           type: 'success',
@@ -86,10 +87,11 @@ export default {
         });
       });
     },
-    gotoplay(v) {
+    gotoPlay(v) {
       play_video(this, v.video)
     },
-    deletehistory(his) {
+    deleteHistory(his) {
+      httpGet("/history/del/" + his.id)
       for (let i = 0; i < this.videos.length; i++) {
         if (this.videos[i].id === his.id) {
           this.videos.splice(i, 1)
@@ -137,7 +139,7 @@ img {
   height: 100%;
 }
 
-.videoimg {
+.videoImg {
   position: relative;
   width: 160px;
   height: 100px;
@@ -148,29 +150,29 @@ img {
   text-align: left;
 }
 
-#footimg {
+#footImg {
   width: 450px;
   height: 200px;
   margin: 0 auto;
 }
 
-.videocontent {
+.videoContent {
   position: relative;
   left: 40px;
   top: -90px;
 }
 
-.videocontent1 a {
+.videoContent1 a {
   font-size: larger;
   font-weight: bold;
 }
 
-.videocontent1 {
+.videoContent1 {
   position: absolute;
   width: 380%;
 }
 
-.videocontent2 {
+.videoContent2 {
   position: absolute;
   top: 80px;
   width: 350px;
@@ -179,20 +181,20 @@ img {
 
 }
 
-.videocontent3 {
+.videoContent3 {
   position: relative;
   top: 90px;
   left: 410px;
   margin-left: 10px;
 }
 
-.videodelete {
+.videoDelete {
   position: relative;
   top: -105px;
   left: 690px;
 }
 
-.desript{
+.desc {
   position: absolute;
   top: 60px;
 }

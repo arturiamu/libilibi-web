@@ -17,6 +17,7 @@
             title="视频分区"
             :size="150"
             :visible.sync="drawer">
+
           <div id="partition">
             <div class="pt pt-top" @click="goAnchor('lb-header')">
               <el-link :underline="false" icon="el-icon-arrow-up"></el-link>
@@ -138,8 +139,8 @@ export default {
   },
   methods: {
     load_videos: function () {
-      httpGet('/video/pid/' + 129 + '/' + 13).then(data => {
-        if(data.state === 200){
+      httpGet('/interest/13').then(data => {
+        if (data.state === 200) {
           this.videos = data.data
         }
       })
