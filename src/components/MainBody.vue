@@ -6,6 +6,10 @@
     </keep-alive>
     <LBFooter></LBFooter>
     <div id="sidebar" v-bind:style="{ left: $store.state.per}">
+      <div id="up" class="s-h" @click="goAnchor('lb-header')">
+        <el-link :underline="false" icon="el-icon-arrow-up"></el-link>
+        <el-link :underline="false">顶部</el-link>
+      </div>
       <div id="join" class="s-h" @click="side_f('join')">
         <el-link :underline="false">加入</el-link>
         <el-link :underline="false">我们</el-link>
@@ -17,6 +21,10 @@
       <div id="feedback" class="s-h" @click="side_f('feedback')">
         <el-link :underline="false">意见</el-link>
         <el-link :underline="false">反馈</el-link>
+      </div>
+      <div id="down" class="s-h" @click="goAnchor('lb-footer')">
+        <el-link :underline="false">底部</el-link>
+        <el-link :underline="false" icon="el-icon-arrow-down"></el-link>
       </div>
     </div>
   </div>
@@ -85,7 +93,11 @@ export default {
           that.failed_tip("输入无效")
         });
       }
-    }
+    },
+    goAnchor: function (id) {
+      let anchor = document.getElementById(id);
+      anchor.scrollIntoView();
+    },
   }
 }
 </script>
@@ -94,6 +106,24 @@ export default {
 #main-body {
   margin: 0 auto;
   max-width: 1630px;
+}
+
+#up {
+  text-align: center;
+  position: fixed;
+  width: 40px;
+  top: 57%;
+  border: 1px solid #606266;
+  border-radius: 5px;
+}
+
+#down {
+  text-align: center;
+  position: fixed;
+  width: 40px;
+  top: 83%;
+  border: 1px solid #606266;
+  border-radius: 5px;
 }
 
 .s-h:hover {

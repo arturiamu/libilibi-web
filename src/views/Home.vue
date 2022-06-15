@@ -17,7 +17,6 @@
             title="视频分区"
             :size="150"
             :visible.sync="drawer">
-
           <div id="partition">
             <div class="pt pt-top" @click="goAnchor('lb-header')">
               <el-link :underline="false" icon="el-icon-arrow-up"></el-link>
@@ -30,14 +29,6 @@
             </div>
           </div>
         </el-drawer>
-        <div id="up" class="s-h" @click="goAnchor('lb-header')">
-          <el-link :underline="false" icon="el-icon-arrow-up"></el-link>
-          <el-link :underline="false">顶部</el-link>
-        </div>
-        <div id="down" class="s-h" @click="goAnchor('lb-footer')">
-          <el-link :underline="false">底部</el-link>
-          <el-link :underline="false" icon="el-icon-arrow-down"></el-link>
-        </div>
       </div>
 
       <div class="inl" id="carousel">
@@ -175,24 +166,6 @@ export default {
   position: fixed;
   text-align: center;
   width: 40px;
-  border: 1px solid #606266;
-  border-radius: 5px;
-}
-
-#up {
-  text-align: center;
-  position: fixed;
-  width: 40px;
-  top: 57%;
-  border: 1px solid #606266;
-  border-radius: 5px;
-}
-
-#down {
-  text-align: center;
-  position: fixed;
-  width: 40px;
-  top: 83%;
   border: 1px solid #606266;
   border-radius: 5px;
 }

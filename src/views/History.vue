@@ -51,7 +51,6 @@
 <script>
 import {httpGet, play_video} from "@/js/https";
 
-
 export default {
   name: "History",
   data() {
