@@ -17,17 +17,17 @@
           <el-card>
             <div class="center">
               <div class="videoimg inl" @click="gotoplay(video)">
-                <img :src="video.video.pic" @click="gotoplay(video)">
+                <img :src="video.video.pic">
               </div>
               <div class="videocontent inl">
-                <div class="videocontent1 ">
+                <div class="videocontent1 " @click="gotoplay(video)">
                   <el-link :underline="false">{{ video.video.title }}</el-link>
                 </div>
                 <div class="desript">
-                 <h4>描述 :</h4>
+                  <h4>描述 :</h4>
                 </div>
                 <div class="videocontent2 ">
-                  <el-link :underline="false">{{ video.video.desc.replaceAll(/\r/g,"&nbsp;")}}</el-link>
+                  <el-link :underline="false">{{ video.video.desc.replaceAll(/\r/g, "&nbsp;") }}</el-link>
                 </div>
                 <div class="videocontent3">
                   <el-link :underline="false">类型 | {{ video.video.tname }}</el-link>
@@ -192,7 +192,7 @@ img {
   left: 690px;
 }
 
-.desript{
+.desript {
   position: absolute;
   top: 60px;
 }

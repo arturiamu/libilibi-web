@@ -167,8 +167,8 @@ export default {
       videos: '',
     }
   },
-  mounted() {
-    httpGet('/video/pid/' + 129 + '/' + 12).then(data => {
+  activated () {
+    httpGet('/interest/13').then(data => {
       if (data.state === 200) {
         this.videos = data.data
       }
