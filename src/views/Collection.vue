@@ -2,6 +2,7 @@
   <div id="collection">
     <div id="nav" class="inl">
       <el-menu
+          default-active="1-1"
           class="el-menu-vertical-demo">
         <div id="collectionTitle">
           <h2>我的收藏</h2>
@@ -624,6 +625,9 @@ export default {
       }
     }
   },
+  mounted() {
+    this.videos = this.collections[0].videos
+  },
   methods: {
     play(v) {
       play_video(this, v)
@@ -631,8 +635,6 @@ export default {
     ch_videos(index) {
       this.videos = this.collections[index].videos
     },
-
-
   }
 }
 </script>
@@ -687,14 +689,13 @@ export default {
 }
 
 #content-pic {
-  position: relative;
+  margin-left: -10%;
 }
 
 #content-des {
-  position: relative;
-  font-size: 14px;
-  left: 1150px;
-  top: 410px;
+  margin-left: -10%;
+  margin-top: -4%;
+  font-size: 20px;
 }
 
 #createdForm {
