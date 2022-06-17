@@ -68,9 +68,16 @@
             </div>
           </el-dialog>
         </div>
+        <div id="content-deleteAll" class="inl" @click="deleteAll">
+          <el-button>删除全部</el-button>
+        </div>
         <div id="content-search" class="inl">
           <el-input v-model="ruleForm.content" prefix-icon="el-icon-search" placeholder="搜索收藏夹内容"></el-input>
         </div>
+      </div>
+      <div id="content-description">
+        简介：
+        没到18+不准看哦，我说认真的，因为你们也看不懂，嘿嘿嘿，都是珍藏精品资源!
       </div>
       <div id="content-body">
         <div id="content-null" v-if="collections.length === 0">
@@ -82,17 +89,20 @@
           </div>
         </div>
         <div id="content-exist" v-else>
-          <div class="videosType inl" @click="play(v)" v-for="v in videos">
-            <div class="videosImg">
+          <div class="videosType inl" v-for="v in videos">
+            <div class="videosImg" @click="play(v)">
               <img :src="v.pic">
             </div>
             <div>
-              <el-link :underline="false" type="primary">
+              <el-link :underline="false" type="primary" @click="play(v)">
                 {{ v.title.substring(0, 25) }}
               </el-link>
             </div>
-            <div class="c-time">
+            <div class="collectionTime ">
               <span>收藏于: xx小时前</span>
+            </div>
+            <div class="videosDelete ">
+              <el-link type="primary" :underline="false" @click="VideosDelete">删除</el-link>
             </div>
           </div>
         </div>
@@ -635,6 +645,12 @@ export default {
     ch_videos(index) {
       this.videos = this.collections[index].videos
     },
+    VideosDelete() {
+    },
+    deleteAll() {
+
+    }
+
   }
 }
 </script>
@@ -658,7 +674,7 @@ export default {
 
 #content {
   vertical-align: top;
-  width: 85%;
+  width: 80%;
   margin: 0 auto;
 }
 
@@ -667,17 +683,23 @@ export default {
   margin-top: 20px;
 }
 
+#content-deleteAll {
+  margin-right: 55%;
+}
+
+#content-description {
+  margin-top: 2%;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
 #content-addCollection {
-  padding-right: 5%;
-
+  padding-right: 2%;
 }
 
-#content-search {
-  padding-right: 5%;
-}
 
 #content-body {
-  padding-left: 8%;
+  padding-left: 6%;
   padding-top: 2%;
 }
 
@@ -712,6 +734,11 @@ export default {
 .videosImg img {
   width: 100%;
   height: 100%;
+}
+
+.videosDelete {
+  margin-top: -12%;
+  margin-left: 80%;
 }
 
 #createdForm-body {
