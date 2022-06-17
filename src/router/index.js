@@ -100,6 +100,7 @@ const routes = [
             title: 'ad-astra 忘记密码'
         }
     },
+
 ]
 
 export default new VueRouter({
