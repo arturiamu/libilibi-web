@@ -75,10 +75,6 @@
           <el-input v-model="ruleForm.content" prefix-icon="el-icon-search" placeholder="搜索收藏夹内容"></el-input>
         </div>
       </div>
-      <div id="content-description">
-        简介：
-        没到18+不准看哦，我说认真的，因为你们也看不懂，嘿嘿嘿，都是珍藏精品资源!
-      </div>
       <div id="content-body">
         <div id="content-null" v-if="collections.length === 0">
           <div id="content-pic">
@@ -89,6 +85,10 @@
           </div>
         </div>
         <div id="content-exist" v-else>
+          <div id="content-description">
+            简介：
+            没到18+不准看哦，我说认真的，因为你们也看不懂，嘿嘿嘿，都是珍藏精品资源!
+          </div>
           <div class="videosType inl" v-for="v in videos">
             <div class="videosImg" @click="play(v)">
               <img :src="v.pic">
@@ -625,6 +625,10 @@ export default {
             }
           ]
         },
+        {name: "收藏夹3"},
+        {name: "收藏夹4"},
+        {name: "收藏夹5"},
+        {name: "收藏夹6"},
       ],
       videos: [],
       rules: {
@@ -687,16 +691,9 @@ export default {
   margin-right: 55%;
 }
 
-#content-description {
-  margin-top: 2%;
-  font-size: 20px;
-  font-weight: bolder;
-}
-
 #content-addCollection {
   padding-right: 2%;
 }
-
 
 #content-body {
   padding-left: 6%;
@@ -708,6 +705,13 @@ export default {
   max-height: 640px;
   min-height: 640px;
   overflow: scroll;
+}
+
+#content-description {
+  padding-bottom: 2%;
+  font-size: 20px;
+  font-weight: bolder;
+  text-align: center;
 }
 
 #content-pic {
