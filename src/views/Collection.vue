@@ -17,7 +17,7 @@
               <span>默认收藏夹</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="1-1" @click="ch_videos(0)">收藏数量: 10</el-menu-item>
+              <el-menu-item index="1-1" @click="ch_default">收藏数量: {{ defaultVCollections.length }}</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </div>
@@ -25,11 +25,11 @@
           <el-submenu index="2">
             <template slot="title">
               <i class="el-icon-folder-add"></i>
-              <span>创建的收藏夹</span>
+              <span>用户收藏夹</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item v-for="(c,i) in collections" v-if="i!== 0" :index="c" @click="ch_videos(i)">
-                {{ c.name }}
+              <el-menu-item v-for="(c,i) in collections" :index="2-i" @click="ch_videos(i)">
+                {{ c.category + "：" + c.data.length }}
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -76,12 +76,12 @@
         </div>
       </div>
       <div id="content-body">
-        <div id="content-null" v-if="collections.length === 0">
+        <div id="content-null" v-if="len === 0">
           <div id="content-pic">
             <img src="../assets/null.png">
           </div>
           <div id="content-des">
-            你暂时还没有收藏夹哦~
+            这里什么都没有哦~
           </div>
         </div>
         <div id="content-exist" v-else>
@@ -91,15 +91,15 @@
           </div>
           <div class="videosType inl" v-for="v in videos">
             <div class="videosImg" @click="play(v)">
-              <img :src="v.pic">
+              <img :src="v.video[0].pic">
             </div>
-            <div>
+            <div class="title">
               <el-link :underline="false" type="primary" @click="play(v)">
-                {{ v.title.substring(0, 25) }}
+                {{ v.video[0].title.substring(0, 25) }}
               </el-link>
             </div>
             <div class="collectionTime ">
-              <span>收藏于: xx小时前</span>
+              <el-link type="primary">收藏于: {{ v.createTime.substring(0, 10) }}</el-link>
             </div>
             <div class="videosDelete ">
               <el-link type="primary" :underline="false" @click="VideosDelete">删除</el-link>
@@ -112,524 +112,22 @@
 </template>
 
 <script>
-import {play_video} from "@/js/https";
+import {play_video, httpGet} from "@/js/https";
 
-export default  {
+export default {
+
   name: "Collection",
   data() {
     return {
+      len: 0,
       createVisible: false,
       ruleForm: {
         name: '',
         desc: '',
         content: '',
       },
-      collections: [
-        {
-          name: "默认收藏夹",
-          videos: [
-            {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            },
-            {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            },
-            {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            },
-            {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            },
-            {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            },
-            {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            },
-            {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            }, {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            }, {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            }, {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            },
-          ]
-        },
-        {
-          name: "收藏夹1",
-          videos: [
-            {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            },
-            {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            },
-            {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            },
-            {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            },
-            {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            },
-            {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            },
-            {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            },
-            {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            },
-            {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            },
-            {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            }, {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            }, {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            }, {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            }, {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            }, {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            }, {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            }, {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            }, {
-              aid: 208453317,
-              coin: 16,
-              danmaku: 2,
-              desc: "-",
-              favorite: 9,
-              like: 30,
-              pic: "http://i1.hdslb.com/bfs/archive/471f1a6bb58b8a12b9776777c99ce52d6ccba9c3.jpg",
-              pid: 129,
-              reply: 17,
-              share: 5,
-              tid: 154,
-              title: "【Twice】The Feels舞蹈挑战 男生（大叔）翻跳Twice回归英单",
-              tname: "舞蹈综合",
-              view: 1123
-            },
-            {
-              aid: 208242333,
-              coin: 23680,
-              danmaku: 3914,
-              desc: "唐诗逸舞蹈片段来源于逆水寒 X 唐诗逸《雨霖铃》选段 BV1As41177fV 和新流派“鸿音”同名推广舞蹈《鸿音》BV1" + "Qb4y1d7N6",
-              favorite: 83887,
-              like: 248160,
-              pic: "http://i0.hdslb.com/bfs/archive/db9564dbc6cea79f14732aaf44531e456ed5099d.jpg",
-              pid: 129,
-              reply: 1776,
-              share: 8476,
-              tid: 154,
-              title: "国家舞团首席:我将用62秒夺走你的“卧槽”！！！",
-              tname: "舞蹈综合",
-              view: 6241758
-            },
-          ]
-        },
-        {
-          name: "收藏夹2",
-          videos: [
-            {
-              aid: 208246193,
-              coin: 2241,
-              danmaku: 2422,
-              desc: "yt",
-              favorite: 22993,
-              like: 26888,
-              pic: "http://i2.hdslb.com/bfs/archive/5f607cace91c50fb0c1851c5cabff962e47e11b7.jpg",
-              pid: 129,
-              reply: 1972,
-              share: 7998,
-              tid: 199,
-              title: "ITZY最新回归曲LOCO 4K舞蹈版公开",
-              tname: "明星舞蹈",
-              view: 1396928
-            },
-            {
-              aid: 208118587,
-              coin: 1322,
-              danmaku: 2017,
-              desc: "yt",
-              favorite: 8047,
-              like: 13647,
-              pic: "http://i1.hdslb.com/bfs/archive/4c8e16a0e4970bedf5bdbc41e8a58e8a1e2e6541.jpg",
-              pid: 129,
-              reply: 1148,
-              share: 2394,
-              tid: 199,
-              title: "NCT127最新回归曲Sticker 4K舞蹈版公开",
-              tname: "明星舞蹈",
-              view: 417397
-            }
-          ]
-        },
-        {name: "收藏夹3"},
-        {name: "收藏夹4"},
-        {name: "收藏夹5"},
-        {name: "收藏夹6"},
-      ],
+      defaultVCollections: [],
+      collections: [],
       videos: [],
       rules: {
         name: [
@@ -640,21 +138,43 @@ export default  {
     }
   },
   mounted() {
-    this.videos = this.collections[0].videos
+    if (this.$store.state.user.id) {
+      let that = this
+      httpGet("/collection/selectCategory").then(resp => {
+        for (let i = 0; i < resp.data.length; i++) {
+          if (resp.data[i].category === '默认收藏夹') {
+            this.defaultVCollections = resp.data[i]
+          } else {
+            this.collections.push(resp.data[i])
+          }
+        }
+        that.ch_default()
+        console.log(this.collections)
+      })
+    }
   },
   methods: {
     play(v) {
       play_video(this, v)
     },
     ch_videos(index) {
-      this.videos = this.collections[index].videos
+      this.videos = this.collections[index].data
+      this.len = this.videos.length
+    },
+    ch_default() {
+      this.videos = this.defaultVCollections.data
+      if (this.videos) {
+        this.len = this.videos.length
+      } else {
+        this.len = 0
+      }
     },
     VideosDelete() {
+      alert(1)
     },
     deleteAll() {
-
+      alert(2)
     }
-
   }
 }
 </script>
@@ -662,6 +182,11 @@ export default  {
 <style scoped>
 #nav {
   vertical-align: top;
+}
+
+.title {
+  max-height: 22px;
+  overflow: hidden;
 }
 
 #collectionTitle {

@@ -37,8 +37,11 @@ export default {
     window.onresize = () => {
       return (() => {
         w = document.body.clientWidth
-        console.log(w)
         let alpha = w / 1903
+        if (alpha > 1.0) {
+          alpha = 1.0
+        }
+        console.log(w)
         console.log(alpha)
         document.body.style.zoom = alpha.toString()
       })();
