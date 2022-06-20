@@ -2,6 +2,7 @@
   <div id="collection">
     <div id="nav" class="inl">
       <el-menu
+          default-active="1-1"
           class="el-menu-vertical-demo">
         <div id="collectionTitle">
           <h2>我的收藏</h2>
@@ -16,7 +17,7 @@
               <span>默认收藏夹</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="1-1" @click="ch_videos(0)">收藏数量: {{ collections[0].videos.length }}</el-menu-item>
+              <el-menu-item index="1-1" @click="ch_videos(0)">收藏数量: 10</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </div>
@@ -28,7 +29,7 @@
             </template>
             <el-menu-item-group>
               <el-menu-item v-for="(c,i) in collections" v-if="i!== 0" :index="c" @click="ch_videos(i)">
-                {{ c + '：' + c.videos.length }}
+                {{ c.name }}
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -60,12 +61,15 @@
                 </div>
                 <div id="createdForm-foot">
                   <el-form-item>
-                    <el-button type="primary" @click="create('ruleForm')" style="width: 25%">创建</el-button>
+                    <el-button type="primary" @click="resetForm('ruleForm')" style="width: 25%">提交</el-button>
                   </el-form-item>
                 </div>
               </el-form>
             </div>
           </el-dialog>
+        </div>
+        <div id="content-deleteAll" class="inl" @click="deleteAll">
+          <el-button>删除全部</el-button>
         </div>
         <div id="content-search" class="inl">
           <el-input v-model="ruleForm.content" prefix-icon="el-icon-search" placeholder="搜索收藏夹内容"></el-input>
@@ -81,17 +85,24 @@
           </div>
         </div>
         <div id="content-exist" v-else>
-          <div class="videosType inl" @click="play(v)" v-for="v in videos">
-            <div class="videosImg">
+          <div id="content-description">
+            简介：
+            没到18+不准看哦，我说认真的，因为你们也看不懂，嘿嘿嘿，都是珍藏精品资源!
+          </div>
+          <div class="videosType inl" v-for="v in videos">
+            <div class="videosImg" @click="play(v)">
               <img :src="v.pic">
             </div>
             <div>
-              <el-link :underline="false" type="primary">
+              <el-link :underline="false" type="primary" @click="play(v)">
                 {{ v.title.substring(0, 25) }}
               </el-link>
             </div>
-            <div class="c-time">
+            <div class="collectionTime ">
               <span>收藏于: xx小时前</span>
+            </div>
+            <div class="videosDelete ">
+              <el-link type="primary" :underline="false" @click="VideosDelete">删除</el-link>
             </div>
           </div>
         </div>
@@ -101,7 +112,7 @@
 </template>
 
 <script>
-import {play_video, httpGet} from "@/js/https";
+import {play_video} from "@/js/https";
 
 export default  {
   name: "Collection",
@@ -614,6 +625,10 @@ export default  {
             }
           ]
         },
+        {name: "收藏夹3"},
+        {name: "收藏夹4"},
+        {name: "收藏夹5"},
+        {name: "收藏夹6"},
       ],
       videos: [],
       rules: {
@@ -625,26 +640,21 @@ export default  {
     }
   },
   mounted() {
-    if (this.$store.state.user.id) {
-      httpGet("/collection/selectCategory").then(resp => {
-        console.log(resp)
-      })
-    }
+    this.videos = this.collections[0].videos
   },
   methods: {
-    create(rf) {
-      this.$refs[rf].validate((valid) => {
-        if(valid){
-          alert(1)
-        }
-      })
-    },
     play(v) {
       play_video(this, v)
     },
     ch_videos(index) {
       this.videos = this.collections[index].videos
     },
+    VideosDelete() {
+    },
+    deleteAll() {
+
+    }
+
   }
 }
 </script>
@@ -668,7 +678,7 @@ export default  {
 
 #content {
   vertical-align: top;
-  width: 85%;
+  width: 80%;
   margin: 0 auto;
 }
 
@@ -677,17 +687,16 @@ export default  {
   margin-top: 20px;
 }
 
-#content-addCollection {
-  padding-right: 5%;
-
+#content-deleteAll {
+  margin-right: 55%;
 }
 
-#content-search {
-  padding-right: 5%;
+#content-addCollection {
+  padding-right: 2%;
 }
 
 #content-body {
-  padding-left: 8%;
+  padding-left: 6%;
   padding-top: 2%;
 }
 
@@ -698,15 +707,21 @@ export default  {
   overflow: scroll;
 }
 
+#content-description {
+  padding-bottom: 2%;
+  font-size: 20px;
+  font-weight: bolder;
+  text-align: center;
+}
+
 #content-pic {
-  position: relative;
+  margin-left: -10%;
 }
 
 #content-des {
-  position: relative;
-  font-size: 14px;
-  left: 1150px;
-  top: 410px;
+  margin-left: -10%;
+  margin-top: -4%;
+  font-size: 20px;
 }
 
 #createdForm {
@@ -723,6 +738,11 @@ export default  {
 .videosImg img {
   width: 100%;
   height: 100%;
+}
+
+.videosDelete {
+  margin-top: -12%;
+  margin-left: 80%;
 }
 
 #createdForm-body {
