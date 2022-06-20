@@ -16,7 +16,7 @@
               <span>默认收藏夹</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="1-1" @click="ch_videos(0)">收藏数量: 10</el-menu-item>
+              <el-menu-item index="1-1" @click="ch_videos(0)">收藏数量: {{ collections[0].videos.length }}</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </div>
@@ -28,7 +28,7 @@
             </template>
             <el-menu-item-group>
               <el-menu-item v-for="(c,i) in collections" v-if="i!== 0" :index="c" @click="ch_videos(i)">
-                {{ c.name }}
+                {{ c + '：' + c.videos.length }}
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -60,7 +60,7 @@
                 </div>
                 <div id="createdForm-foot">
                   <el-form-item>
-                    <el-button type="primary" @click="resetForm('ruleForm')" style="width: 25%">提交</el-button>
+                    <el-button type="primary" @click="create('ruleForm')" style="width: 25%">创建</el-button>
                   </el-form-item>
                 </div>
               </el-form>
@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import {play_video} from "@/js/https";
+import {play_video, httpGet} from "@/js/https";
 
 export default {
   name: "Collection",
@@ -624,15 +624,27 @@ export default {
       }
     }
   },
+  mounted() {
+    if (this.$store.state.user.id) {
+      httpGet("/collection/selectCategory").then(resp => {
+        console.log(resp)
+      })
+    }
+  },
   methods: {
+    create(rf) {
+      this.$refs[rf].validate((valid) => {
+        if(valid){
+          alert(1)
+        }
+      })
+    },
     play(v) {
       play_video(this, v)
     },
     ch_videos(index) {
       this.videos = this.collections[index].videos
     },
-
-
   }
 }
 </script>

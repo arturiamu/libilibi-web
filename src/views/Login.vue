@@ -31,7 +31,6 @@
       <div id="help_button">
         <router-link to="/forgetPassword">忘记密码?</router-link>
       </div>
-
     </div>
   </div>
 

@@ -130,7 +130,6 @@ export default {
   width: 50%;
   padding-top: 50px;
   margin: 0 auto;
-
 }
 
 img {

@@ -152,6 +152,10 @@ export default {
   height: 32px;
 }
 
+#search-bt{
+  margin-left: 5px;
+}
+
 #user {
   position: relative;
 }
