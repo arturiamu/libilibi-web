@@ -103,7 +103,7 @@
 <script>
 import {play_video, httpGet} from "@/js/https";
 
-export default {
+export default  {
   name: "Collection",
   data() {
     return {
