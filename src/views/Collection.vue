@@ -114,7 +114,7 @@
 <script>
 import {play_video} from "@/js/https";
 
-export default {
+export default  {
   name: "Collection",
   data() {
     return {

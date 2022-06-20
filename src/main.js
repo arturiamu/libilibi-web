@@ -7,6 +7,7 @@ import ElementUI from 'element-ui';
 import './css/element-variables.scss'
 import './css/common.css'
 
+
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 router.beforeEach((to, from, next) => {
@@ -17,7 +18,7 @@ new Vue({
     render: h => h(App),
     store,
     router,
-    beforeCreate(){
+    beforeCreate() {
         Vue.prototype.$bus = this
     },
 }).$mount('#app')
