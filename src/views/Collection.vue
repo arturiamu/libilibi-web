@@ -230,6 +230,7 @@ export default {
   max-height: 640px;
   min-height: 640px;
   overflow: scroll;
+  overflow-x: hidden;
 }
 
 #content-description {
