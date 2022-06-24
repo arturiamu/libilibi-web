@@ -9,59 +9,43 @@
               <span>消息列表</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="1-1">彭于晏</el-menu-item>
-              <el-menu-item index="1-2">周杰伦</el-menu-item>
-              <el-menu-item index="1-3">陈冠希</el-menu-item>
-              <el-menu-item index="1-4">胡歌</el-menu-item>
-              <el-menu-item index="1-5">余文乐</el-menu-item>
-              <el-menu-item index="2-1">彭于晏</el-menu-item>
-              <el-menu-item index="2-2">周杰伦</el-menu-item>
-              <el-menu-item index="2-3">陈冠希</el-menu-item>
-              <el-menu-item index="2-4">胡歌</el-menu-item>
-              <el-menu-item index="2-5">余文乐</el-menu-item>
-              <el-menu-item index="2-1">彭于晏</el-menu-item>
-              <el-menu-item index="2-2">周杰伦</el-menu-item>
-              <el-menu-item index="2-3">陈冠希</el-menu-item>
-              <el-menu-item index="2-4">胡歌</el-menu-item>
-              <el-menu-item index="2-5">余文乐</el-menu-item>
-              <el-menu-item index="2-1">彭于晏</el-menu-item>
-              <el-menu-item index="2-2">周杰伦</el-menu-item>
-              <el-menu-item index="2-3">陈冠希</el-menu-item>
-              <el-menu-item index="2-4">胡歌</el-menu-item>
-              <el-menu-item index="2-5">余文乐</el-menu-item>
+              <el-menu-item index="1-1">
+                <el-badge :value="value" :max="99" :hidden="value==0" class="item">
+                  <el-link>
+                    系统通知
+                  </el-link>
+                </el-badge>
+              </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
       </div>
       <div id="content" class="inl">
         <div id="content-title">
-          彭于晏
+          系统通知
         </div>
         <div id="content-body">
           <div id="content-body-talk">
             <div id="content-body-time">
               2022年6月22日 22:16:24
             </div>
-            <div id="content-body-user">
-              陈冠希 :
-            </div>
+
             <div id="content-body-window">
-              微信转账叁佰块，我带你回香港！微信转账叁佰块，我带你回香港啦！              微信转账叁佰块，我带你回香港！微信转账叁佰块，我带你回香港啦！微信转账叁佰块，我带你回香港！微信转账叁佰块，我带你回香港啦！
+              微信转账叁佰块，我带你回香港！微信转账叁佰块，我带你回香港啦！ 微信转账叁佰块，我带你回香港！微信转账叁佰块，我带你回香港啦！微信转账叁佰块，我带你回香港！微信转账叁佰块，我带你回香港啦！
               微信转账叁佰块，我带你回香港！微信转账叁佰块，我带你回香港啦！
             </div>
           </div>
         </div>
-        <el-divider></el-divider>
-        <div id="content-foot">
-          <div id="content-foot-input">
-            <el-input type="textarea" :autosize="{ minRows: 6.7}" placeholder="请输入内容"
-                      maxlength="500" show-word-limit v-model="text">
-            </el-input>
+        <el-divider content-position="left">用户操作</el-divider>
+        <div id="content-body-deep">
+          <div id="content-body-deep-1 " class="inl">
+            <el-button type="primary" @click="ch_value">全部标为已读</el-button>
           </div>
-          <div id="content-foot-sendButton" @click="sendMessage">
-            <el-button type="primary" size="medium" style="width: 90%">发送</el-button>
+          <div id="content-body-deep-2" class="inl">
+            <el-button type="primary" @click="deleteMessage">全部删除</el-button>
           </div>
         </div>
+        <el-divider></el-divider>
       </div>
     </div>
   </div>
@@ -73,11 +57,15 @@ export default {
   data() {
     return {
       text: '',
+      value: 5
 
     }
   },
   methods: {
-    sendMessage() {
+    ch_value() {
+      this.value = 0
+    },
+    deleteMessage() {
 
     }
   }
@@ -85,23 +73,30 @@ export default {
 </script>
 
 <style scoped>
+
+#content-body-deep-2 {
+  margin-left: 100px;
+}
+
+.item {
+  margin-top: -2px;
+  margin-right: 6px;
+}
+
 #content-body-window {
   text-align: center;
   width: 80%;
   min-height: 75px;
   font-size: 20px;
   margin-left: 10%;
+  margin-top: 3%;
   border-radius: 8px;
   background-color: #ee5b7a;
 
 }
 
-#content-body-user {
-  font-size: 25px;
-  font-weight: bolder;
-}
-
 #content-body-time {
+  padding-top: 2%;
   text-align: center;
 
 }
@@ -143,8 +138,6 @@ export default {
   width: 80%;
   background-color: white;
   opacity: 0.9;
-
-
 }
 
 #content-body {
@@ -152,34 +145,16 @@ export default {
   height: 455px;
   margin: 0 auto;
   max-height: 1000px;
-  min-height: 380px;
+  min-height: 554px;
   overflow: scroll;
-  overflow-x: hidden;
-
-
-}
-
-#content-foot {
-  width: 1000px;
-  height: 195px;
-  overflow: scroll;
-  margin: 0 auto;
   overflow-x: hidden;
 }
 
 #content-title {
-  font-size: 20px;
+  font-size: 25px;
   font-weight: bolder;
+  padding-top: 2%;
 }
 
-#content-foot-sendButton {
-  margin-left: 85%;
-  margin-top: -4%;
-
-}
-
-#content-foot-input {
-  height: 100%;
-}
 
 </style>
