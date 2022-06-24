@@ -27,10 +27,12 @@
     <div id="user" class="inl">
       <div id="userinfo" class="inl">
         <div @click="goto('/user')" v-if="$store.state.user.username">
-          <div id="avatar">
-            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-                       size="large  "></el-avatar>
-          </div>
+          <el-tooltip class="item" effect="light" content="个人中心" placement="bottom">
+            <div id="avatar">
+              <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                         size="large  "></el-avatar>
+            </div>
+          </el-tooltip>
         </div>
 
         <div v-else>
@@ -116,11 +118,11 @@ export default {
       //   type: 'success'
       // });
       // return
-      if(this.$store.state.user.id){
+      if (this.$store.state.user.id) {
         if (this.$route.path !== type) {
           this.$router.push(type)
         }
-      }else {
+      } else {
         this.$message({
           message: "请登录后使用该功能",
           type: 'success'
@@ -169,7 +171,7 @@ export default {
   height: 32px;
 }
 
-#search-bt{
+#search-bt {
   margin-left: 5px;
 }
 
