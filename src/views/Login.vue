@@ -37,12 +37,13 @@
 </template>
 
 <script>
-import {httpPost} from "@/js/https";
+import {httpGet, httpPost} from "@/js/https";
 
 export default {
   name: 'Login',
   methods: {
     submitForm(formName) {
+      let that = this
       httpPost("/user/login", {
         account: this.ruleForm.account,
         password: this.ruleForm.password
@@ -50,6 +51,12 @@ export default {
         if (data.state === 200) {
           this.$store.dispatch("ch_user", data.data)
           this.$router.push("/")
+          httpGet("/category/selectByCategory").then(resp=>{
+            console.log(resp)
+            if(resp.state === 200){
+              that.$store.dispatch("ch_favorites", resp.data)
+            }
+          })
         } else {
           this.fail(data.message)
         }

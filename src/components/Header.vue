@@ -45,7 +45,7 @@
 
       </div>
       <div id="appInfo" class="inl">
-        <div id="message" class="inl app-info" @click="goto('/message')">
+        <div id="message" class="inl app-info" @click="gotoUser('/message')">
           <div id="m-icon" class="mess">
             <el-badge :value="$store.state.user.msg" :hidden="$store.state.user.msg===0" type="primary ">
               <el-link icon="el-icon-message" type="primary" :underline="false"></el-link>
@@ -55,7 +55,7 @@
             <el-link type="primary" :underline="false">消息</el-link>
           </div>
         </div>
-        <div id="dynamic" class="inl app-info" @click="goto('/dynamic')">
+        <div id="dynamic" class="inl app-info" @click="gotoUser('/dynamic')">
           <div id="d-icon" class="mess">
             <el-badge :value="$store.state.user.dym" :hidden="$store.state.user.dym===0" type="primary ">
               <el-link icon="el-icon-magic-stick" type="primary" :underline="false"></el-link>
@@ -65,7 +65,7 @@
             <el-link type="primary" :underline="false">动态</el-link>
           </div>
         </div>
-        <div id="collect" class="inl app-info" @click="goto('/collection')">
+        <div id="collect" class="inl app-info" @click="gotoUser('/collection')">
           <div id="c-icon" class="mess">
             <el-link icon="el-icon-star-off" type="primary" :underline="false"></el-link>
           </div>
@@ -73,7 +73,7 @@
             <el-link type="primary" :underline="false">收藏</el-link>
           </div>
         </div>
-        <div id="history" class="inl app-info" @click="goto('/history')">
+        <div id="history" class="inl app-info" @click="gotoUser('/history')">
           <div id="h-icon" class="mess">
             <el-link icon="el-icon-video-camera" type="primary" :underline="false"></el-link>
           </div>
@@ -109,6 +109,23 @@ export default {
     },
     close() {
       this.loginVisible = false
+    },
+    gotoUser(type) {
+      // this.$message({
+      //   message: "服务器更新，该功能维护中！！！",
+      //   type: 'success'
+      // });
+      // return
+      if(this.$store.state.user.id){
+        if (this.$route.path !== type) {
+          this.$router.push(type)
+        }
+      }else {
+        this.$message({
+          message: "请登录后使用该功能",
+          type: 'success'
+        });
+      }
     },
     goto(type) {
       if (this.$route.path !== type) {

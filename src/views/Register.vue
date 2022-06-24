@@ -63,7 +63,7 @@
 
 <script>
 
-import {httpPost} from '@/js/https'
+import {httpGet, httpPost} from '@/js/https'
 
 export default {
   name: "Register",
@@ -173,6 +173,7 @@ export default {
 
     },
     submitForm() {
+      let that = this
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           let user = {
@@ -193,6 +194,12 @@ export default {
               this.$store.dispatch("ch_user", data.data)
               this.$router.push("/")
               this.success(data.message)
+              httpGet("/category/selectByCategory").then(resp=>{
+                console.log(resp)
+                if(resp.state === 200){
+                  that.$store.dispatch("ch_favorites", resp.data)
+                }
+              })
             } else {
               this.fail(data.message)
             }

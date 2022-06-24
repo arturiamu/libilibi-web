@@ -4,11 +4,23 @@ import Vue from 'vue'
 Vue.use(Vuex)
 
 const actions = {
-    ch_sc(context, value) {
-        context.commit('CH_SC', value)
-    },
     ch_user(context, value) {
         context.state.user = value
+    },
+    ch_favorites(context, value) {
+        context.state.user.favorites = value
+    },
+    add_favorites(context, value) {
+        context.state.user.favorites.push(value)
+    },
+    del_favorites(context, value) {
+        for (let i = 0; i < context.state.user.favorites.length; i++) {
+            if (context.state.user.favorites[i].categoryName === value) {
+                context.state.user.favorites.splice(i,1)
+                break
+            }
+        }
+        context.state.user.favorites.push(value)
     },
     clear_user(context, value) {
         context.state.user.id = ""
@@ -17,6 +29,7 @@ const actions = {
         context.state.user.items = context.state.default_items
         context.state.notice.dym = 0
         context.state.notice.message = 0
+        context.state.user.favorites = []
     },
     ch_all_items(context, value) {
         context.state.all_items = value
@@ -29,9 +42,7 @@ const actions = {
     },
 }
 const mutations = {// 1630
-    CH_SC(state, value) {
-        state.per = value;
-    },
+
 }
 
 const state = {
@@ -43,6 +54,7 @@ const state = {
         items: [
             {name: '', uri: '', pid: ''},
         ],
+        favorites: []
     },
     notice: {
         dym: 0,
