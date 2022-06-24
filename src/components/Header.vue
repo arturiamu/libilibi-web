@@ -113,11 +113,6 @@ export default {
       this.loginVisible = false
     },
     gotoUser(type) {
-      // this.$message({
-      //   message: "服务器更新，该功能维护中！！！",
-      //   type: 'success'
-      // });
-      // return
       if (this.$store.state.user.id) {
         if (this.$route.path !== type) {
           this.$router.push(type)
@@ -137,14 +132,24 @@ export default {
     search: function () {
       if (this.keyword.replaceAll(" ", '') !== "") {
         if (this.$route.path === '/search') {
-          this.$router.push('/')
+          console.log('/')
+          this.$router.push('/').then(res=>{
+            this.$router.push({
+              path: '/search',
+              query: {
+                keyword: this.keyword
+              }
+            })
+          })
+        }else{
+          this.$router.push({
+            path: '/search',
+            query: {
+              keyword: this.keyword
+            }
+          })
         }
-        this.$router.push({
-          path: '/search',
-          query: {
-            keyword: this.keyword
-          }
-        })
+
       }
     }
   }

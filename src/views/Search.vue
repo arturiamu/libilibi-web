@@ -15,23 +15,29 @@
 </template>
 
 <script>
-import {play_video} from "@/js/https";
+import {httpGet, play_video} from "@/js/https";
 
 export default {
   name: "Search",
   data: function () {
     return {
       keyword: this.$route.query.keyword,
-      videos: ""
+      videos: []
     }
   },
   methods: {
     play: function (video) {
       play_video(this, video)
+    },
+    search(keyword,offset,ps){
+      let url = "/video/search/" + keyword + '/' + offset + '/' + ps
+      httpGet(url).then(resp=>{
+        this.videos = resp
+      })
     }
   },
-  mounted() {
-    console.log(this.keyword)
+  beforeMount() {
+    this.search(this.keyword,0,50)
   }
 }
 </script>
