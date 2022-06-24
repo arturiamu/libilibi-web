@@ -11,7 +11,7 @@
           <img src="../assets/recommde.png">
         </div>
         <div id="default">
-          <el-submenu index="1">
+          <el-submenu index="-1">
             <template slot="title">
               <i class="el-icon-star-on"></i>
               <span>默认收藏夹</span>
@@ -32,7 +32,7 @@
             </template>
             <div id="user-collections">
               <el-menu-item-group>
-                <el-menu-item v-for="(c,i) in category" :index="2-i" @click="ch_videos(i)">
+                <el-menu-item v-for="(c,i) in category" :index="i" @click="ch_videos(i)">
                   {{ c.name + "：" + c.videos.length }}
                 </el-menu-item>
               </el-menu-item-group>
@@ -48,7 +48,7 @@
           <el-dialog
               :visible.sync="createVisible"
               destroy-on-close="true"
-              :modal-append-to-body = "false"
+              :modal-append-to-body="false"
               width="25%">
             <div id="createdForm">
               <el-form :model="ruleForm" :rules="rules" label-position="top" ref="ruleForm" label-width="80px"
@@ -186,10 +186,6 @@ export default {
     },
     resetForm(formName) {
       let that = this
-      if (!this.$store.state.user.id) {
-        this.success("请先登录")
-        return
-      }
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           httpPost('/category/add', {
@@ -221,7 +217,7 @@ export default {
       } else {
         for (let i = 0; i < this.category[this.c_index].videos.length; i++) {
           if (this.category[this.c_index].videos[i].id === v.id) {
-            this.category[this.c_index].videos.splice(i, 0)
+            this.category[this.c_index].videos.splice(i, 1)
             this.ch_videos(this.c_index)
             break
           }
@@ -235,15 +231,18 @@ export default {
       let url = '/category/del/' + this.category[this.c_index].name
       httpGet(url)
       this.$store.dispatch("del_favorites", this.category[this.c_index].name)
+      this.category.splice(this.c_index, 1)
     },
     clearCate() {
       let url = ''
       if (this.c_index === -1) {
         url = '/category/clear/默认收藏夹'
-        this.defaultVCollections = []
+        this.defaultVCollections[0].videos = []
+        this.ch_default()
       } else {
         url = '/category/clear/' + this.category[this.c_index].name
-        this.category[this.c_index] = []
+        this.category[this.c_index].videos = []
+        this.ch_videos(this.c_index)
       }
       httpGet(url)
     }

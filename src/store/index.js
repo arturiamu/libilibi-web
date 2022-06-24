@@ -16,11 +16,10 @@ const actions = {
     del_favorites(context, value) {
         for (let i = 0; i < context.state.user.favorites.length; i++) {
             if (context.state.user.favorites[i].categoryName === value) {
-                context.state.user.favorites.splice(i,1)
+                context.state.user.favorites.splice(i, 1)
                 break
             }
         }
-        context.state.user.favorites.push(value)
     },
     clear_user(context, value) {
         context.state.user.id = ""
