@@ -10,7 +10,7 @@
             </template>
             <el-menu-item-group>
               <el-menu-item index="1-1">
-                <el-badge :value="value" :max="99" :hidden="value==0" class="item">
+                <el-badge :value="value" :max="99" :hidden="value===0" class="item">
                   <el-link>
                     系统通知
                   </el-link>
@@ -27,14 +27,15 @@
         <div id="content-body">
           <div id="content-body-talk" v-for="m in messages">
             <div id="content-body-time">
-              {{ m.time }}
+              {{ m.date }}
             </div>
             <div id="content-body-window">
               <el-card class="box-card">
                 <div slot="header" class="box-card-title">
-                  <el-link style="font-size: 20px" type="primary" :underline="false">{{ m.sendUser }}</el-link>
+                  <el-link style="font-size: 20px" type="primary" :underline="false">{{ m.sendUserName }}</el-link>
                   <div class="box-card-button">
-                    <el-button type="text" @click.once="readValue(m)">已读</el-button>
+                    <el-button type="text" v-if="m.read === 0" @click.once="readValue(m)">标为已读</el-button>
+                    <el-button type="text" v-else>已读</el-button>
                     <el-button type="text" @click="del_one(m)">删除</el-button>
                   </div>
                 </div>
@@ -61,92 +62,68 @@
 </template>
 
 <script>
+import {httpGet} from "@/js/https";
+
 export default {
   name: "Message",
   data() {
     return {
       text: '',
-      value: 5,
-      messages: [
-        {
-          id: 1,
-          sendUser: "ad astra官方客服人员",
-          time: '2022年6月21日 22:16:24',
-          text: "你好，您的账户涉嫌色情违规你好，您的账户涉嫌色情违规你好，您的账户涉嫌色情违规你好，您的账户涉嫌色情违规你好，您的账户涉嫌色情违规你好，您的账户涉嫌色情违规你好，您的账户涉嫌色情违规你好，您的账户涉嫌色情违规你好，您的账户涉嫌色情违规你好，您的账户涉嫌色情违规你好，您的账户涉嫌色情违规你好，您的账户涉嫌色情违规，已违反社区法律条例，先将您的账户封禁3天，希望及时改正，谢谢！",
-          read: 0
-        },
-        {
-          id: 2,
-          sendUser: "ad astra官方客服人员",
-          time: '2022年6月22日 22:16:24',
-          text: "dsadsdsaassssssssssssssssssssssssss3天，希望及时改正，谢谢！\n",
-          read: 0,
-        },
-        {
-          id: 3,
-          sendUser: "ad astra官方客服人员",
-          time: '2022年6月23日 22:16:24',
-          text: "1111111111111111111111111111111111及时改正，谢谢！\n",
-          read: 0,
-        },
-        {
-          id: 4,
-          sendUser: "ad astra官方客服人员",
-          time: '2022年6月21日 22:16:24',
-          text: "2222222222222222222222222222222222222封禁3天，希望及时改正，谢谢！\n",
-          read: 0,
-        },
-        {
-          id: 5,
-          sendUser: "ad astra官方客服人员",
-          time: '2022年6月21日 22:16:24',
-          text: "你好33333333333333333333333333333333333希望及时改正，谢谢！\n",
-          read: 0,
-        },
-        {
-          id: 6,
-          sendUser: "ad astra官方客服人员",
-          time: '2022年6月21日 22:16:24',
-          text: "你555555555555555555希望及时改正，谢谢！\n",
-          read: 0,
-        },
-        {
-          id: 7,
-          sendUser: "ad astra官方客服人员",
-          time: '2022年6月21日 22:16:24',
-          text: "你好，您的账户涉嫌色情违规，已违反社区法律条例，先将您的账户封禁3天，希望及时改正，谢谢！\n",
-          read: 0,
-        },
-      ]
+      value: 0,
+      messages: []
     }
+  },
+  mounted() {
+    httpGet('/message/getAll').then(resp => {
+      console.log(resp)
+      if (resp.state === 200) {
+        this.messages = resp.data
+        for (let i = 0; i < this.messages.length; i++) {
+          if (this.messages[i].read === 0) {
+            this.value++
+          }
+        }
+      }
+    })
   },
   methods: {
     ch_value() {
       this.value = 0
+      for (let i = 0; i < this.messages.length; i++) {
+        this.messages[i].read = 1
+      }
+      httpGet('/message/readAll')
     },
     readValue(his) {
       for (let i = 0; i < this.messages.length; i++) {
         if (this.messages[i].id === his.id) {
           this.messages[i].read = 1
+          httpGet('/message/read/' + his.id)
           break
         }
       }
       if (this.value > 0) {
         this.value--
       }
+      this.$forceUpdate()
     },
     del_one(his) {
-      this.readValue(his)
+      if (his.read === 0) {
+        this.readValue(his)
+      }
       for (let i = 0; i < this.messages.length; i++) {
         if (this.messages[i].id === his.id) {
           this.messages.splice(i, 1)
+          httpGet('/message/del/' + his.id)
           break
         }
       }
+      this.$forceUpdate()
     },
     del_all() {
       let that = this
       that.messages = []
+      httpGet('/message/delAll')
       this.value = 0
     }
 
