@@ -61,9 +61,12 @@ export default {
     }
   },
   mounted() {
-    httpGet("/history/get/100").then(data => {
-      this.videos = data.data
-    })
+    if(this.$store.state.user.id){
+      httpGet("/history/get/100").then(data => {
+        this.videos = data.data
+        console.log(data)
+      })
+    }
   },
   methods: {
     clean() {
@@ -168,6 +171,8 @@ img {
 .videoContent1 {
   position: absolute;
   width: 380%;
+  max-height: 45px;
+  overflow: hidden;
 }
 
 .videoContent2 {

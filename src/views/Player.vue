@@ -36,7 +36,7 @@
             <el-link :underline="false">{{ video.like }}</el-link>
           </div>
         </div>
-        <div id="collection" class="inl op" @click="op('collection')">
+        <div id="collection" class="inl op" @click="dialogVisible = true">
           <div class="inl">
             <img src="../assets/collection.png">
           </div>
@@ -44,7 +44,6 @@
             <el-link :underline="false">{{ video.favorite }}</el-link>
           </div>
         </div>
-
         <div id="share" class="inl op">
           <div class="inl">
             <el-popover
@@ -151,6 +150,23 @@
         </div>
       </div>
     </div>
+    <el-dialog
+        :visible.sync="dialogVisible"
+        width="30%">
+      <div id="chose">
+        <el-radio-group v-model="checkedItems">
+          <el-radio :border="true" size="mini" v-for="it in items" :label="it.categoryName"
+                       :key="it.categoryName"
+                       style="margin: 6px">
+            {{ it.categoryName }}
+          </el-radio>
+        </el-radio-group>
+      </div>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="sub">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -161,13 +177,18 @@ export default {
   name: "Player",
   data: function () {
     return {
-      video: this.$route.query.video,
+      dialogVisible: false,
+      video: '',
       src: "https://player.bilibili.com/player.html?high_quality=1&autoplay=1&aid=",
       desc: this.$route.query.video.desc.split('\n'),
       videos: '',
+      items: [],
+      checkedItems: []
     }
   },
-  activated () {
+  activated() {
+    this.items = this.$store.state.user.favorites
+    this.video = this.$route.query.video
     httpGet('/interest/13').then(data => {
       if (data.state === 200) {
         this.videos = data.data
@@ -183,6 +204,28 @@ export default {
     })
   },
   methods: {
+    success(message){
+      this.$message({
+        message: message,
+        type: 'success'
+      });
+    },
+    sub() {
+      if(this.checkedItems){
+        httpPost('/collection/add',{
+          "aid": this.video.aid,
+          "categoryName": this.checkedItems,
+          "pid": this.video.pid,
+        }).then(resp=>{
+          if(resp.state === 200){
+            this.success("添加成功")
+          }else {
+            this.success(resp.message)
+          }
+          this.dialogVisible=false
+        })
+      }
+    },
     op(type) {
       if (this.$store.state.user.id) {
         if (type === 'like') {

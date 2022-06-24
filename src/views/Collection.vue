@@ -17,7 +17,10 @@
               <span>默认收藏夹</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="1-1" @click="ch_default">收藏数量: {{ defaultVCollections.length }}</el-menu-item>
+              <el-menu-item index="1-1" @click="ch_default">收藏数量: {{
+                  defaultVCollections[0].videos.length
+                }}
+              </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </div>
@@ -27,11 +30,13 @@
               <i class="el-icon-folder-add"></i>
               <span>用户收藏夹</span>
             </template>
-            <el-menu-item-group>
-              <el-menu-item v-for="(c,i) in collections" :index="2-i" @click="ch_videos(i)">
-                {{ c.category + "：" + c.data.length }}
-              </el-menu-item>
-            </el-menu-item-group>
+            <div id="user-collections">
+              <el-menu-item-group>
+                <el-menu-item v-for="(c,i) in category" :index="2-i" @click="ch_videos(i)">
+                  {{ c.name + "：" + c.videos.length }}
+                </el-menu-item>
+              </el-menu-item-group>
+            </div>
           </el-submenu>
         </div>
       </el-menu>
@@ -43,6 +48,7 @@
           <el-dialog
               :visible.sync="createVisible"
               destroy-on-close="true"
+              :modal-append-to-body = "false"
               width="25%">
             <div id="createdForm">
               <el-form :model="ruleForm" :rules="rules" label-position="top" ref="ruleForm" label-width="80px"
@@ -61,27 +67,30 @@
                 </div>
                 <div id="createdForm-foot">
                   <el-form-item>
-                    <el-button type="primary" @click="resetForm('ruleForm')" style="width: 25%">提交</el-button>
+                    <el-button type="primary" @click="resetForm('ruleForm')" style="width: 25%">创建</el-button>
                   </el-form-item>
                 </div>
               </el-form>
             </div>
           </el-dialog>
         </div>
-        <div id="content-deleteAll" class="inl" @click="deleteAll">
-          <el-button>删除全部</el-button>
+        <div id="content-clear" class="inl" @click="clearCate">
+          <el-button>清空收藏夹</el-button>
+        </div>
+        <div id="content-del" class="inl" @click="delCate">
+          <el-button>删除收藏夹</el-button>
         </div>
         <div id="content-search" class="inl">
           <el-input v-model="ruleForm.content" prefix-icon="el-icon-search" placeholder="搜索收藏夹内容"></el-input>
         </div>
       </div>
       <div id="content-body">
-        <div id="content-null" v-if="len === 0">
+        <div id="content-null" v-if="videos.length === 0">
           <div id="content-pic">
             <img src="../assets/null.png">
           </div>
           <div id="content-des">
-            这里什么都没有哦~
+            <el-link :underline="false">这里什么都没有哦~</el-link>
           </div>
         </div>
         <div id="content-exist" v-else>
@@ -102,7 +111,7 @@
               <el-link type="primary">收藏于: {{ v.createTime.substring(0, 10) }}</el-link>
             </div>
             <div class="videosDelete ">
-              <el-link type="primary" :underline="false" @click="VideosDelete">删除</el-link>
+              <el-link type="primary" :underline="false" @click="del(v)">删除</el-link>
             </div>
           </div>
         </div>
@@ -112,22 +121,22 @@
 </template>
 
 <script>
-import {play_video, httpGet} from "@/js/https";
+import {play_video, httpGet, httpPost} from "@/js/https";
 
 export default {
 
   name: "Collection",
   data() {
     return {
-      len: 0,
       createVisible: false,
       ruleForm: {
         name: '',
         desc: '',
         content: '',
       },
+      c_index: -1,
+      category: [],
       defaultVCollections: [],
-      collections: [],
       videos: [],
       rules: {
         name: [
@@ -139,41 +148,104 @@ export default {
   },
   mounted() {
     if (this.$store.state.user.id) {
-      let that = this
-      httpGet("/collection/selectCategory").then(resp => {
-        for (let i = 0; i < resp.data.length; i++) {
-          if (resp.data[i].category === '默认收藏夹') {
-            this.defaultVCollections = resp.data[i]
-          } else {
-            this.collections.push(resp.data[i])
+      for (let i = 0; i < this.$store.state.user.favorites.length; i++) {
+        let url = "/collection/selectByCategory/" + this.$store.state.user.favorites[i].categoryName
+        let c = {name: this.$store.state.user.favorites[i].categoryName, videos: []}
+        httpGet(url).then(resp => {
+          for (let j = 0; j < resp.data.length; j++) {
+            c.videos.push(resp.data[j])
           }
+        })
+        if (c.name === '默认收藏夹') {
+          this.defaultVCollections.push(c)
+          this.videos = this.defaultVCollections[0].videos
+        } else {
+          this.category.push(c)
         }
-        that.ch_default()
-        console.log(this.collections)
-      })
+      }
+      this.$forceUpdate()
     }
   },
   methods: {
+    success_tip(message) {
+      this.$message({
+        message: message,
+        type: 'success'
+      });
+    },
     play(v) {
-      play_video(this, v)
+      play_video(this, v.video[0])
     },
     ch_videos(index) {
-      this.videos = this.collections[index].data
-      this.len = this.videos.length
+      this.videos = this.category[index].videos
+      this.c_index = index
     },
     ch_default() {
-      this.videos = this.defaultVCollections.data
-      if (this.videos) {
-        this.len = this.videos.length
+      this.videos = this.defaultVCollections[0].videos
+      this.c_index = -1
+    },
+    resetForm(formName) {
+      let that = this
+      if (!this.$store.state.user.id) {
+        this.success("请先登录")
+        return
+      }
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid) {
+          httpPost('/category/add', {
+            "categoryName": this.ruleForm.name
+          }).then(data => {
+            if (data.state === 200) {
+              that.createVisible = false
+              this.success_tip("创建成功")
+              this.$store.dispatch("add_favorites", {categoryName: this.ruleForm.name})
+              this.category.push({categoryName: this.ruleForm.name})
+            } else {
+              this.success_tip(data.message)
+            }
+            that.$forceUpdate()
+          })
+        }
+      })
+    },
+    del(v) {
+      httpGet('/collection/cancel/' + v.id)
+      if (this.c_index === -1) {
+        for (let i = 0; i < this.defaultVCollections[0].videos.length; i++) {
+          if (this.defaultVCollections[0].videos[i].id === v.id) {
+            this.defaultVCollections[0].videos.splice(i, 1)
+            this.ch_default()
+            break
+          }
+        }
       } else {
-        this.len = 0
+        for (let i = 0; i < this.category[this.c_index].videos.length; i++) {
+          if (this.category[this.c_index].videos[i].id === v.id) {
+            this.category[this.c_index].videos.splice(i, 0)
+            this.ch_videos(this.c_index)
+            break
+          }
+        }
       }
     },
-    VideosDelete() {
-      alert(1)
+    delCate() {
+      if (this.c_index === -1) {
+        return
+      }
+      let url = '/category/del/' + this.category[this.c_index].name
+      httpGet(url)
+      this.$store.dispatch("del_favorites", this.category[this.c_index].name)
     },
-    deleteAll() {
-      alert(2)
+    clearCate() {
+      let url = ''
+      if (this.c_index === -1) {
+        url = '/category/clear/默认收藏夹'
+        this.defaultVCollections = []
+      } else {
+        url = '/category/clear/' + this.category[this.c_index].name
+        this.category[this.c_index] = []
+      }
+      httpGet(url)
     }
   }
 }
@@ -182,6 +254,11 @@ export default {
 <style scoped>
 #nav {
   vertical-align: top;
+}
+
+#user-collections {
+  height: 300px;
+  overflow: scroll;
 }
 
 .title {
@@ -212,12 +289,19 @@ export default {
   margin-top: 20px;
 }
 
-#content-deleteAll {
-  margin-right: 55%;
+#content-addCollection {
+  position: relative;
+  left: -54%;
 }
 
-#content-addCollection {
-  padding-right: 2%;
+#content-clear {
+  position: relative;
+  left: -53%;
+}
+
+#content-del {
+  position: relative;
+  left: -52%;
 }
 
 #content-body {
@@ -256,8 +340,12 @@ export default {
 
 .videosType {
   width: 190px;
-  height: 120px;
   padding: 5px 20px;
+}
+
+.videosImg {
+  width: 190px;
+  height: 120px;
 }
 
 .videosImg img {
