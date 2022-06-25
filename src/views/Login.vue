@@ -51,6 +51,11 @@ export default {
         if (data.state === 200) {
           this.$store.dispatch("ch_user", data.data)
           this.$router.push("/")
+          httpGet("/avatar/getAvatar").then(resp=>{
+            if(resp.state === 200){
+              that.$store.dispatch("ch_avatar", resp.data)
+            }
+          })
           httpGet("/category/selectByCategory").then(resp=>{
             console.log(resp)
             if(resp.state === 200){

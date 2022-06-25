@@ -29,8 +29,7 @@
         <div @click="goto('/user')" v-if="$store.state.user.username">
           <el-tooltip class="item" effect="light" content="个人中心" placement="bottom">
             <div id="avatar">
-              <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-                         size="large  "></el-avatar>
+              <el-avatar :src="$store.state.avatar" size="large"></el-avatar>
             </div>
           </el-tooltip>
         </div>
@@ -113,11 +112,6 @@ export default {
       this.loginVisible = false
     },
     gotoUser(type) {
-      // this.$message({
-      //   message: "服务器更新，该功能维护中！！！",
-      //   type: 'success'
-      // });
-      // return
       if (this.$store.state.user.id) {
         if (this.$route.path !== type) {
           this.$router.push(type)
@@ -137,14 +131,24 @@ export default {
     search: function () {
       if (this.keyword.replaceAll(" ", '') !== "") {
         if (this.$route.path === '/search') {
-          this.$router.push('/')
+          console.log('/')
+          this.$router.push('/').then(res => {
+            this.$router.push({
+              path: '/search',
+              query: {
+                keyword: this.keyword
+              }
+            })
+          })
+        } else {
+          this.$router.push({
+            path: '/search',
+            query: {
+              keyword: this.keyword
+            }
+          })
         }
-        this.$router.push({
-          path: '/search',
-          query: {
-            keyword: this.keyword
-          }
-        })
+
       }
     }
   }
