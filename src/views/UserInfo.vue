@@ -1,7 +1,8 @@
 <template>
   <div>
-    <el-button @click="exit">退出登录</el-button>
+    <el-button @click="exit">a退出登录</el-button>
   </div>
+
 </template>
 
 <script>
