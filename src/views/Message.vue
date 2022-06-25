@@ -179,7 +179,7 @@ export default {
 }
 
 #message {
-  background-image: url("../assets/11.png");
+  background-image: url("../assets/message.png");
   background-size: 100% 100%;
   width: 100%;
   height: 100%;
