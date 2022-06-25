@@ -113,6 +113,8 @@ import language from './utils/language.js'
 import mimes from './utils/mimes.js'
 import data2blob from './utils/data2blob.js'
 import effectRipple from './utils/effectRipple.js'
+import {httpPost} from "@/js/https";
+import request from "@/utils/request";
 export default {
   props: {
     // 域，上传文件name，触发事件会带上（如果一个页面多个图片上传控件，可以做区分
@@ -822,6 +824,13 @@ export default {
       that.reset()
       that.loading = 1
       that.setStep(3)
+      console.log(1)
+      console.log(url)
+      // httpPost(url,{
+      //   data: fmData
+      // }).then(resp=>{
+      //   console.log(resp)
+      // })
       request({
         url,
         method: 'post',

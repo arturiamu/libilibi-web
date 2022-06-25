@@ -33,30 +33,31 @@
 
 <script>
 import ImageCropper from "@/components/ImageCropper";
-import {httpGet} from "@/js/https";
+import {httpPost} from "@/js/https";
+
 export default {
   components: {ImageCropper}, // 加载components 的组件
   name: "UpLoad",
-  data(){
-    return{
-      user:{
-        avatar:'https://libilibi-host.oss-cn-hangzhou.aliyuncs.com/C20F8AB57A4264C161BD8B3DEF236E20.png'
+  data() {
+    return {
+      user: {
+        avatar: 'https://libilibi-host.oss-cn-hangzhou.aliyuncs.com/C20F8AB57A4264C161BD8B3DEF236E20.png'
       },
       // 上传头像需要的参数-0·
-      imagecropperShow:false, // 是否显示上传组件
-      imagecropperKey:0,  // 上传组件id ，要变化
-      imagepath:''
+      imagecropperShow: false, // 是否显示上传组件
+      imagecropperKey: 0,  // 上传组件id ，要变化
+      imagepath: 'http://localhost:9000/avatar/ossfile'
     }
   },
   methods: {
-    upload() {
-      httpPost("", {}).then(resp => {
-
-      })
-    },
     // 上传成功后的回调函数
     cropSuccess(data) {
-      console.log(data)
+      this.$store.dispatch("ch_avatar",data)
+      httpPost("/avatar/updateAvatar", {
+        url: data
+      }).then(resp => {
+        console.log(resp)
+      })
       this.imagecropperShow = false
       //this.user.avatar = data.url
       // 上传成功后，重新打开上传组件时初始化组件，否则显示上一次的上传结果
