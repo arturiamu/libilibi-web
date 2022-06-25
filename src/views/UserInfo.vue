@@ -52,7 +52,7 @@
           我的资料
         </div>
         <div id="personData-avatar" class="inl">
-          <img :src="$store.state.avatar"  @click="imagecropperShow=true" width="120px" height="120px">
+          <img :src="$store.state.avatar" @click="imagecropperShow=true" width="120px" height="120px">
         </div>
         <div id="personData-body" class="inl">
           <div id="personData-names">
@@ -92,6 +92,9 @@
 
           </div>
         </div>
+        <div id="personData-exit">
+          <el-button type="primary" @click="exit">退出登录</el-button>
+        </div>
       </div>
       <div id="content2">
         <div id="personData-vip">
@@ -103,7 +106,7 @@
             七大贵族 显赫身份 尊贵特权 奢华福利
           </div>
           <div id="personData-vip-3" class="inl">
-            <el-button type="primary" round="">查看VIP特权</el-button>
+            <el-button type="danger" round="">查看VIP特权</el-button>
           </div>
         </div>
         <div id="personData-img">
@@ -286,10 +289,8 @@
 
       </div>
     </div>
-
-
     <div id="foot">
-            <el-button @click="exit">退出登录</el-button>
+      <img src="../assets/home2.png">
     </div>
   </div>
 </template>
@@ -317,7 +318,7 @@ export default {
       this.$router.push('/')
     },
     cropSuccess(data) {
-      this.$store.dispatch("ch_avatar",data)
+      this.$store.dispatch("ch_avatar", data)
       httpPost("/avatar/updateAvatar", {
         url: data
       }).then(resp => {
@@ -339,6 +340,15 @@ export default {
 </script>
 
 <style scoped>
+#foot {
+  padding-top: 5%;
+}
+
+#personData-exit {
+  position: relative;
+  left: 35%;
+}
+
 #personBand-body3-4 {
   position: relative;
   top: -10px;
