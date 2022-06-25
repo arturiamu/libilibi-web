@@ -4,8 +4,17 @@
       <img src="../assets/home.png">
     </div>
     <div id="title">
-      个人中心主页
+      {{ $store.state.user.username }}的主页
     </div>
+    <image-cropper
+        v-show="imagecropperShow"
+        :width="300"
+        :height="300"
+        :key="imagecropperKey"
+        :url="imagepath"
+        field="file"
+        @close="close"
+        @crop-upload-success="cropSuccess"/>
     <div id="divider">
       <el-divider></el-divider>
     </div>
@@ -24,11 +33,11 @@
               </el-menu-item>
             </div>
 
-            <el-menu-item index="1-2">
+            <el-menu-item index="1-2" @click="$router.push('/collection')">
               <i class="el-icon-star-on"></i>
               我的收藏
             </el-menu-item>
-            <el-menu-item index="1-3">
+            <el-menu-item index="1-3" @click="$router.push('/message')">
               <i class="el-icon-chat-dot-round"></i>
               我的消息
             </el-menu-item>
@@ -43,12 +52,12 @@
           我的资料
         </div>
         <div id="personData-avatar" class="inl">
-          <img :src="$store.state.avatar" width="120px" height="120px">
+          <img :src="$store.state.avatar"  @click="imagecropperShow=true" width="120px" height="120px">
         </div>
         <div id="personData-body" class="inl">
           <div id="personData-names">
             <div id="personData-name-1" class="inl">
-              不知名路人
+              {{ $store.state.user.username }}
             </div>
             <div id="personData-name-2" class="inl">
               <i class="el-icon-edit"></i>
@@ -280,19 +289,25 @@
 
 
     <div id="foot">
-      <!--      <el-button @click="exit">退出登录</el-button>-->
+            <el-button @click="exit">退出登录</el-button>
     </div>
   </div>
 </template>
 
 <script>
-import {httpGet} from "@/js/https";
+import {httpGet, httpPost} from "@/js/https";
+import ImageCropper from "@/components/ImageCropper";
 
 export default {
   name: "UserInfo",
+  components: {ImageCropper}, // 加载components 的组件
   data() {
     return {
-      value: 2.5
+      value: 2.5,
+      // 上传头像需要的参数-0·
+      imagecropperShow: false, // 是否显示上传组件
+      imagecropperKey: 0,  // 上传组件id ，要变化
+      imagepath: 'http://localhost:9000/avatar/ossfile'
     }
   },
   methods: {
@@ -300,6 +315,24 @@ export default {
       httpGet("/user/logout")
       this.$store.dispatch("clear_user", {})
       this.$router.push('/')
+    },
+    cropSuccess(data) {
+      this.$store.dispatch("ch_avatar",data)
+      httpPost("/avatar/updateAvatar", {
+        url: data
+      }).then(resp => {
+        console.log(resp)
+      })
+      this.imagecropperShow = false
+      //this.user.avatar = data.url
+      // 上传成功后，重新打开上传组件时初始化组件，否则显示上一次的上传结果
+      this.imagecropperKey = this.imagecropperKey + 1
+    },
+    // 关闭上传组件
+    close() {
+      this.imagecropperShow = false
+      // 上传失败后，重新打开上传组件时初始化组件，否则显示上一次的上传结果
+      this.imagecropperKey = this.imagecropperKey + 1
     }
   }
 }
