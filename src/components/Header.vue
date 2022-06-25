@@ -105,6 +105,12 @@ export default {
     this.$bus.$on('close', this.close)
   },
   methods: {
+    tips(message){
+      this.$message({
+        message: message,
+        type: 'success'
+      });
+    },
     show() {
       this.loginVisible = true
     },
@@ -112,15 +118,16 @@ export default {
       this.loginVisible = false
     },
     gotoUser(type) {
+      if(type === '/dynamic'){
+        this.tips("该功能暂不可用！")
+        return
+      }
       if (this.$store.state.user.id) {
         if (this.$route.path !== type) {
           this.$router.push(type)
         }
       } else {
-        this.$message({
-          message: "请登录后使用该功能",
-          type: 'success'
-        });
+        this.tips("请先登录")
       }
     },
     goto(type) {

@@ -35,7 +35,7 @@ export default {
     })
   },
   updated() {
-    document.getElementById('tip').scrollIntoView();
+    // document.getElementById('head').scrollIntoView();
     document.getElementById("mark").addEventListener('mousewheel', this.handleScroll)
   },
 
@@ -43,8 +43,10 @@ export default {
     loadVideo() {
       httpGet("/video/live/20").then(resp => {
         console.log(resp)
+        this.i = 0
         if (resp.state === 200) {
             this.videos = resp.data
+          this.$forceUpdate()
         }
       })
     },
@@ -52,7 +54,7 @@ export default {
       e.preventDefault()
       let direction = e.deltaY > 0 ? 'down' : 'up';  //deltaY为正则滚轮向下，为负滚轮向上
       if (direction === 'down') {
-        if (this.i < 11) {
+        if (this.i < this.videos.length - 1) {
           this.i += 1
         } else {
           this.loadVideo()
@@ -68,7 +70,7 @@ export default {
   },
   data() {
     return {
-      src: 'https://www.bilibili.com/blackboard/live/live-activity-player.html?quality=1&cid=',
+      src: 'https://www.bilibili.com/blackboard/live/live-activity-player.html?high_quality=1&cid=',
       i: 0,
       videos: ''
     }
@@ -79,14 +81,16 @@ export default {
 <style scoped>
 
 #frame {
-  width: 100%;
-  height: 917px;
+  margin: 0 auto;
+  width: 85%;
+  height: 855px;
   overscroll-behavior: contain
 }
 
 #mark {
+  margin: 0 auto;
   width: 100%;
-  height: 750px;
+  height: 650px;
   position: relative;
   top: -100%;
 }
