@@ -4,7 +4,7 @@
       <img src="../assets/home.png">
     </div>
     <div id="title">
-      个人中心主页
+      {{ $store.state.user.username }} 的主页
     </div>
     <el-divider></el-divider>
     <div id="nav" class="inl">
@@ -22,11 +22,11 @@
               </el-menu-item>
             </div>
 
-            <el-menu-item index="1-2">
+            <el-menu-item index="1-2" @click="$router.push('/collection')">
               <i class="el-icon-star-on"></i>
               我的收藏
             </el-menu-item>
-            <el-menu-item index="1-3">
+            <el-menu-item index="1-3" @click="$router.push('/message')">
               <i class="el-icon-chat-dot-round"></i>
               我的消息
             </el-menu-item>
@@ -46,7 +46,7 @@
         <div id="personData-body" class="inl">
           <div id="personData-names">
             <div id="personData-name-1" class="inl">
-              不知名路人
+              {{ $store.state.user.username }}
             </div>
             <div id="personData-name-2" class="inl">
               <i class="el-icon-edit"></i>
@@ -294,6 +294,9 @@ export default {
     }
   },
   methods: {
+    goto(tg) {
+      alert(tg)
+    },
     exit() {
       httpGet("/user/logout")
       this.$store.dispatch("clear_user", {})
