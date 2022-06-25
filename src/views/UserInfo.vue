@@ -4,9 +4,11 @@
       <img src="../assets/home.png">
     </div>
     <div id="title">
-      {{ $store.state.user.username }} 的主页
+      个人中心主页
     </div>
-    <el-divider></el-divider>
+    <div id="divider">
+      <el-divider></el-divider>
+    </div>
     <div id="nav" class="inl">
       <el-menu default-active="1-1">
         <el-submenu index="1">
@@ -22,11 +24,11 @@
               </el-menu-item>
             </div>
 
-            <el-menu-item index="1-2" @click="$router.push('/collection')">
+            <el-menu-item index="1-2">
               <i class="el-icon-star-on"></i>
               我的收藏
             </el-menu-item>
-            <el-menu-item index="1-3" @click="$router.push('/message')">
+            <el-menu-item index="1-3">
               <i class="el-icon-chat-dot-round"></i>
               我的消息
             </el-menu-item>
@@ -46,7 +48,7 @@
         <div id="personData-body" class="inl">
           <div id="personData-names">
             <div id="personData-name-1" class="inl">
-              {{ $store.state.user.username }}
+              不知名路人
             </div>
             <div id="personData-name-2" class="inl">
               <i class="el-icon-edit"></i>
@@ -124,14 +126,14 @@
               </div>
               <div class="inl">
                 <div id="personAccount-body1-2">
-                  手机号未绑定
+                  手机号已绑定
                 </div>
                 <div id="personAccount-body1-3">
                   您可以享受手机相关的安全及提醒服务
                 </div>
               </div>
               <div id="personAccount-body1-4" class="inl">
-                <el-button round type="success" size="medium">绑定手机</el-button>
+                <el-button round type="success" size="medium">解绑手机</el-button>
               </div>
             </div>
             <div id="personAccount-body2" class="inl">
@@ -147,7 +149,7 @@
                 </div>
               </div>
               <div id="personAccount-body2-4" class="inl">
-                <el-button round type="success" size="medium">绑定邮箱</el-button>
+                <el-button round type="warning" size="medium">绑定邮箱</el-button>
               </div>
             </div>
             <div id="personAccount-body3" class="inl">
@@ -163,7 +165,7 @@
                 </div>
               </div>
               <div id="personAccount-body3-4" class="inl">
-                <el-button round type="success" size="medium">绑定银行卡</el-button>
+                <el-button round type="warning" size="medium">绑定银行卡</el-button>
               </div>
             </div>
             <div id="personAccount-body4" class="inl">
@@ -179,7 +181,7 @@
                 </div>
               </div>
               <div id="personAccount-body4-4" class="inl">
-                <el-button round type="success" size="medium">绑定身份证</el-button>
+                <el-button round type="warning" size="medium">绑定身份证</el-button>
               </div>
             </div>
             <div id="personAccount-body5" class="inl">
@@ -195,7 +197,7 @@
                 </div>
               </div>
               <div id="personAccount-body5-4" class="inl">
-                <el-button round type="success" size="medium">立即认证</el-button>
+                <el-button round type="warning" size="medium">立即认证</el-button>
               </div>
             </div>
             <div id="personAccount-body6" class="inl">
@@ -229,46 +231,46 @@
             </div>
             <div class="inl">
               <div id="personBand-body1-2">
-                手机号未绑定
+                绑定QQ
               </div>
               <div id="personBand-body1-3">
-                您可以享受手机相关的安全及提醒服务
+                绑定QQ帐号，使用QQ帐号便捷登录
               </div>
             </div>
             <div id="personBand-body1-4" class="inl">
-              <el-button round type="success" size="medium">绑定手机</el-button>
+              <el-button round type="warning" size="medium">绑定</el-button>
             </div>
           </div>
           <div id="personBand-body2" class="inl">
             <div id="personBand-body2-1" class="inl">
-              <i class="el-icon-message"></i>
+              <img src="../assets/wx.png" width="43px" height="40px">
             </div>
             <div class="inl">
               <div id="personBand-body2-2">
-                邮箱未绑定
+                绑定微信
               </div>
               <div id="personBand-body2-3">
-                您可以使用邮箱来保障您的帐号安全
+                绑定微信帐号，使用微信帐号便捷登录
               </div>
             </div>
             <div id="personBand-body2-4" class="inl">
-              <el-button round type="success" size="medium">绑定邮箱</el-button>
+              <el-button round type="warning" size="medium">绑定</el-button>
             </div>
           </div>
           <div id="personBand-body3" class="inl">
             <div id="personBand-body3-1" class="inl">
-              <i class="el-icon-bank-card"></i>
+              <img src="../assets/wb.png" width="40px" height="40px">
             </div>
             <div class="inl">
               <div id="personBand-body3-2">
-                银行卡绑定
+                绑定微博
               </div>
               <div id="personBand-body3-3">
-                完善银行卡信息，便于提取直播收益
+                绑定微博帐号，使用微博帐号便捷登录
               </div>
             </div>
             <div id="personBand-body3-4" class="inl">
-              <el-button round type="success" size="medium">绑定银行卡</el-button>
+              <el-button round type="warning" size="medium">绑定</el-button>
             </div>
           </div>
         </div>
@@ -294,9 +296,6 @@ export default {
     }
   },
   methods: {
-    goto(tg) {
-      alert(tg)
-    },
     exit() {
       httpGet("/user/logout")
       this.$store.dispatch("clear_user", {})
@@ -358,6 +357,8 @@ export default {
 }
 
 #personBand-body1-1 {
+  position: relative;
+  top: 5px;
   font-size: 40px;
 }
 
@@ -619,6 +620,12 @@ export default {
   padding: 1% 0 1% 2%;
   text-align: left;
 }
+
+#divider {
+  width: 80%;
+  margin-left: 10%;
+}
+
 
 #content {
   vertical-align: top;
