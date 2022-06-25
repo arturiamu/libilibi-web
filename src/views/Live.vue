@@ -6,9 +6,8 @@
       </el-link>
     </div>
     <div id="frame">
-      <!--      <iframe id="lb-frame" v-bind:src="src + videos[i].roomid"-->
       <iframe id="lb-frame"
-              src="https://www.bilibili.com/blackboard/live/live-activity-player.html?quality=1&cid=23635060"
+              :src="src + videos[i]"
               allowfullscreen="allowfullscreen" width="100%" height="100%" allow="autoplay"
               scrolling="no" frameborder="no" framespacing="0" border="0"
               sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
@@ -22,12 +21,12 @@
 
 <script>
 
+import {httpGet} from "@/js/https";
+
 export default {
   name: "Live",
-  created() {
-    live_video(this)
-  },
   mounted() {
+    this.loadVideo()
     let that = this
     document.addEventListener('keydown', function (e) {
       if (e.keyCode === 27) {
@@ -41,6 +40,14 @@ export default {
   },
 
   methods: {
+    loadVideo() {
+      httpGet("/video/live/20").then(resp => {
+        console.log(resp)
+        if (resp.state === 200) {
+            this.videos = resp.data
+        }
+      })
+    },
     handleScroll(e) {
       e.preventDefault()
       let direction = e.deltaY > 0 ? 'down' : 'up';  //deltaY为正则滚轮向下，为负滚轮向上
@@ -48,7 +55,7 @@ export default {
         if (this.i < 11) {
           this.i += 1
         } else {
-          live_video(this)
+          this.loadVideo()
         }
       } else {
         if (this.i > 1) {
