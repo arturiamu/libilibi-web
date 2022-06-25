@@ -7,6 +7,9 @@ const actions = {
     ch_user(context, value) {
         context.state.user = value
     },
+    ch_avatar(context, value) {
+        context.state.avatar = value
+    },
     ch_favorites(context, value) {
         context.state.user.favorites = value
     },
@@ -46,6 +49,7 @@ const mutations = {// 1630
 
 const state = {
     per: '93%',
+    avatar: "https://guli-imge.oss-cn-hangzhou.aliyuncs.com/edu/2022/06/22779838f256794b348cadd0a3bf4b229bfile.png",
     user: {
         id: '',
         username: "",

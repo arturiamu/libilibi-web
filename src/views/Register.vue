@@ -194,9 +194,14 @@ export default {
               this.$store.dispatch("ch_user", data.data)
               this.$router.push("/")
               this.success(data.message)
-              httpGet("/category/selectByCategory").then(resp=>{
+              httpGet("/avatar/getAvatar").then(resp => {
+                if (resp.state === 200) {
+                  that.$store.dispatch("ch_avatar", resp.data)
+                }
+              })
+              httpGet("/category/selectByCategory").then(resp => {
                 console.log(resp)
-                if(resp.state === 200){
+                if (resp.state === 200) {
                   that.$store.dispatch("ch_favorites", resp.data)
                 }
               })

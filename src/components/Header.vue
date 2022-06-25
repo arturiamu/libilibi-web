@@ -29,8 +29,7 @@
         <div @click="goto('/user')" v-if="$store.state.user.username">
           <el-tooltip class="item" effect="light" content="个人中心" placement="bottom">
             <div id="avatar">
-              <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-                         size="large  "></el-avatar>
+              <el-avatar :src="$store.state.avatar" size="large"></el-avatar>
             </div>
           </el-tooltip>
         </div>
@@ -133,7 +132,7 @@ export default {
       if (this.keyword.replaceAll(" ", '') !== "") {
         if (this.$route.path === '/search') {
           console.log('/')
-          this.$router.push('/').then(res=>{
+          this.$router.push('/').then(res => {
             this.$router.push({
               path: '/search',
               query: {
@@ -141,7 +140,7 @@ export default {
               }
             })
           })
-        }else{
+        } else {
           this.$router.push({
             path: '/search',
             query: {
