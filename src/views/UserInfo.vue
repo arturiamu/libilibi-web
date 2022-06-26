@@ -4,7 +4,7 @@
       <img src="../assets/home.png">
     </div>
     <div id="title">
-      {{ $store.state.user.username }}的主页
+      {{ $store.state.user.username + ' ' }}的主页
     </div>
     <image-cropper
         v-show="imagecropperShow"
@@ -46,16 +46,52 @@
       </el-menu>
     </div>
     <div id="content" class="inl">
+      <el-dialog
+          :visible.sync="updateVisible"
+          destroy-on-close="true"
+          width="25%">
+        <div id="createdForm">
+          <div id="createdForm-head">
+            修改信息
+          </div>
+          <el-divider></el-divider>
+          <div id="update-info">
+            <div id="name">
+              用户名(3-15个字符)：
+              <el-input v-model="username" placeholder="请输入用户名" size="small"></el-input>
+            </div>
+            <div id="item">
+              <div id="userItem" class="inl">
+                <div>
+                  <el-link :underline="false">选择兴趣模块:</el-link>
+                </div>
+                <div id="chose">
+                  <el-checkbox-group v-model="checkedItems">
+                    <el-checkbox :border="true" size="mini" v-for="it in items" :label="it" :key="it.pid"
+                                 style="margin: 6px">{{
+                        it.name
+                      }}
+                    </el-checkbox>
+                  </el-checkbox-group>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="createdForm-foot">
+            <el-button type="primary" @click="update" style="width: 25%">确认修改</el-button>
+          </div>
+        </div>
+      </el-dialog>
       <div id="content1">
         <div id="personData-title">
           <i class="el-icon-user"></i>
           我的资料
         </div>
         <div id="personData-avatar" class="inl">
-          <img :src="$store.state.avatar"  @click="imagecropperShow=true" width="120px" height="120px">
+          <img :src="$store.state.avatar" @click="imagecropperShow=true" width="120px" height="120px">
         </div>
         <div id="personData-body" class="inl">
-          <div id="personData-names">
+          <div id="personData-names" @click="updateVisible = true">
             <div id="personData-name-1" class="inl">
               {{ $store.state.user.username }}
             </div>
@@ -289,7 +325,7 @@
 
 
     <div id="foot">
-            <el-button @click="exit">退出登录</el-button>
+      <el-button @click="exit">退出登录</el-button>
     </div>
   </div>
 </template>
@@ -304,20 +340,48 @@ export default {
   data() {
     return {
       value: 2.5,
-      // 上传头像需要的参数-0·
+      updateVisible: false,
+      checkedItems: [],
+      items: this.$store.state.all_items,
+      username: '',
       imagecropperShow: false, // 是否显示上传组件
       imagecropperKey: 0,  // 上传组件id ，要变化
       imagepath: 'http://localhost:9000/avatar/ossfile'
     }
   },
   methods: {
+    tip(message){
+      this.$message({
+        message:message,
+        type:"success"
+      })
+    },
+    update() {
+      if(this.username.length > 15 || this.username.length < 3){
+        this.tip("用户名格式错误")
+        return
+      }
+      if (this.username.replaceAll(" ", '') !== "") {
+        httpPost("/user/update", {
+          username: this.username,
+          items: this.checkedItems
+        }).then(resp => {
+          if(resp.state === 200){
+            this.updateVisible = false
+            this.$store.dispatch("ch_user", resp.data)
+            this.tip("修改成功")
+          }
+          console.log(resp)
+        })
+      }
+    },
     exit() {
       httpGet("/user/logout")
       this.$store.dispatch("clear_user", {})
       this.$router.push('/')
     },
     cropSuccess(data) {
-      this.$store.dispatch("ch_avatar",data)
+      this.$store.dispatch("ch_avatar", data)
       httpPost("/avatar/updateAvatar", {
         url: data
       }).then(resp => {
@@ -343,6 +407,16 @@ export default {
   position: relative;
   top: -10px;
   left: 23px;
+}
+
+#name {
+  width: 200px;
+  text-align: left;
+}
+
+#userItem {
+  text-align: left;
+  margin-top: 5px;
 }
 
 #personBand-body3-3 {

@@ -48,7 +48,6 @@
           <el-dialog
               :visible.sync="createVisible"
               destroy-on-close="true"
-              :modal-append-to-body="false"
               width="25%">
             <div id="createdForm">
               <el-form :model="ruleForm" :rules="rules" label-position="top" ref="ruleForm" label-width="80px"
@@ -186,6 +185,7 @@ export default {
     },
     resetForm(formName) {
       let that = this
+      that.createVisible = false
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           httpPost('/category/add', {

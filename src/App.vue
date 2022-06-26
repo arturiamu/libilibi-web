@@ -21,6 +21,11 @@ export default {
             that.$store.dispatch("ch_favorites", resp.data)
           }
         })
+        httpGet("/avatar/getAvatar").then(resp=>{
+          if(resp.state === 200){
+            that.$store.dispatch("ch_avatar", resp.data)
+          }
+        })
       }
     })
     httpGet("/item/all").then(data => {
