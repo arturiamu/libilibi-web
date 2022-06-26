@@ -323,9 +323,8 @@
       </div>
     </div>
 
-
-    <div id="foot">
-      <el-button @click="exit">退出登录</el-button>
+    <div id="exit">
+      <el-link @click="exit" type="primary" :underline="false">退出登录</el-link>
     </div>
   </div>
 </template>
@@ -350,14 +349,14 @@ export default {
     }
   },
   methods: {
-    tip(message){
+    tip(message) {
       this.$message({
-        message:message,
-        type:"success"
+        message: message,
+        type: "success"
       })
     },
     update() {
-      if(this.username.length > 15 || this.username.length < 3){
+      if (this.username.length > 15 || this.username.length < 3) {
         this.tip("用户名格式错误")
         return
       }
@@ -366,7 +365,7 @@ export default {
           username: this.username,
           items: this.checkedItems
         }).then(resp => {
-          if(resp.state === 200){
+          if (resp.state === 200) {
             this.updateVisible = false
             this.$store.dispatch("ch_user", resp.data)
             this.tip("修改成功")
@@ -407,6 +406,16 @@ export default {
   position: relative;
   top: -10px;
   left: 23px;
+}
+
+#userInfo {
+  position: relative;
+}
+
+#exit {
+  position: absolute;
+  top: 340px;
+  left: 845px;
 }
 
 #name {
