@@ -88,19 +88,22 @@
           我的资料
         </div>
         <div id="personData-avatar" class="inl">
-          <img :src="$store.state.avatar" @click="imagecropperShow=true" width="120px" height="120px">
+          <img :src="$store.state.avatar" width="120px" height="120px">
         </div>
         <div id="personData-body" class="inl">
-          <div id="personData-names" @click="updateVisible = true">
-            <div id="personData-name-1" class="inl">
+          <div id="personData-names">
+            <div id="personData-name-1" class="inl" @click="updateVisible = true">
               {{ $store.state.user.username }}
             </div>
-            <div id="personData-name-2" class="inl">
+            <div id="personData-name-2" class="inl" @click="updateVisible = true">
               <i class="el-icon-edit"></i>
             </div>
             <div id="personData-name-3" class="inl">
               <img src="../assets/qiandao.png">
             </div>
+          </div>
+          <div id="log" @click="updateVisible = true">
+            <el-link :underline="false">{{ log }}</el-link>
           </div>
           <div id="personData-des">
             用户等级
@@ -319,10 +322,8 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
-
     <div id="exit">
       <el-link @click="exit" type="primary" :underline="false">退出登录</el-link>
     </div>
@@ -343,12 +344,24 @@ export default {
       checkedItems: [],
       items: this.$store.state.all_items,
       username: '',
+      log: '',
       imagecropperShow: false, // 是否显示上传组件
       imagecropperKey: 0,  // 上传组件id ，要变化
       imagepath: 'http://localhost:9000/avatar/ossfile'
     }
   },
+  mounted() {
+    this.log = this.getLog()
+  },
   methods: {
+    getLog() {
+      let log = ""
+      for (let i = 0; i < this.$store.state.user.items.length; i++) {
+        console.log(this.$store.state.user.items[i].name)
+        log += this.$store.state.user.items[i].name + "|"
+      }
+      return log
+    },
     tip(message) {
       this.$message({
         message: message,
@@ -692,7 +705,7 @@ export default {
 }
 
 #personData-level {
-  padding-top: 2%;
+  padding-top: 1%;
 }
 
 #personData-des {
@@ -711,8 +724,7 @@ export default {
 }
 
 #personData-name-3 {
-  margin-top: 2%;
-  padding-left: 5%;
+  padding-left: 2%;
 }
 
 #personData-body {
