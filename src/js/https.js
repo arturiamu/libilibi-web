@@ -69,5 +69,6 @@ export {
     getVerCode,
     play_video,
     httpGet,
-    httpPost
+    httpPost,
+    requestUrl
 }

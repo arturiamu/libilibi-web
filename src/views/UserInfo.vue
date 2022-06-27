@@ -88,7 +88,7 @@
           我的资料
         </div>
         <div id="personData-avatar" class="inl">
-          <img :src="$store.state.avatar" width="120px" height="120px">
+          <img :src="$store.state.avatar" @click="imagecropperShow=true" width="120px" height="120px">
         </div>
         <div id="personData-body" class="inl">
           <div id="personData-names">
@@ -331,7 +331,7 @@
 </template>
 
 <script>
-import {httpGet, httpPost} from "@/js/https";
+import {httpGet, httpPost, requestUrl} from "@/js/https";
 import ImageCropper from "@/components/ImageCropper";
 
 export default {
@@ -347,7 +347,7 @@ export default {
       log: '',
       imagecropperShow: false, // 是否显示上传组件
       imagecropperKey: 0,  // 上传组件id ，要变化
-      imagepath: 'http://localhost:9000/avatar/ossfile'
+      imagepath: requestUrl + '/avatar/ossfile'
     }
   },
   mounted() {
@@ -369,23 +369,31 @@ export default {
       })
     },
     update() {
-      if (this.username.length > 15 || this.username.length < 3) {
-        this.tip("用户名格式错误")
-        return
+      if (this.username.length !== 0) {
+        if (this.username.replaceAll(" ", '') === "" || this.username.length > 15 || this.username.length < 3) {
+          this.tip("用户名格式错误")
+          return
+        }
       }
-      if (this.username.replaceAll(" ", '') !== "") {
-        httpPost("/user/update", {
-          username: this.username,
-          items: this.checkedItems
-        }).then(resp => {
-          if (resp.state === 200) {
-            this.updateVisible = false
-            this.$store.dispatch("ch_user", resp.data)
-            this.tip("修改成功")
-          }
-          console.log(resp)
-        })
+      let um = this.username
+      if (um === '') {
+        um = this.$store.state.user.username
       }
+      let it = this.checkedItems
+      if (it.length === 0) {
+        it = this.$store.state.user.items
+      }
+      httpPost("/user/update", {
+        username: um,
+        items: it
+      }).then(resp => {
+        if (resp.state === 200) {
+          this.updateVisible = false
+          this.$store.dispatch("ch_user", resp.data)
+          this.tip("修改成功")
+        }
+        console.log(resp)
+      })
     },
     exit() {
       httpGet("/user/logout")
