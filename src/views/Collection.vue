@@ -66,7 +66,7 @@
                 </div>
                 <div id="createdForm-foot">
                   <el-form-item>
-                    <el-button type="primary" @click="resetForm('ruleForm')" style="width: 25%">创建</el-button>
+                    <el-button type="primary" @click="resetForm()" style="width: 25%">创建</el-button>
                   </el-form-item>
                 </div>
               </el-form>
@@ -183,7 +183,7 @@ export default {
       this.videos = this.defaultVCollections[0].videos
       this.c_index = -1
     },
-    resetForm(formName) {
+    resetForm() {
       let that = this
       that.createVisible = false
       this.$refs['ruleForm'].validate((valid) => {
@@ -193,13 +193,15 @@ export default {
           }).then(data => {
             if (data.state === 200) {
               that.createVisible = false
-              this.success_tip("创建成功")
-              this.$store.dispatch("add_favorites", {categoryName: this.ruleForm.name})
-              this.category.push({categoryName: this.ruleForm.name})
+              that.success_tip("创建成功")
+              that.$store.dispatch("add_favorites", {categoryName: this.ruleForm.name})
+              that.category.push({categoryName: this.ruleForm.name})
+              that.$router.push("/").then(f => {
+                that.$router.push("/collection")
+              })
             } else {
               this.success_tip(data.message)
             }
-            that.$forceUpdate()
           })
         }
       })

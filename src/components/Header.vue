@@ -105,7 +105,7 @@ export default {
     this.$bus.$on('close', this.close)
   },
   methods: {
-    tips(message){
+    tips(message) {
       this.$message({
         message: message,
         type: 'success'
@@ -118,7 +118,7 @@ export default {
       this.loginVisible = false
     },
     gotoUser(type) {
-      if(type === '/dynamic'){
+      if (type === '/dynamic') {
         this.tips("该功能暂不可用！")
         return
       }
@@ -155,7 +155,6 @@ export default {
             }
           })
         }
-
       }
     }
   }
