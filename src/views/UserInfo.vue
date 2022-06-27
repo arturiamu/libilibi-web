@@ -323,6 +323,143 @@
           </div>
         </div>
       </div>
+      <div id="content5">
+        <div id="personBand1-title">
+          <i class="el-icon-connection"></i>
+          个人信息
+        </div>
+        <div id="personBand1-body">
+          <div id="personBand1-1">
+            <div id="personBand1-body1" class="inl">
+              <div id="personBand1-body1-1" class="inl">
+                <img src="../assets/qq1.png" width="40px" height="40px">
+              </div>
+              <div class="inl">
+                <div id="personBand1-body1-2">
+                  填写QQ吧
+                </div>
+                <div id="personBand1-body1-3">
+                  您可以填写QQ帐号来完善个人信息
+                </div>
+              </div>
+              <div id="personBand1-body1-4" class="inl">
+                <el-button round type="warning" size="medium">填写QQ</el-button>
+              </div>
+            </div>
+            <div id="personBand1-body2" class="inl">
+              <div id="personBand1-body2-1" class="inl">
+                <i class="el-icon-mic"></i>
+              </div>
+              <div class="inl">
+                <div id="personBand1-body2-2">
+                  您还不是主播
+                </div>
+                <div id="personBand1-body2-3">
+                  尚未申请实名认证，无法申请直播间
+                </div>
+              </div>
+              <div id="personBand1-body2-4" class="inl">
+                <el-button round type="warning" size="medium">立即申请</el-button>
+              </div>
+            </div>
+          </div>
+          <div id="personBand1-2">
+            <div id="personBand1-body3" class="inl">
+              <div id="personBand1-body3-1" class="inl">
+                <i class="el-icon-service"></i>
+              </div>
+              <div class="inl">
+                <div id="personBand1-body3-2">
+                  成为客服人员
+                </div>
+                <div id="personBand1-body3-3">
+                  团队招募通道
+                </div>
+              </div>
+              <div id="personBand1-body3-4" class="inl">
+                <el-button round type="warning" size="medium">申请加入</el-button>
+              </div>
+            </div>
+            <div id="personBand1-body4" class="inl">
+              <div id="personBand1-body4-1" class="inl">
+                <i class="el-icon-location-information"></i>
+              </div>
+              <div class="inl">
+                <div id="personBand1-body4-2">
+                  收货地址
+                </div>
+                <div id="personBand1-body4-3">
+                  活动实物邮寄
+                </div>
+              </div>
+              <div id="personBand1-body4-4" class="inl">
+                <el-button round type="warning" size="medium">填写地址</el-button>
+              </div>
+            </div>
+          </div>
+          <div id="personBand1-3">
+            <div id="personBand1-body7" class="inl">
+              <div id="personBand1-body7-1" class="inl">
+                <i class="el-icon-magic-stick"></i>
+              </div>
+              <div class="inl">
+                <div id="personBand1-body7-2">
+                  个性化广告推荐
+                </div>
+                <div id="personBand1-body7-3">
+                  关闭后仍可以看到广告
+                </div>
+              </div>
+              <div id="personBand1-body7-4" class="inl">
+                <el-switch width="60"
+                           v-model="values2"
+                           active-color="rgb(255,102,0)"
+                           inactive-color="rgb(221,221,221)">
+                </el-switch>
+              </div>
+            </div>
+
+            <div id="personBand1-body6" class="inl">
+              <div id="personBand1-body6-1" class="inl">
+                <i class="el-icon-data-analysis"></i>
+              </div>
+              <div class="inl">
+                <div id="personBand1-body6-2">
+                  个性化内容推荐
+                </div>
+                <div id="personBand1-body6-3">
+                  关闭后无法收到内容推荐
+                </div>
+              </div>
+              <div id="personBand1-body6-4" class="inl">
+                <el-switch width="60"
+                           v-model="values1"
+                           active-color="rgb(255,102,0)"
+                           inactive-color="rgb(221,221,221)">
+                </el-switch>
+              </div>
+            </div>
+          </div>
+          <div id="personBand1-4">
+            <div id="personBand1-body5" class="inl">
+              <div id="personBand1-body5-1" class="inl">
+                <i class="el-icon-switch-button"></i></div>
+              <div class="inl">
+                <div id="personBand1-body5-2">
+                  帐号注销
+                </div>
+                <div id="personBand1-body5-3">
+                  注销帐号相关信息，请谨慎操作
+                </div>
+              </div>
+              <div id="personBand1-body5-4" class="inl">
+                <el-button round type="info" size="medium">注销</el-button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
     <div id="exit">
       <el-link @click="exit" type="primary" :underline="false">退出登录</el-link>
@@ -340,6 +477,8 @@ export default {
   data() {
     return {
       value: 2.5,
+      values1: true,
+      values2: true,
       updateVisible: false,
       checkedItems: [],
       items: this.$store.state.all_items,
@@ -423,6 +562,166 @@ export default {
 </script>
 
 <style scoped>
+#personBand1-body7-4 {
+  position: relative;
+  top: -10px;
+  left: 30px;
+}
+
+#personBand1-body7-3 {
+  color: rgb(115, 115, 115);
+  font-size: 13px;
+}
+
+#personBand1-body7-1 {
+  font-size: 40px;
+}
+
+#personBand1-body7 {
+  padding-top: 2%;
+}
+
+#personBand1-body6-4 {
+  position: relative;
+  top: -10px;
+  left: 33px;
+}
+
+#personBand1-body6-3 {
+  color: rgb(115, 115, 115);
+  font-size: 13px;
+}
+
+#personBand1-body6-1 {
+  font-size: 40px;
+}
+
+#personBand1-body6 {
+  padding-top: 2%;
+  padding-left: 29.7%;
+}
+
+#personBand1-body5-4 {
+  position: relative;
+  top: -10px;
+  left: 12px;
+}
+
+#personBand1-body5-3 {
+  color: rgb(115, 115, 115);
+  font-size: 13px;
+}
+
+#personBand1-body5-1 {
+  position: relative;
+  top: 5px;
+  font-size: 40px;
+}
+
+#personBand1-body5 {
+  padding-top: 2%;
+}
+
+#personBand1-body4-4 {
+  position: relative;
+  top: -10px;
+  left: 100px;
+}
+
+#personBand1-body4-3 {
+  color: rgb(115, 115, 115);
+  font-size: 13px;
+}
+
+#personBand1-body4-1 {
+  font-size: 40px;
+}
+
+#personBand1-body4 {
+  padding-top: 2%;
+  padding-left: 29.2%;
+}
+
+#personBand1-body3-4 {
+  position: relative;
+  top: -10px;
+  left: 23px;
+}
+
+#personBand1-body3-3 {
+  color: rgb(115, 115, 115);
+  font-size: 13px;
+}
+
+#personBand1-body3-1 {
+  position: relative;
+  font-size: 40px;
+}
+
+#personBand1-body3 {
+  padding-top: 2%;
+}
+
+#personBand1-body2-4 {
+  position: relative;
+  top: -10px;
+  left: 12px;
+}
+
+#personBand1-body2-3 {
+  color: rgb(115, 115, 115);
+  font-size: 13px;
+}
+
+#personBand1-body2-1 {
+  font-size: 40px;
+}
+
+#personBand1-body2 {
+  padding-top: 2%;
+  padding-left: 20%;
+}
+
+#personBand1-body1-4 {
+  position: relative;
+  top: -10px;
+  left: 12px;
+}
+
+#personBand1-body1-3 {
+  color: rgb(115, 115, 115);
+  font-size: 13px;
+}
+
+#personBand1-body1-1 {
+  position: relative;
+  top: 5px;
+  font-size: 40px;
+}
+
+#personBand1-body1 {
+  padding-top: 2%;
+}
+
+#personBand1-body {
+  padding-left: 3%;
+}
+
+#personBand1-title {
+  width: 92%;
+  font-size: 20px;
+  font-weight: bolder;
+  background-color: rgb(245, 245, 245);
+  margin-left: 2%;
+  padding: 1% 0 1% 2%;
+  text-align: left;
+}
+
+#content5 {
+  padding-top: 4%;
+  text-align: left;
+}
+
 #personBand-body3-4 {
   position: relative;
   top: -10px;
@@ -455,6 +754,8 @@ export default {
 }
 
 #personBand-body3-1 {
+  position: relative;
+  top: 5px;
   font-size: 40px;
 }
 
@@ -474,6 +775,8 @@ export default {
 }
 
 #personBand-body2-1 {
+  position: relative;
+  top: 5px;
   font-size: 40px;
 }
 
@@ -525,7 +828,7 @@ export default {
 #personAccount-body6-4 {
   position: relative;
   top: -10px;
-  left: 102px;
+  left: 42px;
 }
 
 #personAccount-body6-3 {
@@ -545,7 +848,7 @@ export default {
 #personAccount-body5-4 {
   position: relative;
   top: -10px;
-  left: 113px;
+  left: 43px;
 }
 
 #personAccount-body5-3 {
