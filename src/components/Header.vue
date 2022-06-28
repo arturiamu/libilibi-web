@@ -46,6 +46,14 @@
 
       </div>
       <div id="appInfo" class="inl">
+        <div id="dynamic" class="inl app-info" @click="gotoUser('/vip')">
+          <div id="d-icon" class="mess">
+            <el-link icon="el-icon-ship" type="primary" :underline="false"></el-link>
+          </div>
+          <div class="mess">
+            <el-link type="primary" :underline="false">会员</el-link>
+          </div>
+        </div>
         <div id="message" class="inl app-info" @click="gotoUser('/message')">
           <div id="m-icon" class="mess">
             <el-badge :value="$store.state.user.msg" :hidden="$store.state.user.msg===0" type="primary ">
@@ -54,16 +62,6 @@
           </div>
           <div class="mess">
             <el-link type="primary" :underline="false">消息</el-link>
-          </div>
-        </div>
-        <div id="dynamic" class="inl app-info" @click="gotoUser('/dynamic')">
-          <div id="d-icon" class="mess">
-            <el-badge :value="$store.state.user.dym" :hidden="$store.state.user.dym===0" type="primary ">
-              <el-link icon="el-icon-magic-stick" type="primary" :underline="false"></el-link>
-            </el-badge>
-          </div>
-          <div class="mess">
-            <el-link type="primary" :underline="false">动态</el-link>
           </div>
         </div>
         <div id="collect" class="inl app-info" @click="gotoUser('/collection')">
@@ -118,10 +116,6 @@ export default {
       this.loginVisible = false
     },
     gotoUser(type) {
-      if (type === '/dynamic') {
-        this.tips("该功能暂不可用！")
-        return
-      }
       if (this.$store.state.user.id) {
         if (this.$route.path !== type) {
           this.$router.push(type)

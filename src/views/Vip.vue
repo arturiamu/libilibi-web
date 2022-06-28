@@ -5,7 +5,6 @@
       <el-button @click="getVip2">购买半年会员</el-button>
       <el-button @click="getVip3">购买年费会员</el-button>
       <el-button @click="exit">退出登录</el-button>
-      <el-button >dawdadadadawdawdawdawdadadawdwad</el-button>
     </div>
     <div id="pay" v-html="apply">
 
@@ -40,8 +39,8 @@ export default {
         // this.apply = resp
         // document.forms[0].submit()
 
-        let divbody=document.createElement('div')
-        divbody.innerHTML=resp   //接口返回的data是一个页面，这里将其添加进新的div
+        let divbody = document.createElement('div')
+        divbody.innerHTML = resp   //接口返回的data是一个页面，这里将其添加进新的div
         document.body.appendChild(divbody)
         document.forms[0].submit()   //提交表单
       })
@@ -56,8 +55,8 @@ export default {
         // this.apply = resp
         // document.forms[0].submit()
 
-        let divbody=document.createElement('div')
-        divbody.innerHTML=resp   //接口返回的data是一个页面，这里将其添加进新的div
+        let divbody = document.createElement('div')
+        divbody.innerHTML = resp   //接口返回的data是一个页面，这里将其添加进新的div
         document.body.appendChild(divbody)
         document.forms[0].submit()   //提交表单
       })
@@ -73,8 +72,8 @@ export default {
         // document.forms[0].submit()
 
 
-        let divbody=document.createElement('div')
-        divbody.innerHTML=resp   //接口返回的data是一个页面，这里将其添加进新的div
+        let divbody = document.createElement('div')
+        divbody.innerHTML = resp   //接口返回的data是一个页面，这里将其添加进新的div
         document.body.appendChild(divbody)
         document.forms[0].submit()   //提交表单
       })

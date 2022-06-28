@@ -29,11 +29,11 @@ const routes = [
         }
     },
     {
-        path: '/dynamic',
-        name: 'dynamic',
-        component: () => import('@/views/Dynamic'),
+        path: '/vip',
+        name: 'vip',
+        component: () => import('@/views/Vip'),
         meta: {
-            title: 'ad-astra 动态'
+            title: 'ad-astra 会员'
         }
     },
     {

@@ -29,7 +29,6 @@ const actions = {
         context.state.user.username = ""
         context.state.user.account = ""
         context.state.user.items = context.state.default_items
-        context.state.notice.dym = 0
         context.state.notice.message = 0
         context.state.user.favorites = []
     },
@@ -60,7 +59,6 @@ const state = {
         favorites: []
     },
     notice: {
-        dym: 0,
         message: 0
     },
     all_items: [
