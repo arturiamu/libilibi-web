@@ -16,13 +16,13 @@ export default {
       let that = this
       if (data.state === 200) {
         that.$store.dispatch("ch_user", data.data)
-        httpGet("/category/selectByCategory").then(resp=>{
-          if(resp.state === 200){
+        httpGet("/category/selectByCategory").then(resp => {
+          if (resp.state === 200) {
             that.$store.dispatch("ch_favorites", resp.data)
           }
         })
-        httpGet("/avatar/getAvatar").then(resp=>{
-          if(resp.state === 200){
+        httpGet("/avatar/getAvatar").then(resp => {
+          if (resp.state === 200) {
             that.$store.dispatch("ch_avatar", resp.data)
           }
         })

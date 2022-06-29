@@ -48,7 +48,7 @@
       <div id="appInfo" class="inl">
         <div id="dynamic" class="inl app-info" @click="gotoUser('/vip')">
           <div id="d-icon" class="mess">
-            <el-link icon="el-icon-ship" type="primary" :underline="false"></el-link>
+            <el-link icon="el-icon-present" type="primary" :underline="false"></el-link>
           </div>
           <div class="mess">
             <el-link type="primary" :underline="false">会员</el-link>
