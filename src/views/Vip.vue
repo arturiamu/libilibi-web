@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import {logout, httpGet, httpPost} from "@/js/https";
+import {httpGet} from "@/js/https";
 
 export default {
-  name: "UserInfo",
+  name: "Vip",
   data() {
     return {
       content: '',
@@ -35,10 +35,6 @@ export default {
       let money = 25;
       httpGet("/pay/topay?subject=" + subject + "&money=" + money + "").then(resp => {
         console.log(resp)
-        // window.open(resp, "adastra 视频分享", 'height=720, width=900, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no')
-        // this.apply = resp
-        // document.forms[0].submit()
-
         let divbody = document.createElement('div')
         divbody.innerHTML = resp   //接口返回的data是一个页面，这里将其添加进新的div
         document.body.appendChild(divbody)

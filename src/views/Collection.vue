@@ -94,8 +94,7 @@
         </div>
         <div id="content-exist" v-else>
           <div id="content-description">
-            简介：
-            没到18+不准看哦，我说认真的，因为你们也看不懂，嘿嘿嘿，都是珍藏精品资源!
+            简介：{{ remarks }}
           </div>
           <div class="videosType inl" v-for="v in videos">
             <div class="videosImg" @click="play(v)">
@@ -128,6 +127,7 @@ export default {
   data() {
     return {
       createVisible: false,
+      remarks: '',
       ruleForm: {
         name: '',
         desc: '',
@@ -149,7 +149,11 @@ export default {
     if (this.$store.state.user.id) {
       for (let i = 0; i < this.$store.state.user.favorites.length; i++) {
         let url = "/collection/selectByCategory/" + this.$store.state.user.favorites[i].categoryName
-        let c = {name: this.$store.state.user.favorites[i].categoryName, videos: []}
+        let c = {
+          name: this.$store.state.user.favorites[i].categoryName,
+          remarks: this.$store.state.user.favorites[i].remarks,
+          videos: []
+        }
         httpGet(url).then(resp => {
           for (let j = 0; j < resp.data.length; j++) {
             c.videos.push(resp.data[j])
@@ -158,6 +162,7 @@ export default {
         if (c.name === '默认收藏夹') {
           this.defaultVCollections.push(c)
           this.videos = this.defaultVCollections[0].videos
+          this.remarks = this.defaultVCollections[0].remarks
         } else {
           this.category.push(c)
         }
@@ -176,10 +181,12 @@ export default {
       play_video(this, v.video[0])
     },
     ch_videos(index) {
+      this.remarks = this.category[index].remarks
       this.videos = this.category[index].videos
       this.c_index = index
     },
     ch_default() {
+      this.remarks = this.defaultVCollections[0].remarks
       this.videos = this.defaultVCollections[0].videos
       this.c_index = -1
     },
@@ -189,7 +196,8 @@ export default {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           httpPost('/category/add', {
-            "categoryName": this.ruleForm.name
+            "categoryName": this.ruleForm.name,
+            "remarks": this.ruleForm.desc
           }).then(data => {
             if (data.state === 200) {
               that.createVisible = false
@@ -323,6 +331,7 @@ export default {
   font-size: 20px;
   font-weight: bolder;
   text-align: center;
+  color: #606266;
 }
 
 #content-pic {

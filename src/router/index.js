@@ -63,9 +63,9 @@ const routes = [
     {
         path: '/user',
         name: 'user',
-        component: () => import('@/views/Vip'),
+        component: () => import('@/views/UserInfo'),
         meta: {
-            title: 'ad-astra 用户中心'
+            title: 'ad-astra 个人中心'
         }
     },
     {
