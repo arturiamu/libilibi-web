@@ -202,8 +202,9 @@ export default {
             if (data.state === 200) {
               that.createVisible = false
               that.success_tip("创建成功")
-              that.$store.dispatch("add_favorites", {categoryName: this.ruleForm.name})
-              that.category.push({categoryName: this.ruleForm.name})
+              let ca = {categoryName: this.ruleForm.name, remarks: this.ruleForm.desc}
+              that.$store.dispatch("add_favorites", ca)
+              that.category.push(ca)
               that.$router.push("/").then(f => {
                 that.$router.push("/collection")
               })
