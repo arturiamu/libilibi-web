@@ -136,13 +136,13 @@
         <div id="personData-vip">
           <div id="personData-vip-1" class="inl">
             <i class="el-icon-trophy-1"></i>
-            贵族专属
+            会员专属
           </div>
           <div id="personData-vip-2" class="inl">
             七大贵族 显赫身份 尊贵特权 奢华福利
           </div>
           <div id="personData-vip-3" class="inl">
-            <el-button type="primary" round="">查看VIP特权</el-button>
+            <el-button type="primary" round="">查看会员特权</el-button>
           </div>
         </div>
         <div id="personData-img">

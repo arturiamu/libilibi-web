@@ -38,7 +38,7 @@
 }
 
 .inl {
-    display: inline-block!important;
+    display: inline-block !important;
 }
 
 .video-type {
@@ -76,7 +76,7 @@ a {
     text-decoration: none;
 }
 
-a, img {
+a {
     cursor: pointer;
     cursor: hand;
 }
