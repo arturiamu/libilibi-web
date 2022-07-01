@@ -27,7 +27,7 @@
           </template>
           <el-menu-item-group>
             <div id="personData">
-              <el-menu-item index="1-1">
+              <el-menu-item index="1-1" @click="flag='info'">
                 <i class="el-icon-user-solid"></i>
                 我的资料
               </el-menu-item>
@@ -41,428 +41,438 @@
               <i class="el-icon-chat-dot-round"></i>
               我的消息
             </el-menu-item>
+            <el-menu-item index="1-4" @click="flag='data'">
+              <i class="el-icon-reading"></i>
+              我的数据
+            </el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
     </div>
     <div id="content" class="inl">
-      <el-dialog
-          :visible.sync="updateVisible"
-          destroy-on-close="true"
-          width="25%">
-        <div id="createdForm">
-          <div id="createdForm-head">
-            修改信息
-          </div>
-          <el-divider></el-divider>
-          <div id="update-info">
-            <div id="name">
-              用户名(3-15个字符)：
-              <el-input v-model="username" placeholder="请输入用户名" size="small"></el-input>
+      <div id="info" v-if="flag === 'info'">
+        <el-dialog
+            :visible.sync="updateVisible"
+            destroy-on-close="true"
+            width="25%">
+          <div id="createdForm">
+            <div id="createdForm-head">
+              修改信息
             </div>
-            <div id="item">
-              <div id="userItem" class="inl">
-                <div>
-                  <el-link :underline="false">选择兴趣模块:</el-link>
-                </div>
-                <div id="chose">
-                  <el-checkbox-group v-model="checkedItems">
-                    <el-checkbox :border="true" size="mini" v-for="it in items" :label="it" :key="it.pid"
-                                 style="margin: 6px">{{
-                        it.name
-                      }}
-                    </el-checkbox>
-                  </el-checkbox-group>
+            <el-divider></el-divider>
+            <div id="update-info">
+              <div id="name">
+                用户名(3-15个字符)：
+                <el-input v-model="username" placeholder="请输入用户名" size="small"></el-input>
+              </div>
+              <div id="item">
+                <div id="userItem" class="inl">
+                  <div>
+                    <el-link :underline="false">选择兴趣模块:</el-link>
+                  </div>
+                  <div id="chose">
+                    <el-checkbox-group v-model="checkedItems">
+                      <el-checkbox :border="true" size="mini" v-for="it in items" :label="it" :key="it.pid"
+                                   style="margin: 6px">{{
+                          it.name
+                        }}
+                      </el-checkbox>
+                    </el-checkbox-group>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div id="createdForm-foot">
-            <el-button type="primary" @click="update" style="width: 25%">确认修改</el-button>
-          </div>
-        </div>
-      </el-dialog>
-      <div id="content1">
-        <div id="personData-title">
-          <i class="el-icon-user"></i>
-          我的资料
-        </div>
-        <div id="personData-avatar" class="inl">
-          <img :src="$store.state.avatar" @click="imagecropperShow=true" width="120px" height="120px">
-        </div>
-        <div id="personData-body" class="inl">
-          <div id="personData-names">
-            <div id="personData-name-1" class="inl" @click="updateVisible = true">
-              {{ $store.state.user.username }}
-            </div>
-            <div id="personData-name-2" class="inl" @click="updateVisible = true">
-              <i class="el-icon-edit"></i>
-            </div>
-            <div id="personData-name-3" class="inl">
-              <img src="../assets/qiandao.png">
+            <div id="createdForm-foot">
+              <el-button type="primary" @click="update" style="width: 25%">确认修改</el-button>
             </div>
           </div>
-          <div id="log" @click="updateVisible = true">
-            <el-link :underline="false">{{ log }}</el-link>
-          </div>
-          <div id="personData-des">
-            用户等级
-          </div>
-          <div id="personData-level">
-            <div id="personData-level-1" class="inl">
-              <img src="../assets/LV1.png">
-            </div>
-            <div id="personData-level-2" class="inl">
-              <el-progress :percentage="60"></el-progress>
-            </div>
-            <div id="personData-level-3" class="inl">
-              <el-link type="primary">等级特权</el-link>
-            </div>
-          </div>
-          <div id="personData-items">
-            <div id="personData-items-1" class="inl">
-              <i class="el-icon-watermelon">数量:10</i> <i class="el-icon-lollipop">数量:3</i> <i
-                class="el-icon-sugar">数量:0 </i>
-            </div>
-            <div id="personData-items-2" class="inl">
-              <el-link type="primary">信用积分: 100分</el-link>
-              <i class="el-icon-arrow-right"></i>
-            </div>
-
-          </div>
-        </div>
-      </div>
-      <div id="content2">
-        <div id="personData-vip">
-          <div id="personData-vip-1" class="inl">
-            <i class="el-icon-trophy-1"></i>
-            会员专属
-          </div>
-          <div id="personData-vip-2" class="inl">
-            七大贵族 显赫身份 尊贵特权 奢华福利
-          </div>
-          <div id="personData-vip-3" class="inl">
-            <el-button type="primary" round="">查看会员特权</el-button>
-          </div>
-        </div>
-        <div id="personData-img">
-          <img src="../assets/vip2.jpg" width=100%>
-        </div>
-      </div>
-      <div id="content3">
-        <div id="personAccount">
-          <div id="personAccount-title">
+        </el-dialog>
+        <div id="content1">
+          <div id="personData-title">
             <i class="el-icon-user"></i>
-            账户设置
+            我的资料
           </div>
-          <div id="personAccount-number" class="inl">
-            <el-rate
-                v-model="value"
-                disabled
-                show-score
-                text-color="#ff9900"
-                score-template="{value}">
-            </el-rate>
+          <div id="personData-avatar" class="inl">
+            <img :src="$store.state.avatar" @click="imagecropperShow=true" width="120px" height="120px">
           </div>
-          <div id="personAccount-tip" class="inl">
-            安全评分2.5分，帐号存在安全风险，可进一步提升
+          <div id="personData-body" class="inl">
+            <div id="personData-names">
+              <div id="personData-name-1" class="inl" @click="updateVisible = true">
+                {{ $store.state.user.username }}
+              </div>
+              <div id="exit">
+                <el-link @click="exit" type="primary" :underline="false">退出登录</el-link>
+              </div>
+              <div id="personData-name-2" class="inl" @click="updateVisible = true">
+                <i class="el-icon-edit"></i>
+              </div>
+              <div id="personData-name-3" class="inl">
+                <img src="../assets/qiandao.png">
+              </div>
+            </div>
+            <div id="log" @click="updateVisible = true">
+              <el-link :underline="false">{{ log }}</el-link>
+            </div>
+            <div id="personData-des">
+              用户等级
+            </div>
+            <div id="personData-level">
+              <div id="personData-level-1" class="inl">
+                <img src="../assets/LV1.png">
+              </div>
+              <div id="personData-level-2" class="inl">
+                <el-progress :percentage="60"></el-progress>
+              </div>
+              <div id="personData-level-3" class="inl">
+                <el-link type="primary">等级特权</el-link>
+              </div>
+            </div>
+            <div id="personData-items">
+              <div id="personData-items-1" class="inl">
+                <i class="el-icon-watermelon">数量:10</i> <i class="el-icon-lollipop">数量:3</i> <i
+                  class="el-icon-sugar">数量:0 </i>
+              </div>
+              <div id="personData-items-2" class="inl">
+                <el-link type="primary">信用积分: 100分</el-link>
+                <i class="el-icon-arrow-right"></i>
+              </div>
+
+            </div>
           </div>
-          <div id="personAccount-body">
-            <div id="personAccount-body1" class="inl">
-              <div id="personAccount-body1-1" class="inl">
-                <i class="el-icon-mobile-phone"></i>
-              </div>
-              <div class="inl">
-                <div id="personAccount-body1-2">
-                  手机号已绑定
-                </div>
-                <div id="personAccount-body1-3">
-                  您可以享受手机相关的安全及提醒服务
-                </div>
-              </div>
-              <div id="personAccount-body1-4" class="inl">
-                <el-button round type="success" size="medium">解绑手机</el-button>
-              </div>
+        </div>
+        <div id="content2">
+          <div id="personData-vip">
+            <div id="personData-vip-1" class="inl">
+              <i class="el-icon-trophy-1"></i>
+              会员专属
             </div>
-            <div id="personAccount-body2" class="inl">
-              <div id="personAccount-body2-1" class="inl">
-                <i class="el-icon-message"></i>
-              </div>
-              <div class="inl">
-                <div id="personAccount-body2-2">
-                  邮箱未绑定
-                </div>
-                <div id="personAccount-body2-3">
-                  您可以使用邮箱来保障您的帐号安全
-                </div>
-              </div>
-              <div id="personAccount-body2-4" class="inl">
-                <el-button round type="warning" size="medium">绑定邮箱</el-button>
-              </div>
+            <div id="personData-vip-2" class="inl">
+              七大贵族 显赫身份 尊贵特权 奢华福利
             </div>
-            <div id="personAccount-body3" class="inl">
-              <div id="personAccount-body3-1" class="inl">
-                <i class="el-icon-bank-card"></i>
-              </div>
-              <div class="inl">
-                <div id="personAccount-body3-2">
-                  银行卡绑定
-                </div>
-                <div id="personAccount-body3-3">
-                  完善银行卡信息，便于提取直播收益
-                </div>
-              </div>
-              <div id="personAccount-body3-4" class="inl">
-                <el-button round type="warning" size="medium">绑定银行卡</el-button>
-              </div>
+            <div id="personData-vip-3" class="inl">
+              <el-button type="primary" round="">查看会员特权</el-button>
             </div>
-            <div id="personAccount-body4" class="inl">
-              <div id="personAccount-body4-1" class="inl">
-                <i class="el-icon-postcard"></i>
-              </div>
-              <div class="inl">
-                <div id="personAccount-body4-2">
-                  身份证认证
-                </div>
-                <div id="personAccount-body4-3">
-                  完善身份证信息，便于提取直播收益
-                </div>
-              </div>
-              <div id="personAccount-body4-4" class="inl">
-                <el-button round type="warning" size="medium">绑定身份证</el-button>
-              </div>
+          </div>
+          <div id="personData-img">
+            <img src="../assets/vip2.jpg" width=100%>
+          </div>
+        </div>
+        <div id="content3">
+          <div id="personAccount">
+            <div id="personAccount-title">
+              <i class="el-icon-user"></i>
+              账户设置
             </div>
-            <div id="personAccount-body5" class="inl">
-              <div id="personAccount-body5-1" class="inl">
-                <i class="el-icon-thumb"></i>
-              </div>
-              <div class="inl">
-                <div id="personAccount-body5-2">
-                  尚未实名认证
-                </div>
-                <div id="personAccount-body5-3">
-                  认证后可申请直播间
-                </div>
-              </div>
-              <div id="personAccount-body5-4" class="inl">
-                <el-button round type="warning" size="medium">立即认证</el-button>
-              </div>
+            <div id="personAccount-number" class="inl">
+              <el-rate
+                  v-model="value"
+                  disabled
+                  show-score
+                  text-color="#ff9900"
+                  score-template="{value}">
+              </el-rate>
             </div>
-            <div id="personAccount-body6" class="inl">
-              <div id="personAccount-body6-1" class="inl">
-                <i class="el-icon-lock"></i>
-              </div>
-              <div class="inl">
-                <div id="personAccount-body6-2">
-                  密码强度(低)
+            <div id="personAccount-tip" class="inl">
+              安全评分2.5分，帐号存在安全风险，可进一步提升
+            </div>
+            <div id="personAccount-body">
+              <div id="personAccount-body1" class="inl">
+                <div id="personAccount-body1-1" class="inl">
+                  <i class="el-icon-mobile-phone"></i>
                 </div>
-                <div id="personAccount-body6-3">
-                  目前您的密码强度低
+                <div class="inl">
+                  <div id="personAccount-body1-2">
+                    手机号已绑定
+                  </div>
+                  <div id="personAccount-body1-3">
+                    您可以享受手机相关的安全及提醒服务
+                  </div>
+                </div>
+                <div id="personAccount-body1-4" class="inl">
+                  <el-button round type="success" size="medium">解绑手机</el-button>
                 </div>
               </div>
-              <div id="personAccount-body6-4" class="inl">
-                <el-button round type="warning" size="medium">修改密码</el-button>
+              <div id="personAccount-body2" class="inl">
+                <div id="personAccount-body2-1" class="inl">
+                  <i class="el-icon-message"></i>
+                </div>
+                <div class="inl">
+                  <div id="personAccount-body2-2">
+                    邮箱未绑定
+                  </div>
+                  <div id="personAccount-body2-3">
+                    您可以使用邮箱来保障您的帐号安全
+                  </div>
+                </div>
+                <div id="personAccount-body2-4" class="inl">
+                  <el-button round type="warning" size="medium">绑定邮箱</el-button>
+                </div>
+              </div>
+              <div id="personAccount-body3" class="inl">
+                <div id="personAccount-body3-1" class="inl">
+                  <i class="el-icon-bank-card"></i>
+                </div>
+                <div class="inl">
+                  <div id="personAccount-body3-2">
+                    银行卡绑定
+                  </div>
+                  <div id="personAccount-body3-3">
+                    完善银行卡信息，便于提取直播收益
+                  </div>
+                </div>
+                <div id="personAccount-body3-4" class="inl">
+                  <el-button round type="warning" size="medium">绑定银行卡</el-button>
+                </div>
+              </div>
+              <div id="personAccount-body4" class="inl">
+                <div id="personAccount-body4-1" class="inl">
+                  <i class="el-icon-postcard"></i>
+                </div>
+                <div class="inl">
+                  <div id="personAccount-body4-2">
+                    身份证认证
+                  </div>
+                  <div id="personAccount-body4-3">
+                    完善身份证信息，便于提取直播收益
+                  </div>
+                </div>
+                <div id="personAccount-body4-4" class="inl">
+                  <el-button round type="warning" size="medium">绑定身份证</el-button>
+                </div>
+              </div>
+              <div id="personAccount-body5" class="inl">
+                <div id="personAccount-body5-1" class="inl">
+                  <i class="el-icon-thumb"></i>
+                </div>
+                <div class="inl">
+                  <div id="personAccount-body5-2">
+                    尚未实名认证
+                  </div>
+                  <div id="personAccount-body5-3">
+                    认证后可申请直播间
+                  </div>
+                </div>
+                <div id="personAccount-body5-4" class="inl">
+                  <el-button round type="warning" size="medium">立即认证</el-button>
+                </div>
+              </div>
+              <div id="personAccount-body6" class="inl">
+                <div id="personAccount-body6-1" class="inl">
+                  <i class="el-icon-lock"></i>
+                </div>
+                <div class="inl">
+                  <div id="personAccount-body6-2">
+                    密码强度(低)
+                  </div>
+                  <div id="personAccount-body6-3">
+                    目前您的密码强度低
+                  </div>
+                </div>
+                <div id="personAccount-body6-4" class="inl">
+                  <el-button round type="warning" size="medium">修改密码</el-button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div id="content4">
-        <div id="personBand-title">
-          <i class="el-icon-connection"></i>
-          第三方账户绑定
-        </div>
-        <div id="personBand-body">
-          <div id="personBand-body1" class="inl">
-            <div id="personBand-body1-1" class="inl">
-              <img src="../assets/qq1.png" width="40px" height="40px">
-            </div>
-            <div class="inl">
-              <div id="personBand-body1-2">
-                绑定QQ
-              </div>
-              <div id="personBand-body1-3">
-                绑定QQ帐号，使用QQ帐号便捷登录
-              </div>
-            </div>
-            <div id="personBand-body1-4" class="inl">
-              <el-button round type="warning" size="medium">绑定</el-button>
-            </div>
+        <div id="content4">
+          <div id="personBand-title">
+            <i class="el-icon-connection"></i>
+            第三方账户绑定
           </div>
-          <div id="personBand-body2" class="inl">
-            <div id="personBand-body2-1" class="inl">
-              <img src="../assets/wx.png" width="43px" height="40px">
-            </div>
-            <div class="inl">
-              <div id="personBand-body2-2">
-                绑定微信
-              </div>
-              <div id="personBand-body2-3">
-                绑定微信帐号，使用微信帐号便捷登录
-              </div>
-            </div>
-            <div id="personBand-body2-4" class="inl">
-              <el-button round type="warning" size="medium">绑定</el-button>
-            </div>
-          </div>
-          <div id="personBand-body3" class="inl">
-            <div id="personBand-body3-1" class="inl">
-              <img src="../assets/wb.png" width="40px" height="40px">
-            </div>
-            <div class="inl">
-              <div id="personBand-body3-2">
-                绑定微博
-              </div>
-              <div id="personBand-body3-3">
-                绑定微博帐号，使用微博帐号便捷登录
-              </div>
-            </div>
-            <div id="personBand-body3-4" class="inl">
-              <el-button round type="warning" size="medium">绑定</el-button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="content5">
-        <div id="personBand1-title">
-          <i class="el-icon-connection"></i>
-          个人信息
-        </div>
-        <div id="personBand1-body">
-          <div id="personBand1-1">
-            <div id="personBand1-body1" class="inl">
-              <div id="personBand1-body1-1" class="inl">
+          <div id="personBand-body">
+            <div id="personBand-body1" class="inl">
+              <div id="personBand-body1-1" class="inl">
                 <img src="../assets/qq1.png" width="40px" height="40px">
               </div>
               <div class="inl">
-                <div id="personBand1-body1-2">
-                  填写QQ吧
+                <div id="personBand-body1-2">
+                  绑定QQ
                 </div>
-                <div id="personBand1-body1-3">
-                  您可以填写QQ帐号来完善个人信息
+                <div id="personBand-body1-3">
+                  绑定QQ帐号，使用QQ帐号便捷登录
                 </div>
               </div>
-              <div id="personBand1-body1-4" class="inl">
-                <el-button round type="warning" size="medium">填写QQ</el-button>
+              <div id="personBand-body1-4" class="inl">
+                <el-button round type="warning" size="medium">绑定</el-button>
               </div>
             </div>
-            <div id="personBand1-body2" class="inl">
-              <div id="personBand1-body2-1" class="inl">
-                <i class="el-icon-mic"></i>
+            <div id="personBand-body2" class="inl">
+              <div id="personBand-body2-1" class="inl">
+                <img src="../assets/wx.png" width="43px" height="40px">
               </div>
               <div class="inl">
-                <div id="personBand1-body2-2">
-                  您还不是主播
+                <div id="personBand-body2-2">
+                  绑定微信
                 </div>
-                <div id="personBand1-body2-3">
-                  尚未申请实名认证，无法申请直播间
+                <div id="personBand-body2-3">
+                  绑定微信帐号，使用微信帐号便捷登录
                 </div>
               </div>
-              <div id="personBand1-body2-4" class="inl">
-                <el-button round type="warning" size="medium">立即申请</el-button>
+              <div id="personBand-body2-4" class="inl">
+                <el-button round type="warning" size="medium">绑定</el-button>
+              </div>
+            </div>
+            <div id="personBand-body3" class="inl">
+              <div id="personBand-body3-1" class="inl">
+                <img src="../assets/wb.png" width="40px" height="40px">
+              </div>
+              <div class="inl">
+                <div id="personBand-body3-2">
+                  绑定微博
+                </div>
+                <div id="personBand-body3-3">
+                  绑定微博帐号，使用微博帐号便捷登录
+                </div>
+              </div>
+              <div id="personBand-body3-4" class="inl">
+                <el-button round type="warning" size="medium">绑定</el-button>
               </div>
             </div>
           </div>
-          <div id="personBand1-2">
-            <div id="personBand1-body3" class="inl">
-              <div id="personBand1-body3-1" class="inl">
-                <i class="el-icon-service"></i>
-              </div>
-              <div class="inl">
-                <div id="personBand1-body3-2">
-                  成为客服人员
-                </div>
-                <div id="personBand1-body3-3">
-                  团队招募通道
-                </div>
-              </div>
-              <div id="personBand1-body3-4" class="inl">
-                <el-button round type="warning" size="medium">申请加入</el-button>
-              </div>
-            </div>
-            <div id="personBand1-body4" class="inl">
-              <div id="personBand1-body4-1" class="inl">
-                <i class="el-icon-location-information"></i>
-              </div>
-              <div class="inl">
-                <div id="personBand1-body4-2">
-                  收货地址
-                </div>
-                <div id="personBand1-body4-3">
-                  活动实物邮寄
-                </div>
-              </div>
-              <div id="personBand1-body4-4" class="inl">
-                <el-button round type="warning" size="medium">填写地址</el-button>
-              </div>
-            </div>
+        </div>
+        <div id="content5">
+          <div id="personBand1-title">
+            <i class="el-icon-connection"></i>
+            个人信息
           </div>
-          <div id="personBand1-3">
-            <div id="personBand1-body7" class="inl">
-              <div id="personBand1-body7-1" class="inl">
-                <i class="el-icon-magic-stick"></i>
-              </div>
-              <div class="inl">
-                <div id="personBand1-body7-2">
-                  个性化广告推荐
+          <div id="personBand1-body">
+            <div id="personBand1-1">
+              <div id="personBand1-body1" class="inl">
+                <div id="personBand1-body1-1" class="inl">
+                  <img src="../assets/qq1.png" width="40px" height="40px">
                 </div>
-                <div id="personBand1-body7-3">
-                  关闭后仍可以看到广告
+                <div class="inl">
+                  <div id="personBand1-body1-2">
+                    填写QQ吧
+                  </div>
+                  <div id="personBand1-body1-3">
+                    您可以填写QQ帐号来完善个人信息
+                  </div>
+                </div>
+                <div id="personBand1-body1-4" class="inl">
+                  <el-button round type="warning" size="medium">填写QQ</el-button>
                 </div>
               </div>
-              <div id="personBand1-body7-4" class="inl">
-                <el-switch width="60"
-                           v-model="values2"
-                           active-color="rgb(255,102,0)"
-                           inactive-color="rgb(221,221,221)">
-                </el-switch>
+              <div id="personBand1-body2" class="inl">
+                <div id="personBand1-body2-1" class="inl">
+                  <i class="el-icon-mic"></i>
+                </div>
+                <div class="inl">
+                  <div id="personBand1-body2-2">
+                    您还不是主播
+                  </div>
+                  <div id="personBand1-body2-3">
+                    尚未申请实名认证，无法申请直播间
+                  </div>
+                </div>
+                <div id="personBand1-body2-4" class="inl">
+                  <el-button round type="warning" size="medium">立即申请</el-button>
+                </div>
               </div>
             </div>
+            <div id="personBand1-2">
+              <div id="personBand1-body3" class="inl">
+                <div id="personBand1-body3-1" class="inl">
+                  <i class="el-icon-service"></i>
+                </div>
+                <div class="inl">
+                  <div id="personBand1-body3-2">
+                    成为客服人员
+                  </div>
+                  <div id="personBand1-body3-3">
+                    团队招募通道
+                  </div>
+                </div>
+                <div id="personBand1-body3-4" class="inl">
+                  <el-button round type="warning" size="medium">申请加入</el-button>
+                </div>
+              </div>
+              <div id="personBand1-body4" class="inl">
+                <div id="personBand1-body4-1" class="inl">
+                  <i class="el-icon-location-information"></i>
+                </div>
+                <div class="inl">
+                  <div id="personBand1-body4-2">
+                    收货地址
+                  </div>
+                  <div id="personBand1-body4-3">
+                    活动实物邮寄
+                  </div>
+                </div>
+                <div id="personBand1-body4-4" class="inl">
+                  <el-button round type="warning" size="medium">填写地址</el-button>
+                </div>
+              </div>
+            </div>
+            <div id="personBand1-3">
+              <div id="personBand1-body7" class="inl">
+                <div id="personBand1-body7-1" class="inl">
+                  <i class="el-icon-magic-stick"></i>
+                </div>
+                <div class="inl">
+                  <div id="personBand1-body7-2">
+                    个性化广告推荐
+                  </div>
+                  <div id="personBand1-body7-3">
+                    关闭后仍可以看到广告
+                  </div>
+                </div>
+                <div id="personBand1-body7-4" class="inl">
+                  <el-switch width="60"
+                             v-model="values2"
+                             active-color="rgb(255,102,0)"
+                             inactive-color="rgb(221,221,221)">
+                  </el-switch>
+                </div>
+              </div>
 
-            <div id="personBand1-body6" class="inl">
-              <div id="personBand1-body6-1" class="inl">
-                <i class="el-icon-data-analysis"></i>
-              </div>
-              <div class="inl">
-                <div id="personBand1-body6-2">
-                  个性化内容推荐
+              <div id="personBand1-body6" class="inl">
+                <div id="personBand1-body6-1" class="inl">
+                  <i class="el-icon-data-analysis"></i>
                 </div>
-                <div id="personBand1-body6-3">
-                  关闭后无法收到内容推荐
+                <div class="inl">
+                  <div id="personBand1-body6-2">
+                    个性化内容推荐
+                  </div>
+                  <div id="personBand1-body6-3">
+                    关闭后无法收到内容推荐
+                  </div>
                 </div>
-              </div>
-              <div id="personBand1-body6-4" class="inl">
-                <el-switch width="60"
-                           v-model="values1"
-                           active-color="rgb(255,102,0)"
-                           inactive-color="rgb(221,221,221)">
-                </el-switch>
+                <div id="personBand1-body6-4" class="inl">
+                  <el-switch width="60"
+                             v-model="values1"
+                             active-color="rgb(255,102,0)"
+                             inactive-color="rgb(221,221,221)">
+                  </el-switch>
+                </div>
               </div>
             </div>
-          </div>
-          <div id="personBand1-4">
-            <div id="personBand1-body5" class="inl">
-              <div id="personBand1-body5-1" class="inl">
-                <i class="el-icon-switch-button"></i></div>
-              <div class="inl">
-                <div id="personBand1-body5-2">
-                  帐号注销
+            <div id="personBand1-4">
+              <div id="personBand1-body5" class="inl">
+                <div id="personBand1-body5-1" class="inl">
+                  <i class="el-icon-switch-button"></i></div>
+                <div class="inl">
+                  <div id="personBand1-body5-2">
+                    帐号注销
+                  </div>
+                  <div id="personBand1-body5-3">
+                    注销帐号相关信息，请谨慎操作
+                  </div>
                 </div>
-                <div id="personBand1-body5-3">
-                  注销帐号相关信息，请谨慎操作
+                <div id="personBand1-body5-4" class="inl">
+                  <el-button round type="info" size="medium">注销</el-button>
                 </div>
               </div>
-              <div id="personBand1-body5-4" class="inl">
-                <el-button round type="info" size="medium">注销</el-button>
-              </div>
-            </div>
 
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div id="exit">
-      <el-link @click="exit" type="primary" :underline="false">退出登录</el-link>
+      <div v-else>
+        <Data></Data>
+      </div>
+
     </div>
   </div>
 </template>
@@ -470,12 +480,14 @@
 <script>
 import {httpGet, httpPost, requestUrl} from "@/js/https";
 import ImageCropper from "@/components/ImageCropper";
+import Data from "@/views/Data";
 
 export default {
   name: "UserInfo",
-  components: {ImageCropper}, // 加载components 的组件
+  components: {ImageCropper, Data}, // 加载components 的组件
   data() {
     return {
+      flag: 'info',
       value: 2.5,
       values1: true,
       values2: true,
@@ -493,6 +505,9 @@ export default {
     this.log = this.getLog()
   },
   methods: {
+    goto(target) {
+
+    },
     getLog() {
       let log = ""
       for (let i = 0; i < this.$store.state.user.items.length; i++) {

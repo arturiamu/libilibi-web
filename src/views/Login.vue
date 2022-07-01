@@ -51,14 +51,14 @@ export default {
         if (data.state === 200) {
           this.$store.dispatch("ch_user", data.data)
           this.$router.push("/")
-          httpGet("/avatar/getAvatar").then(resp=>{
-            if(resp.state === 200){
+          httpGet("/avatar/getAvatar").then(resp => {
+            if (resp.state === 200) {
               that.$store.dispatch("ch_avatar", resp.data)
             }
           })
-          httpGet("/category/selectByCategory").then(resp=>{
+          httpGet("/category/selectByCategory").then(resp => {
             console.log(resp)
-            if(resp.state === 200){
+            if (resp.state === 200) {
               that.$store.dispatch("ch_favorites", resp.data)
             }
           })
@@ -97,6 +97,14 @@ export default {
 #top_total_length_picture {
   position: relative;
   top: 15px
+}
+
+#button_size {
+  padding-top: 4%;
+}
+
+#help_button {
+  padding-top: 1%;
 }
 
 #nav {

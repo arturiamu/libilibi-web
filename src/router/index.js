@@ -77,6 +77,14 @@ const routes = [
         }
     },
     {
+        path: '/data',
+        name: 'data',
+        component: () => import('@/views/Data'),
+        meta: {
+            title: 'ad-astra 我的数据'
+        }
+    },
+    {
         path: '/player',
         name: 'player',
         component: () => import('@/views/Player'),

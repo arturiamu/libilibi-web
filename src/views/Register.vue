@@ -39,7 +39,7 @@
           </el-form-item>
 
           <el-form-item id="reg-bt" size="small" class="inl">
-            <el-button size="mini" type="primary" @click="submitForm('ruleForm')">注册并登录</el-button>
+            <el-button size="medium" type="primary" @click="submitForm('ruleForm')">注册并登录</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -234,7 +234,8 @@ export default {
 
 #reg-bt {
   position: relative;
-  left: 2px;
+  top: 20px;
+  left: 215px;
 }
 
 #userInfo {
