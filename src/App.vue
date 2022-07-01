@@ -11,7 +11,42 @@ import {httpGet} from "@/js/https";
 export default {
   name: 'App',
   components: {MainBody},
+  methods: {
+    ch_sc(w) {
+      console.log(w)
+      if (w > 1600 && w < 1700) {
+        document.body.style.zoom = '0.85'
+        this.$store.dispatch('ch_per','92%')
+      } else if (w > 1500 && w < 1600) {
+        document.body.style.zoom = '0.75'
+        this.$store.dispatch('ch_per','91%')
+      } else if (w > 1400 && w < 1500) {
+        document.body.style.zoom = '0.65'
+        this.$store.dispatch('ch_per','90%')
+      } else if (w > 1200 && w < 1300) {
+        document.body.style.zoom = '0.65'
+        this.$store.dispatch('ch_per','93%')
+      } else if (w > 1100 && w < 1200) {
+        document.body.style.zoom = '0.55'
+        this.$store.dispatch('ch_per','89%')
+      }
+    }
+  },
   mounted() {
+    let tip_time = localStorage.getItem("tip_time")
+    let now = Date.now()
+    // if (now - tip_time > 1 * 24 * 60 * 60 * 1000) {
+    // if (now - tip_time > 5000) {
+    //   this.$confirm('若页面显示异常，请尝试缩放页面', '提示', {
+    //     confirmButtonText: '下次不在提示',
+    //     cancelButtonText: '我知道了',
+    //     type: 'warning',
+    //     center: true
+    //   }).then(() => {
+    //     localStorage.setItem("tip_time", Date.now().toString())
+    //   }).catch(() => {
+    //   });
+    // }
     httpGet("/user/isLogin").then(data => {
       let that = this
       if (data.state === 200) {
@@ -43,18 +78,14 @@ export default {
     })
 
     let w = document.body.clientWidth
-    console.log(w)
-    console.log(this)
+    this.ch_sc(w)
+    let that = this
     window.onresize = () => {
       return (() => {
         w = document.body.clientWidth
-        let alpha = w / 1903
-        if (alpha > 1.0) {
-          alpha = 1.0
+        if(w < 1920){
+          that.ch_sc(w)
         }
-        console.log(w)
-        console.log(alpha)
-        document.body.style.zoom = alpha.toString()
       })();
     };
   }

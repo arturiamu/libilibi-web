@@ -4,6 +4,9 @@ import Vue from 'vue'
 Vue.use(Vuex)
 
 const actions = {
+    ch_per(context, value) {
+        context.state.per = value
+    },
     ch_user(context, value) {
         context.state.user = value
     },

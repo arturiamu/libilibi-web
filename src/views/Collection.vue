@@ -93,8 +93,8 @@
           </div>
         </div>
         <div id="content-exist" v-else>
-          <div id="content-description">
-            简介：{{ remarks }}
+          <div id="content-description" v-if="remarks">
+            {{ remarks }}
           </div>
           <div class="videosType inl" v-for="v in videos">
             <div class="videosImg" @click="play(v)">
@@ -331,7 +331,8 @@ export default {
   padding-bottom: 2%;
   font-size: 20px;
   font-weight: bolder;
-  text-align: center;
+  text-align: left;
+  margin-left: 15px;
   color: #606266;
 }
 

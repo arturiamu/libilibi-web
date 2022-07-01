@@ -88,7 +88,12 @@
           我的资料
         </div>
         <div id="personData-avatar" class="inl">
-          <img :src="$store.state.avatar" @click="imagecropperShow=true" width="120px" height="120px">
+          <div>
+            <img :src="$store.state.avatar" @click="imagecropperShow=true" width="120px" height="120px">
+          </div>
+          <div>
+            <el-link :underline="false" @click="imagecropperShow=true" >修改头像</el-link>
+          </div>
         </div>
         <div id="personData-body" class="inl">
           <div id="personData-names">
@@ -142,7 +147,7 @@
             七大贵族 显赫身份 尊贵特权 奢华福利
           </div>
           <div id="personData-vip-3" class="inl">
-            <el-button type="primary" round="">查看会员特权</el-button>
+            <el-button type="primary" round="" size="small" @click="$router.push('/vip')">查看会员特权</el-button>
           </div>
         </div>
         <div id="personData-img">
@@ -494,10 +499,10 @@ export default {
   },
   methods: {
     getLog() {
-      let log = ""
+      let log = "| "
       for (let i = 0; i < this.$store.state.user.items.length; i++) {
         console.log(this.$store.state.user.items[i].name)
-        log += this.$store.state.user.items[i].name + "|"
+        log += this.$store.state.user.items[i].name + " | "
       }
       return log
     },

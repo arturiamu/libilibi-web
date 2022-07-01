@@ -9,6 +9,7 @@ npm install
 ```
 npm run serve
 ```
+### 本地部署请自行修改js/http.js文件下的`requestUrl`常量值
 
 ### Compiles and minifies for production
 ```

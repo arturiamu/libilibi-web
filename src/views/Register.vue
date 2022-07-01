@@ -190,10 +190,12 @@ export default {
             user: user,
             verCode: this.ruleForm.ver
           }).then(data => {
+            console.log(data)
             if (data.state === 200) {
-              this.$store.dispatch("ch_user", data.data)
-              this.$router.push("/")
-              this.success(data.message)
+              that.$bus.$emit('close','')
+              that.$store.dispatch("ch_user", data.data)
+              that.$router.push("/")
+              that.success(data.message)
               httpGet("/avatar/getAvatar").then(resp => {
                 if (resp.state === 200) {
                   that.$store.dispatch("ch_avatar", resp.data)
@@ -206,7 +208,7 @@ export default {
                 }
               })
             } else {
-              this.fail(data.message)
+              that.fail(data.message)
             }
           })
         }
