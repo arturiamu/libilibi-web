@@ -1,10 +1,26 @@
 <template>
   <div id="userInfo">
     <div>
-      <img src="../assets/home.png">
+      <div id="vipBk" v-if="$store.state.vip===true">
+        <img src="../assets/vipBackground.webp">
+      </div>
+      <div v-else>
+        <img src="../assets/home.png">
+      </div>
+
     </div>
     <div id="title">
-      {{ $store.state.user.username + ' ' }}的主页
+      <div id="vipTitle" v-if="$store.state.vip===true">
+        <div id="vipTitle-1" class="inl">
+          <img src="../assets/vipImg.webp">
+        </div>
+        <div id="vipTitle-2" class="inl">
+          {{ $store.state.user.username + ' ' }}的主页
+        </div>
+      </div>
+      <div v-else>
+        {{ $store.state.user.username + ' ' }}的主页
+      </div>
     </div>
     <image-cropper
         v-show="imagecropperShow"
@@ -100,14 +116,14 @@
               <div id="personData-name-1" class="inl" @click="updateVisible = true">
                 {{ $store.state.user.username }}
               </div>
-              <div id="exit">
-                <el-link @click="exit" type="primary" :underline="false">退出登录</el-link>
-              </div>
               <div id="personData-name-2" class="inl" @click="updateVisible = true">
                 <i class="el-icon-edit"></i>
               </div>
               <div id="personData-name-3" class="inl">
                 <img src="../assets/qiandao.png">
+              </div>
+              <div id="exit" class="inl">
+                <el-link @click="exit" type="primary" :underline="false">退出登录</el-link>
               </div>
             </div>
             <div id="log" @click="updateVisible = true">
@@ -136,7 +152,6 @@
                 <el-link type="primary">信用积分: 100分</el-link>
                 <i class="el-icon-arrow-right"></i>
               </div>
-
             </div>
           </div>
         </div>
@@ -577,6 +592,32 @@ export default {
 </script>
 
 <style scoped>
+#vipTitle-1 img {
+  width: 100%;
+  height: 100%;
+}
+
+#vipTitle-1 {
+  vertical-align: top;
+  padding-right: 0.5%;
+  width: 45px;
+  height: 37px;
+  opacity: 0.7;
+
+}
+
+#vipBk img {
+  width: 100%;
+  height: 100%;
+}
+
+#vipBk {
+  padding-left: 176px;
+  text-align: center;
+  width: 1280px;
+  height: 280px;
+}
+
 #personBand1-body7-4 {
   position: relative;
   top: -10px;
@@ -748,9 +789,7 @@ export default {
 }
 
 #exit {
-  position: absolute;
-  top: 340px;
-  left: 845px;
+  padding-left: 10%;
 }
 
 #name {
@@ -1089,6 +1128,13 @@ export default {
 #nav {
   vertical-align: top;
   width: 15%;
+}
+
+#vipTitle {
+  font-size: 30px;
+  color: rgb(229, 200, 42);
+  margin-bottom: -1%;
+  text-align: center;
 }
 
 #title {
