@@ -1,5 +1,5 @@
-const requestUrl = "http://localhost:8160"  // 本地
-// const requestUrl = "http://10.1.188.121:8160"  // 本地
+// const requestUrl = "http://localhost:8160"  // 本地
+const requestUrl = "http://10.1.188.121:8160"  // 本地
 // const requestUrl = "http://adastra.isamumu.cn:8160"  // 上线
 // const requestUrl = "/app"
 import axios from "axios";

@@ -41,12 +41,13 @@ export default {
       imagecropperKey: 0,  // 上传组件id ，要变化
       // imagepath: 'http://adastra.isamumu.cn:8160/avatar/ossfile'
       imagepath: 'http://localhost:8160/avatar/ossfile'
+      // imagepath: 'http://10.1.188.121:8160/avatar/ossfile'
     }
   },
   methods: {
     // 上传成功后的回调函数
     cropSuccess(data) {
-      this.$store.dispatch("ch_avatar",data)
+      this.$store.dispatch("ch_avatar", data)
       httpPost("/avatar/updateAvatar", {
         url: data
       }).then(resp => {
