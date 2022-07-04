@@ -1,6 +1,6 @@
 // const requestUrl = "http://localhost:8160"  // 本地
-// const requestUrl = "http://10.1.188.121:8160"  // 本地
-const requestUrl = "http://adastra.isamumu.cn:9000"  // 上线
+const requestUrl = "http://10.1.188.121:8160"  // 本地
+// const requestUrl = "http://adastra.isamumu.cn:9000"  // 上线
 // const requestUrl = "/app"
 import axios from "axios";
 
@@ -16,7 +16,6 @@ function httpGet(url) {
             resolve(r.data);
         }).catch(e => {
             reject(e.data)
-
         })
     })
 }
