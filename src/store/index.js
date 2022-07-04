@@ -44,6 +44,9 @@ const actions = {
     ch_default_items(context, value) {
         context.state.default_items = value
     },
+    ch_vip(context, value) {
+        context.state.vip = value
+    },
 }
 const mutations = {// 1630
 
@@ -52,7 +55,7 @@ const mutations = {// 1630
 const state = {
     per: '93%',
     avatar: "https://guli-imge.oss-cn-hangzhou.aliyuncs.com/edu/2022/06/22779838f256794b348cadd0a3bf4b229bfile.png",
-    vip: false,
+    vip: true,
     user: {
         id: '',
         username: "",

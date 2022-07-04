@@ -56,6 +56,11 @@ export default {
               that.$store.dispatch("ch_avatar", resp.data)
             }
           })
+          httpGet("/user/isVip").then(resp => {
+            if (resp.state === 200) {
+              that.$store.dispatch("ch_vip", resp.data)
+            }
+          })
           httpGet("/category/selectByCategory").then(resp => {
             console.log(resp)
             if (resp.state === 200) {
