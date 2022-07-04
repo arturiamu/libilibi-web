@@ -10,20 +10,16 @@
 </template>
 
 <script>
-import {httpGet} from "@/js/https";
 
 export default {
   name: "Other",
   data() {
     return {
-      url: "http://10.1.188.121:8160/api/ucenter/wx/wxLogin"
+      // url: "http://10.1.188.121:8160/api/ucenter/wx/wxLogin"
+      url: "http://localhost:8160/api/ucenter/wx/wxLogin"
+      // url: "http://adastra.isamumu.cn:8160/api/ucenter/wx/wxLogin"
     }
   },
-  methods: {
-    wx() {
-      httpGet("http://10.1.188.121:8160/api/ucenter/wx/wxLogin")
-    }
-  }
 }
 </script>
 

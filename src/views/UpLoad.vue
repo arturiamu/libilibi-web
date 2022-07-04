@@ -39,7 +39,8 @@ export default {
       // 上传头像需要的参数-0·
       imagecropperShow: false, // 是否显示上传组件
       imagecropperKey: 0,  // 上传组件id ，要变化
-      imagepath: 'http://localhost:9000/avatar/ossfile'
+      // imagepath: 'http://adastra.isamumu.cn:8160/avatar/ossfile'
+      imagepath: 'http://localhost:8160/avatar/ossfile'
     }
   },
   methods: {
