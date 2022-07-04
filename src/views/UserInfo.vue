@@ -165,7 +165,7 @@
               七大贵族 显赫身份 尊贵特权 奢华福利
             </div>
             <div id="personData-vip-3" class="inl">
-              <el-button type="primary" round="">查看会员特权</el-button>
+              <el-button type="primary" size="small" @click="$router.push('/vip')" round="">查看会员特权</el-button>
             </div>
           </div>
           <div id="personData-img">
