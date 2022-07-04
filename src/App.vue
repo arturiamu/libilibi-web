@@ -6,12 +6,35 @@
 
 <script>
 import MainBody from "@/components/MainBody";
-import {httpGet} from "@/js/https";
+import {httpGet, httpPost} from "@/js/https";
 
 export default {
   name: 'App',
   components: {MainBody},
+  data() {
+    return {
+      token: ''
+    }
+  },
+  created() {
+    let href = location.href
+    let st = href.indexOf('?')
+    if (st !== -1) {
+      let ed = href.indexOf('#/')
+      let token = href.slice(st + 1, ed)
+      this.wxLogin(token)
+    }
+  },
   methods: {
+    wxLogin(token) {
+      let that = this
+      httpPost("/user/auth/getLoginInfo", {
+        token: token
+      }).then(resp => {
+        console.log(resp)
+        that.$store.dispatch("ch_user", data.data)
+      })
+    },
     ch_sc(w) {
       console.log(w)
       if (w > 1600 && w < 1700) {
