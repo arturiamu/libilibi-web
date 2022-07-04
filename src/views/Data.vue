@@ -12,9 +12,9 @@ export default {
   name: "Data",
   mounted() {
 
-    var chartDom = document.getElementById('main');
-    var myChart = echarts.init(chartDom);
-    var option;
+    let chartDom = document.getElementById('main');
+    let myChart = echarts.init(chartDom);
+    let option;
 
     option = {
       tooltip: {
