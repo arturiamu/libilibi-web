@@ -14,13 +14,13 @@ import {httpGet} from "@/js/https";
 
 export default {
   name: "Other",
-  data(){
-    return{
-      url:"http://10.1.188.121:8160/api/ucenter/wx/wxLogin"
+  data() {
+    return {
+      url: "http://10.1.188.121:8160/api/ucenter/wx/wxLogin"
     }
   },
-  methods:{
-    wx(){
+  methods: {
+    wx() {
       httpGet("http://10.1.188.121:8160/api/ucenter/wx/wxLogin")
     }
   }
@@ -28,7 +28,7 @@ export default {
 </script>
 
 <style scoped>
-#other{
+#other {
   margin-top: 5px;
 }
 </style>
