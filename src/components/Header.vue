@@ -28,7 +28,13 @@
       <div id="userinfo" class="inl">
         <div @click="goto('/user')" v-if="$store.state.user.username">
           <el-tooltip class="item" effect="light" content="个人中心" placement="bottom">
-            <div id="avatar">
+            <div id="avatar1" v-if="$store.state.vip===true">
+              <div id="vipBox">
+                <img src="../assets/box.webp">
+              </div>
+              <el-avatar :src="$store.state.avatar" size="large"></el-avatar>
+            </div>
+            <div id="avatar2" v-else>
               <el-avatar :src="$store.state.avatar" size="large"></el-avatar>
             </div>
           </el-tooltip>
@@ -156,12 +162,31 @@ export default {
 </script>
 
 <style scoped>
+#vipBox img {
+  width: 100%;
+  height: 100%;
+}
+
+#vipBox {
+  position: absolute;
+  left: -7px;
+  top: -10px;
+  width: 55px;
+  height: 55px;
+}
+
 #nav a {
   font-size: 20px;
   padding-left: 25px;
 }
 
-#avatar {
+#avatar1 {
+  position: absolute;
+  top: -27px;
+  left: -30px
+}
+
+#avatar2 {
   position: absolute;
   top: -27px;
   left: -30px
